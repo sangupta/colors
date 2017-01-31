@@ -1,5 +1,7 @@
 package com.sangupta.colors;
 
+import java.awt.Color;
+
 /**
  * @author sangupta
  *
@@ -36,7 +38,7 @@ public class RGBColor {
 	
 	/**
 	 * Construct an {@link RGBColor} instance using an integer array with 3
-	 * elements, specifying red, green abd blue components in that order.
+	 * elements, specifying red, green and blue components in that order.
 	 * 
 	 * @param rgb
 	 *            the <code>int[]</code> array
@@ -90,6 +92,30 @@ public class RGBColor {
 		this.red = rgb[0];
 		this.green = rgb[1];
 		this.blue = rgb[2];
+	}
+	
+	/**
+	 * Construct an {@link RGBColor} instance using another {@link HSBColor}
+	 * instance
+	 * 
+	 * @param hsl
+	 *            {@link HSBColor} instance to use
+	 */
+	public RGBColor(HSBColor color) {
+		this(Color.HSBtoRGB(color.hue, color.saturation, color.brightness));
+	}
+	
+	public RGBColor(String color) {
+		color = color.trim();
+		
+		if(color.startsWith("#")) {
+			color = color.substring(1);
+		}
+		
+		// TODO: fix this
+		if(color.length() == 6) {
+			
+		}
 	}
 	
 	public void invert() {

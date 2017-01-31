@@ -1,6 +1,52 @@
 package com.sangupta.colors;
 
+/**
+ * Utility functions to work with colors.
+ * 
+ * @author sangupta
+ *
+ */
 public class ColorUtils {
+	
+	/**
+	 * Convert and return CMYK float array from a given {@link RGBColor}
+	 * 
+	 * @param color
+	 *            the {@link RGBColor}
+	 * 
+	 * @return <code>float</code>-array with 4 elements
+	 */
+	public static float[] RGBtoCMYK(RGBColor color) {
+		float[] cmyk = new float[4];
+		RGBtoCMYK(color, cmyk);
+		return cmyk;
+	}
+	
+	public static void RGBtoCMYK(RGBColor color, float[] cmyk) {
+		float cyan = (1 - color.red) / 255f;
+		float magenta = (1 - color.green) / 255f;
+		float yellow = (1 - color.blue) / 255f;
+		
+		float black = Math.min(cyan, Math.min(magenta, yellow));
+		
+		if(black == 1f) {
+			cmyk[0] = 0f;
+			cmyk[1] = 0f;
+			cmyk[2] = 0f;
+			cmyk[3] = 1f;
+			return;
+		}
+		
+		float divider = 1 - black;
+		cyan = (cyan - black) / divider;
+		magenta = (magenta - black) / divider;
+		yellow = (yellow - black) / divider;
+		
+		cmyk[0] = cyan;
+		cmyk[1] = magenta;
+		cmyk[2] = yellow;
+		cmyk[3] = black;
+	}
 	
 	public static float[] RGBtoHSL(RGBColor rgbColor) {
 		if(rgbColor == null) {
