@@ -51,4 +51,72 @@ public class HSLColor {
 		return "HSL(" + this.hue + ", " + this.saturation + ", " + this.luminosity + ")";
 	}
 	
+	@Override
+	public int hashCode() {
+		Float value = this.hue * 31f + this.saturation * 17f + this.luminosity;
+		return value.intValue();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		
+		if(this == obj) {
+			return true;
+		}
+		
+		if(!(obj instanceof HSLColor)) {
+			return false;
+		}
+		
+		HSLColor color = (HSLColor) obj;
+		return this.hue ==  color.hue && this.saturation == color.saturation && this.luminosity == color.luminosity;
+	}
+	
+	// Usual accessors follow
+
+	/**
+	 * @return the hue
+	 */
+	public float getHue() {
+		return hue;
+	}
+
+	/**
+	 * @param hue the hue to set
+	 */
+	public void setHue(float hue) {
+		this.hue = hue;
+	}
+
+	/**
+	 * @return the saturation
+	 */
+	public float getSaturation() {
+		return saturation;
+	}
+
+	/**
+	 * @param saturation the saturation to set
+	 */
+	public void setSaturation(float saturation) {
+		this.saturation = saturation;
+	}
+
+	/**
+	 * @return the luminosity
+	 */
+	public float getLuminosity() {
+		return luminosity;
+	}
+
+	/**
+	 * @param luminosity the luminosity to set
+	 */
+	public void setLuminosity(float luminosity) {
+		this.luminosity = luminosity;
+	}
+	
 }
