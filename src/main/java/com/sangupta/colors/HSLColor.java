@@ -28,6 +28,14 @@ public class HSLColor {
 		this.luminosity = other.luminosity;
 	}
 	
+	public HSLColor(RGBColor rgbColor) {
+		float hsl[] = ColorUtils.RGBtoHSL(rgbColor);
+		
+		this.hue = hsl[0];
+		this.saturation = hsl[1];
+		this.luminosity = hsl[2];
+	}
+	
 	@Override
 	public String toString() {
 		return "HSL(" + this.hue + ", " + this.saturation + ", " + this.luminosity + ")";
