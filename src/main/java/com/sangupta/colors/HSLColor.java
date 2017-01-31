@@ -22,6 +22,12 @@ public class HSLColor {
 		this.luminosity = luminosity;
 	}
 	
+	public HSLColor(float[] hsl) {
+		this.hue = hsl[0];
+		this.saturation = hsl[1];
+		this.luminosity = hsl[2];
+	}
+	
 	public HSLColor(HSLColor other) {
 		this.hue = other.hue;
 		this.saturation = other.saturation;
@@ -34,6 +40,10 @@ public class HSLColor {
 		this.hue = hsl[0];
 		this.saturation = hsl[1];
 		this.luminosity = hsl[2];
+	}
+	
+	public float[] asArray() {
+		return new float[] { this.hue, this.saturation, this.luminosity };
 	}
 	
 	@Override

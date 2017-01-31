@@ -1,7 +1,5 @@
 package com.sangupta.colors;
 
-import com.sangupta.colors.RGBColor;
-
 public class ColorUtils {
 	
 	public static float[] RGBtoHSL(RGBColor rgbColor) {
@@ -51,5 +49,64 @@ public class ColorUtils {
         hsl[1] = saturation;
         hsl[2] = lumin;
 	}
+	
+	public static int[] HSLtoRGB (float[] hsl) {
+		int[] rgb = new int[3];
+		HSLtoRGB(hsl, rgb);
+		return rgb;
+	}
 
+	public static void HSLtoRGB (float[] hsl, int[] rgb) {
+        final float h = hsl[0];
+        final float s = hsl[1];
+        final float l = hsl[2];
+        
+        final float c = (1f - Math.abs(2 * l - 1f)) * s;
+        final float m = l - 0.5f * c;
+        final float x = c * (1f - Math.abs((h / 60f % 2f) - 1f));
+        final int hueSegment = (int) h / 60;
+        int red = 0, green = 0, blue = 0;
+        
+        switch (hueSegment) {
+            case 0:
+                red = Math.round(255 * (c + m));
+                green = Math.round(255 * (x + m));
+                blue = Math.round(255 * m);
+                break;
+            case 1:
+                red = Math.round(255 * (x + m));
+                green = Math.round(255 * (c + m));
+                blue = Math.round(255 * m);
+                break;
+            case 2:
+                red = Math.round(255 * m);
+                green = Math.round(255 * (c + m));
+                blue = Math.round(255 * (x + m));
+                break;
+            case 3:
+                red = Math.round(255 * m);
+                green = Math.round(255 * (x + m));
+                blue = Math.round(255 * (c + m));
+                break;
+            case 4:
+                red = Math.round(255 * (x + m));
+                green = Math.round(255 * m);
+                blue = Math.round(255 * (c + m));
+                break;
+            case 5:
+            case 6:
+                red = Math.round(255 * (c + m));
+                green = Math.round(255 * m);
+                blue = Math.round(255 * (x + m));
+                break;
+        }
+        
+        red = Math.max(0, Math.min(255, red));
+        green = Math.max(0, Math.min(255, green));
+        blue = Math.max(0, Math.min(255, blue));
+        
+        rgb[0] = red;
+        rgb[1] = green;
+        rgb[2] = blue;
+    }
 }

@@ -18,6 +18,12 @@ public class RGBColor {
 		this.blue = color & 0xFF;
 	}
 	
+	public RGBColor(int[] rgb) {
+		this.red = rgb[0];
+		this.green = rgb[1];
+		this.blue = rgb[2];
+	}
+	
 	public RGBColor(int red, int green, int blue) {
 		this.red = red;
 		this.green = green;
@@ -28,6 +34,14 @@ public class RGBColor {
 		this.red = other.red;
 		this.green = other.green;
 		this.blue = other.blue;
+	}
+	
+	public RGBColor(HSLColor hsl) {
+		int rgb[] = ColorUtils.HSLtoRGB(hsl.asArray());
+		
+		this.red = rgb[0];
+		this.green = rgb[1];
+		this.blue = rgb[2];
 	}
 	
 	public void invert() {
@@ -44,6 +58,10 @@ public class RGBColor {
 	
 	public float asGrayScaleColor() {
 		return (float) (this.red * 0.3f + this.green * 0.59f + this.blue * 0.11f);
+	}
+	
+	public int[] asArray() {
+		return new int[] { this.red, this.green, this.blue };
 	}
 	
 	@Override
