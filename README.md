@@ -36,10 +36,10 @@ Strongly typed color models and utility functions in Java.
 
 ## RoadMap
 
-* rgb - hsi
-* rgb - lab
 * Add YCbCr family of color models - https://en.wikipedia.org/wiki/YCbCr
 * CIELUV color model - https://en.wikipedia.org/wiki/CIELUV
+* CIE-Lch color model
+* Test cases
 
 ## License
 
