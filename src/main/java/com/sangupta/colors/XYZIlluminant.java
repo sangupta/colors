@@ -12,7 +12,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public enum Illuminant {
+public enum XYZIlluminant {
 	
 	A(109.850f, 100.0f, 35.585f, 111.144f, 100.0f, 35.200f),
 	
@@ -45,7 +45,7 @@ public enum Illuminant {
 	 */
 	private final float x10, y10, z10;
 	
-	private Illuminant(float x2, float y2, float z2, float x10, float y10, float z10) {
+	private XYZIlluminant(float x2, float y2, float z2, float x10, float y10, float z10) {
 		this.x2 = x2;
 		this.y2 = y2;
 		this.z2 = z2;

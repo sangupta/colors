@@ -4,7 +4,11 @@ import java.awt.Color;
 
 /**
  * Utility functions to work with colors.
+ * 
+ * Refer 
  * http://www.easyrgb.com/index.php?X=MATH&H=06
+ * https://imagej.nih.gov/ij/plugins/download/Color_Space_Converter.java
+ * for more details.
  * 
  * @author sangupta
  *
@@ -204,38 +208,72 @@ public class ColorConversionUtils {
 		rgb[2] = blue.intValue();
 	}
 	
-//	public static double[] LABtoXYZ(double L, double a, double b) {
-//		double[] result = new double[3];
-//
-//		double y = (L + 16.0) / 116.0;
-//		double y3 = Math.pow(y, 3.0);
-//		double x = (a / 500.0) + y;
-//		double x3 = Math.pow(x, 3.0);
-//		double z = y - (b / 200.0);
-//		double z3 = Math.pow(z, 3.0);
-//
-//		if (y3 > 0.008856) {
-//			y = y3;
-//		} else {
-//			y = (y - (16.0 / 116.0)) / 7.787;
-//		}
-//		if (x3 > 0.008856) {
-//			x = x3;
-//		} else {
-//			x = (x - (16.0 / 116.0)) / 7.787;
-//		}
-//		if (z3 > 0.008856) {
-//			z = z3;
-//		} else {
-//			z = (z - (16.0 / 116.0)) / 7.787;
-//		}
-//
-//		result[0] = x * whitePoint[0];
-//		result[1] = y * whitePoint[1];
-//		result[2] = z * whitePoint[2];
-//
-//		return result;
-//	}
+	public static double[] LABtoXYZ(double L, double a, double b, XYZIlluminant whitePoint) {
+		double[] result = new double[3];
+
+		double y = (L + 16.0) / 116.0;
+		double y3 = Math.pow(y, 3.0);
+		double x = (a / 500.0) + y;
+		double x3 = Math.pow(x, 3.0);
+		double z = y - (b / 200.0);
+		double z3 = Math.pow(z, 3.0);
+
+		if (y3 > 0.008856) {
+			y = y3;
+		} else {
+			y = (y - (16.0 / 116.0)) / 7.787;
+		}
+		if (x3 > 0.008856) {
+			x = x3;
+		} else {
+			x = (x - (16.0 / 116.0)) / 7.787;
+		}
+		if (z3 > 0.008856) {
+			z = z3;
+		} else {
+			z = (z - (16.0 / 116.0)) / 7.787;
+		}
+
+		result[0] = x * whitePoint.x2();
+		result[1] = y * whitePoint.y2();
+		result[2] = z * whitePoint.z2();
+
+		return result;
+	}
+	
+	public static double[] XYZtoLAB(double X, double Y, double Z, XYZIlluminant whitePoint) {
+
+	      double x = X / whitePoint.x2();
+	      double y = Y / whitePoint.y2();
+	      double z = Z / whitePoint.z2();
+
+	      if (x > 0.008856) {
+	        x = Math.pow(x, 1.0 / 3.0);
+	      }
+	      else {
+	        x = (7.787 * x) + (16.0 / 116.0);
+	      }
+	      if (y > 0.008856) {
+	        y = Math.pow(y, 1.0 / 3.0);
+	      }
+	      else {
+	        y = (7.787 * y) + (16.0 / 116.0);
+	      }
+	      if (z > 0.008856) {
+	        z = Math.pow(z, 1.0 / 3.0);
+	      }
+	      else {
+	        z = (7.787 * z) + (16.0 / 116.0);
+	      }
+
+	      double[] result = new double[3];
+
+	      result[0] = (116.0 * y) - 16.0;
+	      result[1] = 500.0 * (x - y);
+	      result[2] = 200.0 * (y - z);
+
+	      return result;
+	    }
 
 	/**
 	 * Convert between {@link RGBColor} to {@link CMYColor}.
@@ -390,4 +428,39 @@ public class ColorConversionUtils {
 		return rgb;
 	}
 	
+	/**
+	 * Convert from {@link RGBColor} to {@link YIQColor}.
+	 * 
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * @return
+	 */
+	public static float[] RGBtoYUVSD(int red, int green, int blue) {
+		float[] yuv = new float[3];
+		
+		yuv[0] = new Double(0.299d * red + 0.587d * green + 0.114d * blue).floatValue();
+		yuv[1] = new Double(-0.14173d * red - 0.28886d * green + 0.436d * blue).floatValue();
+		yuv[2] = new Double(0.615d * red - 0.51499d * green - 0.10001d * blue).floatValue();
+		
+		return yuv;
+	}
+	
+	/**
+	 * Convert from {@link YIQColor} to {@link RGBColor}.
+	 * 
+	 * @param y
+	 * @param u
+	 * @param v
+	 * @return
+	 */
+	public static int[] YUVSDtoRGB(float y, float u, float v) {
+		int[] rgb = new int[3];
+		
+		rgb[0] = new Double(1.0d * y + 1.13983d * v).intValue();
+		rgb[1] = new Double(1.0d * y - 0.39465d * u - 0.58060d * v).intValue();
+		rgb[2] = new Double(1.0d * y + 2.03211d * u).intValue();
+	
+		return rgb;
+	}
 }

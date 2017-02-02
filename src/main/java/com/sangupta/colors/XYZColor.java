@@ -15,13 +15,13 @@ public class XYZColor {
 
 	public final float z;
 	
-	public final Illuminant illuminant;
+	public final XYZIlluminant illuminant;
 	
 	public XYZColor(float[] xyz) {
-		this(xyz, Illuminant.D65);
+		this(xyz, XYZIlluminant.D65);
 	}
 	
-	public XYZColor(float[] xyz, Illuminant illuminant) {
+	public XYZColor(float[] xyz, XYZIlluminant illuminant) {
 		if(xyz == null) {
 			throw new IllegalArgumentException("XYZ array cannot be null");
 		}
@@ -42,10 +42,10 @@ public class XYZColor {
 	}
 	
 	public XYZColor(float x, float y, float z) {
-		this(x, y, z, Illuminant.D65);
+		this(x, y, z, XYZIlluminant.D65);
 	}
 	
-	public XYZColor(float x, float y, float z, Illuminant illuminant) {
+	public XYZColor(float x, float y, float z, XYZIlluminant illuminant) {
 		if(illuminant == null) {
 			throw new IllegalArgumentException("Illuminant cannot be null");
 		}

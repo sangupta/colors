@@ -13,21 +13,33 @@ Strongly typed color models and utility functions in Java.
 * LAB
 * RGB - Red, Green, Blue
 * RGBA - Red, Green, Blue, Alpha
-* XYZ - CIE 1931 XYZ color space
+* XYZ - CIE 1931 XYZ color space including following Illuminants: A, C, D50, D55, D65, D75, F2, F7, F11
 * YIQ
 * YUV
 * Yxy
 
 ## Available Conversions
 
-* RGB <> CMY
-* RGB <> CMYK
-* RGB <> HSB
-* RGB <> HSL
-* RGB <> XYZ
-* RGB <> YIQ
-* XYZ <> Yxy
-* XYZ <> HunterLAB
+* CMY <> RGB
+* CMYK <> RGB
+* HSB <> RGB
+* HSI <>
+* HSL <> RGB
+* HunterLAB <> XYZ
+* LAB <>
+* RGB (base)
+* RGBA
+* XYZ <> RGB
+* YIQ <> RGB
+* YUV <> RGB
+* Yxy <> XYZ
+
+## RoadMap
+
+* rgb - hsi
+* rgb - lab
+* Add YCbCr family of color models - https://en.wikipedia.org/wiki/YCbCr
+* CIELUV color model - https://en.wikipedia.org/wiki/CIELUV
 
 ## License
 
