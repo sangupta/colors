@@ -35,7 +35,7 @@ public class HSLColor {
 	}
 	
 	public HSLColor(RGBColor rgbColor) {
-		float hsl[] = ColorUtils.RGBtoHSL(rgbColor);
+		float hsl[] = ColorConversionUtils.RGBtoHSL(rgbColor);
 		
 		this.hue = hsl[0];
 		this.saturation = hsl[1];

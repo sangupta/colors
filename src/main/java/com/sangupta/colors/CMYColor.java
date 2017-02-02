@@ -1,5 +1,15 @@
 package com.sangupta.colors;
 
+/**
+ * Cyan-Magenta-Yellow color model.
+ * 
+ * Refer <a href=
+ * "http://www.mat.univie.ac.at/~kriegl/Skripten/CG/node13.html">http://www.mat.univie.ac.at/~kriegl/Skripten/CG/node13.html</a>
+ * for more details.
+ * 
+ * @author sangupta
+ *
+ */
 public class CMYColor {
 	
 	public final float cyan;
@@ -33,7 +43,7 @@ public class CMYColor {
 			throw new IllegalArgumentException("RGB color cannot be null");
 		}
 		
-		float[] cmy = ColorUtils.RGBtoCMY(rgbColor.red, rgbColor.green, rgbColor.blue);
+		float[] cmy = ColorConversionUtils.RGBtoCMY(rgbColor.red, rgbColor.green, rgbColor.blue);
 		
 		this.cyan = cmy[0];
 		this.magenta = cmy[1];

@@ -87,7 +87,7 @@ public class RGBColor {
 	 *            {@link HSLColor} instance to use
 	 */
 	public RGBColor(HSLColor hsl) {
-		int rgb[] = ColorUtils.HSLtoRGB(hsl.asArray());
+		int rgb[] = ColorConversionUtils.HSLtoRGB(hsl.asArray());
 		
 		this.red = rgb[0];
 		this.green = rgb[1];

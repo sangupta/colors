@@ -4,11 +4,12 @@ import java.awt.Color;
 
 /**
  * Utility functions to work with colors.
+ * http://www.easyrgb.com/index.php?X=MATH&H=06
  * 
  * @author sangupta
  *
  */
-public class ColorUtils {
+public class ColorConversionUtils {
 	
 	/**
 	 * Convert and return CMYK float array from a given {@link RGBColor}
@@ -236,6 +237,14 @@ public class ColorUtils {
 //		return result;
 //	}
 
+	/**
+	 * Convert between {@link RGBColor} to {@link CMYColor}.
+	 * 
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * @return
+	 */
 	public static float[] RGBtoCMY(int red, int green, int blue) {
 		float[] cmy = new float[3];
 		
@@ -246,6 +255,14 @@ public class ColorUtils {
 		return cmy;
 	}
 
+	/**
+	 * Convert between {@link CMYColor} to {@link RGBColor}.
+	 * 
+	 * @param cyan
+	 * @param magenta
+	 * @param yellow
+	 * @return
+	 */
 	public static int[] CMYtoRGB(float cyan, float magenta, float yellow) {
 		int[] rgb = new int[3];
 		
@@ -255,4 +272,122 @@ public class ColorUtils {
 		
 		return rgb;
 	}
+	
+	/**
+	 * Convert between {@link XYZColor} to {@link YxyColor}.
+	 * 
+	 * @param X
+	 * @param Y
+	 * @param Z
+	 * @return
+	 */
+	public static float[] XYZtoYxy(float X, float Y, float Z) {
+		float[] Yxy = new float[3];
+		
+		float sum = X + Y + Z;
+		
+		Yxy[0] = Y;
+		Yxy[1] = X / sum;
+		Yxy[2] = Y / sum;
+		
+		return Yxy;
+	}
+	
+	/**
+	 * Convert from {@link YxyColor} to {@link XYZColor}.
+	 * 
+	 * @param Y
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public static float[] YxytoXYZ(float Y, float x, float y) {
+		float[] XYZ = new float[3];
+		float div = Y / y;
+		
+		XYZ[0] = x * div;
+		XYZ[1] = Y;
+		XYZ[2] = (1 - x - y) * div;
+		
+		return XYZ; 
+	}
+	
+	/**
+	 * Convert from {@link XYZColor} to {@link HunterLabColor}.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
+	public static float[] XYZtoHLAB(float x, float y, float z) {
+		float[] hlab = new float[3];
+		
+		float sy = new Double(Math.sqrt(y)).floatValue();
+		
+		hlab[0] = 10f * sy;
+		hlab[1] = 17.5f * (((1.02f * x) - y) / sy);
+		hlab[2] = 7.0f * ((y - (0.847f * z)) / sy);
+		
+		return hlab;
+	}
+	
+	/**
+	 * Convert from {@link HunterLabColor} to {@link XYZColor}.
+	 * 
+	 * @param hl
+	 * @param ha
+	 * @param hb
+	 * @return
+	 */
+	public static float[] HLABtoXYZ(float hl, float ha, float hb) {
+		float[] xyz = new float[3];
+		
+		float varY = hl / 10f;
+		float varX = ha / 17.5f * hl / 10.0f;
+		float varZ = hb / 7.0f * hl / 10.0f;
+		
+		xyz[1] = varY * varY;
+		xyz[0] = (varX + xyz[1]) / 1.02f;
+		xyz[2] = -(varZ - xyz[1]) / 0.847f;
+		
+		return xyz;
+	}
+	
+	/**
+	 * Convert from {@link RGBColor} to {@link YIQColor}.
+	 * 
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * @return
+	 */
+	public static float[] RGBtoYIQ(int red, int green, int blue) {
+		float[] yiq = new float[3];
+		
+		yiq[0] = new Double(0.299d * red + 0.587d * green + 0.114d * blue).floatValue();
+		yiq[1] = new Double(0.596d * red - 0.274d * green - 0.332d * blue).floatValue();
+		yiq[2] = new Double(0.211d * red - 0.523d * green + 0.312d * blue).floatValue();
+		
+		return yiq;
+	}
+	
+	/**
+	 * Convert from {@link YIQColor} to {@link RGBColor}.
+	 * 
+	 * @param y
+	 * @param i
+	 * @param q
+	 * @return
+	 */
+	public static int[] YIQtoRGB(float y, float i, float q) {
+		int[] rgb = new int[3];
+		
+		rgb[0] = new Double(1.0d * y + 0.956d * i + 0.621d * q).intValue();
+		rgb[1] = new Double(1.0d * y - 0.272d * i - 0.647d * q).intValue();
+		rgb[2] = new Double(1.0d * y - 1.106d * i + 1.703d * q).intValue();
+	
+		return rgb;
+	}
+	
 }

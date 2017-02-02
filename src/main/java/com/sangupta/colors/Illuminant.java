@@ -7,11 +7,12 @@ package com.sangupta.colors;
  * 
  * https://imagej.nih.gov/ij/plugins/download/Color_Space_Converter.java
  * http://www.easyrgb.com/index.php?X=MATH&H=15
+ * https://en.wikipedia.org/wiki/Color_temperature
  * 
  * @author sangupta
  *
  */
-public enum Illuminance {
+public enum Illuminant {
 	
 	A(109.850f, 100.0f, 35.585f, 111.144f, 100.0f, 35.200f),
 	
@@ -21,6 +22,9 @@ public enum Illuminance {
 	
 	D55(95.6797f, 100.0f, 92.1481f, 95.799f, 100.0f, 90.926f),
 	
+	/**
+	 * Refer https://en.wikipedia.org/wiki/Illuminant_D65 for more details.
+	 */
 	D65(95.0429f, 100.0f, 108.8900f, 94.811f, 100.0f, 107.304f),
 	
 	D75(94.9722f, 100.0f, 122.6394f, 94.416f, 100.0f, 120.641f),
@@ -41,7 +45,7 @@ public enum Illuminance {
 	 */
 	private final float x10, y10, z10;
 	
-	private Illuminance(float x2, float y2, float z2, float x10, float y10, float z10) {
+	private Illuminant(float x2, float y2, float z2, float x10, float y10, float z10) {
 		this.x2 = x2;
 		this.y2 = y2;
 		this.z2 = z2;

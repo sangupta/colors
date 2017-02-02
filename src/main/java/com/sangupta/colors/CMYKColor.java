@@ -56,7 +56,7 @@ public class CMYKColor {
 			throw new IllegalArgumentException("RGBColor cannot be null");
 		}
 		
-		float[] cmyk = ColorUtils.RGBtoCMYK(color);
+		float[] cmyk = ColorConversionUtils.RGBtoCMYK(color);
 		
 		this.cyan = cmyk[0];
 		this.magenta = cmyk[1];
