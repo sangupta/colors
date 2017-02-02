@@ -2,6 +2,9 @@ package com.sangupta.colors;
 
 import java.awt.Color;
 
+import com.sangupta.colors.XYZColor.XYZIlluminant;
+import com.sangupta.colors.YUVColor.YUVQuality;
+
 /**
  * Utility functions to work with colors.
  * 
@@ -436,12 +439,28 @@ public class ColorConversionUtils {
 	 * @param blue
 	 * @return
 	 */
-	public static float[] RGBtoYUVSD(int red, int green, int blue) {
+	public static float[] RGBtoYUV(int red, int green, int blue, YUVQuality quality) {
+		if(quality == null) {
+			throw new IllegalArgumentException("YUVQuality cannot be null");
+		}
+		
 		float[] yuv = new float[3];
 		
-		yuv[0] = new Double(0.299d * red + 0.587d * green + 0.114d * blue).floatValue();
-		yuv[1] = new Double(-0.14173d * red - 0.28886d * green + 0.436d * blue).floatValue();
-		yuv[2] = new Double(0.615d * red - 0.51499d * green - 0.10001d * blue).floatValue();
+		switch(quality) {
+			case SDTV:
+			case BT_601:
+				yuv[0] = new Double(0.299d * red + 0.587d * green + 0.114d * blue).floatValue();
+				yuv[1] = new Double(-0.14173d * red - 0.28886d * green + 0.436d * blue).floatValue();
+				yuv[2] = new Double(0.615d * red - 0.51499d * green - 0.10001d * blue).floatValue();
+				break;
+				
+			case HDTV:
+			case BT_709:
+				yuv[0] = new Double(0.2126d * red + 0.7152d * green + 0.0722d * blue).floatValue();
+				yuv[1] = new Double(-0.09991 * red - 0.33609d * green + 0.436d * blue).floatValue();
+				yuv[2] = new Double(0.615d * red - 0.55861d * green - 0.05639d * blue).floatValue();
+				break;
+		}
 		
 		return yuv;
 	}
@@ -454,12 +473,28 @@ public class ColorConversionUtils {
 	 * @param v
 	 * @return
 	 */
-	public static int[] YUVSDtoRGB(float y, float u, float v) {
+	public static int[] YUVtoRGB(float y, float u, float v, YUVQuality quality) {
+		if(quality == null) {
+			throw new IllegalArgumentException("YUVQuality cannot be null");
+		}
+		
 		int[] rgb = new int[3];
 		
-		rgb[0] = new Double(1.0d * y + 1.13983d * v).intValue();
-		rgb[1] = new Double(1.0d * y - 0.39465d * u - 0.58060d * v).intValue();
-		rgb[2] = new Double(1.0d * y + 2.03211d * u).intValue();
+		switch(quality) {
+			case SDTV:
+			case BT_601:
+				rgb[0] = new Double(1.0d * y + 1.13983d * v).intValue();
+				rgb[1] = new Double(1.0d * y - 0.39465d * u - 0.58060d * v).intValue();
+				rgb[2] = new Double(1.0d * y + 2.03211d * u).intValue();
+				break;
+				
+			case HDTV:
+			case BT_709:
+				rgb[0] = new Double(1.0d * y + 1.28033 * v).intValue();
+				rgb[1] = new Double(1.0d * y - 0.21482d * u - 0.38059d * v).intValue();
+				rgb[2] = new Double(1.0d * y + 2.12798d * u).intValue();
+				break;
+		}
 	
 		return rgb;
 	}

@@ -56,4 +56,15 @@ public class YUVColor {
 		return this.y == color.y && this.u == color.u && this.v == color.v;
 	}
 
+	public static enum YUVQuality {
+		
+		SDTV,
+		
+		BT_601,
+		
+		HDTV,
+		
+		BT_709;
+		
+	}
 }
