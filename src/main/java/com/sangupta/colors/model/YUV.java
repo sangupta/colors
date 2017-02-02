@@ -1,4 +1,4 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
 /**
  * Refer
@@ -8,7 +8,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public class YUVColor {
+public class YUV {
 	
 	public final float y;
 	
@@ -16,13 +16,13 @@ public class YUVColor {
 	
 	public final float v;
 	
-	public YUVColor(float[] yuv) {
+	public YUV(float[] yuv) {
 		this.y = yuv[0];
 		this.u = yuv[1];
 		this.v = yuv[2];
 	}
 	
-	public YUVColor(float y, float u, float v) {
+	public YUV(float y, float u, float v) {
 		this.y = y;
 		this.u = u;
 		this.v = v;
@@ -48,11 +48,11 @@ public class YUVColor {
 			return true;
 		}
 		
-		if(!(obj instanceof YUVColor)) {
+		if(!(obj instanceof YUV)) {
 			return false;
 		}
 		
-		YUVColor color = (YUVColor) obj;
+		YUV color = (YUV) obj;
 		return this.y == color.y && this.u == color.u && this.v == color.v;
 	}
 

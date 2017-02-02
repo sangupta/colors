@@ -3,6 +3,9 @@ package com.sangupta.colors;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.sangupta.colors.model.RGB;
+import com.sangupta.colors.utils.ColorConversionUtils;
+
 public class TestColorUtils {
 	
 	@Test
@@ -64,7 +67,7 @@ public class TestColorUtils {
 	}
 	
 	public void testCMYK(int red, int green, int blue, float cyan, float magenta, float yellow, float black) {
-		float[] cmyk = ColorConversionUtils.RGBtoCMYK(new RGBColor(red, green, blue));
+		float[] cmyk = ColorConversionUtils.RGBtoCMYK(new RGB(red, green, blue));
 		
 		Assert.assertEquals(cyan, cmyk[0], 0f);
 		Assert.assertEquals(magenta, cmyk[1], 0f);
@@ -73,7 +76,7 @@ public class TestColorUtils {
 	}
 	
 	public void testHSL(int red, int green, int blue, float hue, float saturation, float lumen) {
-		float[] hsl = ColorConversionUtils.RGBtoHSL(new RGBColor(red, green, blue));
+		float[] hsl = ColorConversionUtils.RGBtoHSL(new RGB(red, green, blue));
 		
 		Assert.assertEquals(hue, hsl[0], 0f);
 		Assert.assertEquals(saturation, hsl[1], 0f);
@@ -81,7 +84,7 @@ public class TestColorUtils {
 	}
 	
 	public void testHSB(int red, int green, int blue, float hue, float saturation, float brightness) {
-		float[] hsb = ColorConversionUtils.RGBtoHSB(new RGBColor(red, green, blue));
+		float[] hsb = ColorConversionUtils.RGBtoHSB(new RGB(red, green, blue));
 		
 		Assert.assertEquals(hue, hsb[0], 0f);
 		Assert.assertEquals(saturation, hsb[1], 0f);

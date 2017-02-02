@@ -1,32 +1,32 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
-public class RGBAColor extends RGBColor {
+public class RGBA extends RGB {
 	
 	public static final int DEFAULT_RGBA_ALPHA = 255;
 	
 	public final int alpha;
 
-	public RGBAColor(int color) {
+	public RGBA(int color) {
 		super(color);
 		this.alpha = color >>> 24;
 	}
 	
-	public RGBAColor(int red, int green, int blue) {
+	public RGBA(int red, int green, int blue) {
 		super(red, green, blue);
 		this.alpha = DEFAULT_RGBA_ALPHA;
 	}
 	
-	public RGBAColor(int red, int green, int blue, int alpha) {
+	public RGBA(int red, int green, int blue, int alpha) {
 		super(red, green, blue);
 		this.alpha = alpha;
 	}
 	
-	public RGBAColor(RGBColor other) {
+	public RGBA(RGB other) {
 		super(other);
 		this.alpha = DEFAULT_RGBA_ALPHA;
 	}
 	
-	public RGBAColor(RGBAColor other) {
+	public RGBA(RGBA other) {
 		super(other);
 		this.alpha = other.alpha;
 	}
@@ -46,11 +46,11 @@ public class RGBAColor extends RGBColor {
 			return true;
 		}
 		
-		if(!(obj instanceof RGBAColor)) {
+		if(!(obj instanceof RGBA)) {
 			return false;
 		}
 		
-		RGBAColor color = (RGBAColor) obj;
+		RGBA color = (RGBA) obj;
 		return this.red == color.red && this.green == color.green && this.blue == color.blue && this.alpha == color.alpha;
 	}
 	

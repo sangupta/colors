@@ -1,12 +1,14 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
 import java.awt.Color;
+
+import com.sangupta.colors.utils.ColorConversionUtils;
 
 /**
  * @author sangupta
  *
  */
-public class RGBColor {
+public class RGB {
 	
 	/**
 	 * Red component between 0-255
@@ -24,33 +26,33 @@ public class RGBColor {
 	public final int blue;
 
 	/**
-	 * Construct an {@link RGBColor} instance using compound <code>int</code>
+	 * Construct an {@link RGB} instance using compound <code>int</code>
 	 * value.
 	 * 
 	 * @param color
 	 *            the <code>int</code> value
 	 */
-	public RGBColor(int color) {
+	public RGB(int color) {
 		this.red = (color >> 16) & 0xFF;
 		this.green = (color >> 8) & 0xFF;
 		this.blue = color & 0xFF;
 	}
 	
 	/**
-	 * Construct an {@link RGBColor} instance using an integer array with 3
+	 * Construct an {@link RGB} instance using an integer array with 3
 	 * elements, specifying red, green and blue components in that order.
 	 * 
 	 * @param rgb
 	 *            the <code>int[]</code> array
 	 */
-	public RGBColor(int[] rgb) {
+	public RGB(int[] rgb) {
 		this.red = rgb[0];
 		this.green = rgb[1];
 		this.blue = rgb[2];
 	}
 	
 	/**
-	 * Construct an {@link RGBColor} instance using given RGB values
+	 * Construct an {@link RGB} instance using given RGB values
 	 * 
 	 * @param red
 	 *            between 0-255
@@ -61,32 +63,32 @@ public class RGBColor {
 	 * @param blue
 	 *            between 0-255
 	 */
-	public RGBColor(int red, int green, int blue) {
+	public RGB(int red, int green, int blue) {
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
 	}
 	
 	/**
-	 * Construct an {@link RGBColor} instance using another instance
+	 * Construct an {@link RGB} instance using another instance
 	 * 
 	 * @param other
-	 *            the {@link RGBColor} instance to copy values from
+	 *            the {@link RGB} instance to copy values from
 	 */
-	public RGBColor(RGBColor other) {
+	public RGB(RGB other) {
 		this.red = other.red;
 		this.green = other.green;
 		this.blue = other.blue;
 	}
 	
 	/**
-	 * Construct an {@link RGBColor} instance using another {@link HSLColor}
+	 * Construct an {@link RGB} instance using another {@link HSL}
 	 * instance
 	 * 
 	 * @param hsl
-	 *            {@link HSLColor} instance to use
+	 *            {@link HSL} instance to use
 	 */
-	public RGBColor(HSLColor hsl) {
+	public RGB(HSL hsl) {
 		int rgb[] = ColorConversionUtils.HSLtoRGB(hsl.asArray());
 		
 		this.red = rgb[0];
@@ -95,17 +97,17 @@ public class RGBColor {
 	}
 	
 	/**
-	 * Construct an {@link RGBColor} instance using another {@link HSBColor}
+	 * Construct an {@link RGB} instance using another {@link HSB}
 	 * instance
 	 * 
 	 * @param hsl
-	 *            {@link HSBColor} instance to use
+	 *            {@link HSB} instance to use
 	 */
-	public RGBColor(HSBColor color) {
+	public RGB(HSB color) {
 		this(Color.HSBtoRGB(color.hue, color.saturation, color.brightness));
 	}
 	
-	public RGBColor(String color) {
+	public RGB(String color) {
 		color = color.trim();
 		
 		if(color.startsWith("#")) {
@@ -115,16 +117,16 @@ public class RGBColor {
 		throw new RuntimeException("not yet implemented");
 	}
 	
-	public RGBColor invert() {
-		return new RGBColor(255 - this.red, 255 - this.green, 255 - this.blue);
+	public RGB invert() {
+		return new RGB(255 - this.red, 255 - this.green, 255 - this.blue);
 	}
 	
-	public RGBColor mix(RGBColor color) {
+	public RGB mix(RGB color) {
 		int red = (this.red + color.red) / 2;
 		int green = (this.green + color.green) / 2;
 		int blue = (this.blue + color.blue) / 2;
 		
-		return new RGBColor(red, green, blue);
+		return new RGB(red, green, blue);
 	}
 	
 	public float asGrayScaleColor() {
@@ -161,11 +163,11 @@ public class RGBColor {
 			return true;
 		}
 		
-		if(!(obj instanceof RGBColor)) {
+		if(!(obj instanceof RGB)) {
 			return false;
 		}
 		
-		RGBColor color = (RGBColor) obj;
+		RGB color = (RGB) obj;
 		return this.red == color.red && this.green == color.green && this.blue == color.blue;
 	}
 	

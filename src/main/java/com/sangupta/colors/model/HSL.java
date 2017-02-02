@@ -1,4 +1,6 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
+
+import com.sangupta.colors.utils.ColorConversionUtils;
 
 /**
  * HSL stands for hue, saturation, and lightness (or luminosity), and is also often called HLS
@@ -8,7 +10,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public class HSLColor {
+public class HSL {
 	
 	public final float hue;
 	
@@ -16,25 +18,25 @@ public class HSLColor {
 	
 	public final float luminosity;
 
-	public HSLColor(float hue, float saturation, float luminosity) {
+	public HSL(float hue, float saturation, float luminosity) {
 		this.hue = hue;
 		this.saturation = saturation;
 		this.luminosity = luminosity;
 	}
 	
-	public HSLColor(float[] hsl) {
+	public HSL(float[] hsl) {
 		this.hue = hsl[0];
 		this.saturation = hsl[1];
 		this.luminosity = hsl[2];
 	}
 	
-	public HSLColor(HSLColor other) {
+	public HSL(HSL other) {
 		this.hue = other.hue;
 		this.saturation = other.saturation;
 		this.luminosity = other.luminosity;
 	}
 	
-	public HSLColor(RGBColor rgbColor) {
+	public HSL(RGB rgbColor) {
 		float hsl[] = ColorConversionUtils.RGBtoHSL(rgbColor);
 		
 		this.hue = hsl[0];
@@ -67,11 +69,11 @@ public class HSLColor {
 			return true;
 		}
 		
-		if(!(obj instanceof HSLColor)) {
+		if(!(obj instanceof HSL)) {
 			return false;
 		}
 		
-		HSLColor color = (HSLColor) obj;
+		HSL color = (HSL) obj;
 		return this.hue ==  color.hue && this.saturation == color.saturation && this.luminosity == color.luminosity;
 	}
 	

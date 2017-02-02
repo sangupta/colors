@@ -1,4 +1,4 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
 /**
  * YIQ Color model. Refer https://en.wikipedia.org/wiki/YIQ
@@ -7,7 +7,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public class YIQColor {
+public class YIQ {
 
 	public final float y;
 	
@@ -15,13 +15,13 @@ public class YIQColor {
 	
 	public final float q;
 	
-	public YIQColor(float[] yiq) {
+	public YIQ(float[] yiq) {
 		this.y = yiq[0];
 		this.i = yiq[1];
 		this.q = yiq[2];
 	}
 	
-	public YIQColor(float y, float i, float q) {
+	public YIQ(float y, float i, float q) {
 		this.y = y;
 		this.i = i;
 		this.q = q;
@@ -47,11 +47,11 @@ public class YIQColor {
 			return true;
 		}
 		
-		if(!(obj instanceof YIQColor)) {
+		if(!(obj instanceof YIQ)) {
 			return false;
 		}
 		
-		YIQColor color = (YIQColor) obj;
+		YIQ color = (YIQ) obj;
 		return this.y == color.y && this.i == color.i && this.q == color.q;
 	}
 	

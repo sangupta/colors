@@ -1,4 +1,4 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
 /**
  * Yxy Color Model
@@ -10,7 +10,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public class YxyColor {
+public class Yxy {
 
 	public final float Y;
 	
@@ -18,7 +18,7 @@ public class YxyColor {
 	
 	public final float y;
 	
-	public YxyColor(float[] yxy) {
+	public Yxy(float[] yxy) {
 		if(yxy == null) {
 			throw new IllegalArgumentException("Yxy array cannot be null");
 		}
@@ -32,7 +32,7 @@ public class YxyColor {
 		this.y = yxy[2];
 	}
 	
-	public YxyColor(float Y, float x, float y) {
+	public Yxy(float Y, float x, float y) {
 		this.Y = Y;
 		this.x = x;
 		this.y = y;
@@ -58,11 +58,11 @@ public class YxyColor {
 			return true;
 		}
 		
-		if(!(obj instanceof YxyColor)) {
+		if(!(obj instanceof Yxy)) {
 			return false;
 		}
 		
-		YxyColor color = (YxyColor) obj;
+		Yxy color = (Yxy) obj;
 		return this.Y == color.Y && this.x == color.x && this.y == color.y;
 	}
 }

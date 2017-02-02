@@ -1,4 +1,4 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
 /**
  * A third model, common in computer vision applications, is HSI, for hue, saturation, and intensity
@@ -8,7 +8,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public class HSIColor {
+public class HSI {
 
 	public final float hue;
 	
@@ -16,13 +16,13 @@ public class HSIColor {
 	
 	public final float intensity;
 	
-	public HSIColor(float hue, float saturation, float intensity) {
+	public HSI(float hue, float saturation, float intensity) {
 		this.hue = hue;
 		this.saturation = saturation;
 		this.intensity = intensity;
 	}
 	
-	public HSIColor(HSIColor other) {
+	public HSI(HSI other) {
 		this.hue = other.hue;
 		this.saturation = other.saturation;
 		this.intensity = other.intensity;
@@ -49,11 +49,11 @@ public class HSIColor {
 			return true;
 		}
 		
-		if(!(obj instanceof HSIColor)) {
+		if(!(obj instanceof HSI)) {
 			return false;
 		}
 		
-		HSIColor color = (HSIColor) obj;
+		HSI color = (HSI) obj;
 		return this.hue ==  color.hue && this.saturation == color.saturation && this.intensity == color.intensity;
 	}
 }

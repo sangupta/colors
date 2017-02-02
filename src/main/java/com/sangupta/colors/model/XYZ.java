@@ -1,4 +1,4 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
 /**
  * 
@@ -7,7 +7,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public class XYZColor {
+public class XYZ {
 	
 	public final float x;
 	
@@ -17,11 +17,11 @@ public class XYZColor {
 	
 	public final XYZIlluminant illuminant;
 	
-	public XYZColor(float[] xyz) {
+	public XYZ(float[] xyz) {
 		this(xyz, XYZIlluminant.D65);
 	}
 	
-	public XYZColor(float[] xyz, XYZIlluminant illuminant) {
+	public XYZ(float[] xyz, XYZIlluminant illuminant) {
 		if(xyz == null) {
 			throw new IllegalArgumentException("XYZ array cannot be null");
 		}
@@ -41,11 +41,11 @@ public class XYZColor {
 		this.illuminant = illuminant;
 	}
 	
-	public XYZColor(float x, float y, float z) {
+	public XYZ(float x, float y, float z) {
 		this(x, y, z, XYZIlluminant.D65);
 	}
 	
-	public XYZColor(float x, float y, float z, XYZIlluminant illuminant) {
+	public XYZ(float x, float y, float z, XYZIlluminant illuminant) {
 		if(illuminant == null) {
 			throw new IllegalArgumentException("Illuminant cannot be null");
 		}
@@ -57,8 +57,8 @@ public class XYZColor {
 		this.illuminant = illuminant;
 	}
 	
-	public XYZColor multiply(float factor) {
-		return new XYZColor(this.x * factor, this.y * factor, this.z * factor);
+	public XYZ multiply(float factor) {
+		return new XYZ(this.x * factor, this.y * factor, this.z * factor);
 	}
 	
 	public void normalize() {
@@ -91,11 +91,11 @@ public class XYZColor {
 			return true;
 		}
 		
-		if(!(obj instanceof XYZColor)) {
+		if(!(obj instanceof XYZ)) {
 			return false;
 		}
 		
-		XYZColor color = (XYZColor) obj;
+		XYZ color = (XYZ) obj;
 		return this.x == color.x && this.y == color.y && this.z == color.z && this.illuminant == color.illuminant;
 	}
 

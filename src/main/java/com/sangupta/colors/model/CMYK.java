@@ -1,4 +1,6 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
+
+import com.sangupta.colors.utils.ColorConversionUtils;
 
 /**
  * CMYK color based on https://en.wikipedia.org/wiki/CMYK_color_model
@@ -7,7 +9,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public class CMYKColor {
+public class CMYK {
 	
 	/**
 	 * Cyan component
@@ -29,7 +31,7 @@ public class CMYKColor {
 	 */
 	public final float black;
 	
-	public CMYKColor(float[] cmyk) {
+	public CMYK(float[] cmyk) {
 		if(cmyk == null) {
 			throw new IllegalArgumentException("Array cannot be null");
 		}
@@ -44,14 +46,14 @@ public class CMYKColor {
 		this.black = cmyk[3];
 	}
 	
-	public CMYKColor(float cyan, float magenta, float yellow, float black) {
+	public CMYK(float cyan, float magenta, float yellow, float black) {
 		this.cyan = cyan;
 		this.magenta = magenta;
 		this.yellow = yellow;
 		this.black = black;
 	}
 	
-	public CMYKColor(RGBColor color) {
+	public CMYK(RGB color) {
 		if(color == null) {
 			throw new IllegalArgumentException("RGBColor cannot be null");
 		}
@@ -84,11 +86,11 @@ public class CMYKColor {
 			return true;
 		}
 		
-		if(!(obj instanceof CMYKColor)) {
+		if(!(obj instanceof CMYK)) {
 			return false;
 		}
 		
-		CMYKColor color = (CMYKColor) obj;
+		CMYK color = (CMYK) obj;
 		return this.cyan == color.cyan && this.magenta == color.magenta && this.yellow == color.yellow && this.black == color.black;
 	}
 }

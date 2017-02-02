@@ -1,6 +1,6 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
-public class LABColor {
+public class LAB {
 	
 	public final float l;
 	
@@ -8,7 +8,7 @@ public class LABColor {
 	
 	public final float b;
 
-	public LABColor(float[] lab) {
+	public LAB(float[] lab) {
 		if(lab == null) {
 			throw new IllegalArgumentException("LAB color cannot be null");
 		}
@@ -22,7 +22,7 @@ public class LABColor {
 		this.b = lab[2];
 	}
 	
-	public LABColor(float l, float a, float b) {
+	public LAB(float l, float a, float b) {
 		this.l = l;
 		this.a = a;
 		this.b = b;
@@ -73,11 +73,11 @@ public class LABColor {
 			return true;
 		}
 		
-		if(!(obj instanceof LABColor)) {
+		if(!(obj instanceof LAB)) {
 			return false;
 		}
 		
-		LABColor color = (LABColor) obj;
+		LAB color = (LAB) obj;
 		return this.l == color.l && this.a == color.a && this.b == color.b;
 	}
 }

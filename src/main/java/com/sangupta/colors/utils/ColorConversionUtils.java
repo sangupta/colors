@@ -1,9 +1,15 @@
-package com.sangupta.colors;
+package com.sangupta.colors.utils;
 
 import java.awt.Color;
 
-import com.sangupta.colors.XYZColor.XYZIlluminant;
-import com.sangupta.colors.YUVColor.YUVQuality;
+import com.sangupta.colors.model.CMY;
+import com.sangupta.colors.model.HunterLAB;
+import com.sangupta.colors.model.RGB;
+import com.sangupta.colors.model.XYZ;
+import com.sangupta.colors.model.XYZ.XYZIlluminant;
+import com.sangupta.colors.model.YIQ;
+import com.sangupta.colors.model.YUV.YUVQuality;
+import com.sangupta.colors.model.Yxy;
 
 /**
  * Utility functions to work with colors.
@@ -19,20 +25,20 @@ import com.sangupta.colors.YUVColor.YUVQuality;
 public class ColorConversionUtils {
 	
 	/**
-	 * Convert and return CMYK float array from a given {@link RGBColor}
+	 * Convert and return CMYK float array from a given {@link RGB}
 	 * 
 	 * @param color
-	 *            the {@link RGBColor}
+	 *            the {@link RGB}
 	 * 
 	 * @return <code>float</code>-array with 4 elements
 	 */
-	public static float[] RGBtoCMYK(RGBColor color) {
+	public static float[] RGBtoCMYK(RGB color) {
 		float[] cmyk = new float[4];
 		RGBtoCMYK(color, cmyk);
 		return cmyk;
 	}
 	
-	public static void RGBtoCMYK(RGBColor color, float[] cmyk) {
+	public static void RGBtoCMYK(RGB color, float[] cmyk) {
 		float cyan = 1 - color.red / 255f;
 		float magenta = 1 - color.green / 255f;
 		float yellow = 1 - color.blue / 255f;
@@ -58,7 +64,7 @@ public class ColorConversionUtils {
 		cmyk[3] = black;
 	}
 	
-	public static float[] RGBtoHSB(RGBColor rgbColor) {
+	public static float[] RGBtoHSB(RGB rgbColor) {
 		if(rgbColor == null) {
 			throw new IllegalArgumentException("Color cannot be null");
 		}
@@ -68,7 +74,7 @@ public class ColorConversionUtils {
 		return hsb;
 	}
 	
-	public static void RGBtoHSB(RGBColor rgbColor, float[] hsb) {
+	public static void RGBtoHSB(RGB rgbColor, float[] hsb) {
 		if(rgbColor == null) {
 			throw new IllegalArgumentException("Color cannot be null");
 		}
@@ -76,7 +82,7 @@ public class ColorConversionUtils {
 		Color.RGBtoHSB(rgbColor.red, rgbColor.green, rgbColor.blue, hsb);
 	}
 	
-	public static float[] RGBtoHSL(RGBColor rgbColor) {
+	public static float[] RGBtoHSL(RGB rgbColor) {
 		if(rgbColor == null) {
 			throw new IllegalArgumentException("Color cannot be null");
 		}
@@ -86,7 +92,7 @@ public class ColorConversionUtils {
 		return hsl;
 	}
 	
-	public static void RGBtoHSL(RGBColor rgbColor, float[] hsl) {
+	public static void RGBtoHSL(RGB rgbColor, float[] hsl) {
 		if(rgbColor == null) {
 			throw new IllegalArgumentException("Color cannot be null");
 		}
@@ -187,13 +193,13 @@ public class ColorConversionUtils {
         rgb[2] = blue;
     }
 	
-	public static float[] RGBtoXYZ(RGBColor color) {
+	public static float[] RGBtoXYZ(RGB color) {
 		float[] xyz = new float[3];
 		RGBtoXYZ(color, xyz);
 		return xyz;
 	}
 	
-	public static void RGBtoXYZ(RGBColor color, float[] xyz) {
+	public static void RGBtoXYZ(RGB color, float[] xyz) {
 		float normalizer = 1.0f / 0.17697f;
 		
 		xyz[0] = normalizer * (0.490f * color.red) + (0.310f * color.green) + (0.20f * color.blue);
@@ -201,7 +207,7 @@ public class ColorConversionUtils {
 		xyz[2] = normalizer * (0.0f * color.red) + (0.01f * color.green) + (0.99f * color.blue);
 	}
 	
-	public static void XYZtoRGB(XYZColor color, int[] rgb) {
+	public static void XYZtoRGB(XYZ color, int[] rgb) {
 		Float red = (0.41847f * color.x) - (0.15866f * color.y) - (0.082835f * color.z);
 		Float green = (-0.091169f * color.x) + (0.25243f * color.y) + (0.015708f * color.z);
 		Float blue = (0.0009209f * color.x) - (0.0025498f * color.y) + (0.17860f * color.z);
@@ -279,7 +285,7 @@ public class ColorConversionUtils {
 	    }
 
 	/**
-	 * Convert between {@link RGBColor} to {@link CMYColor}.
+	 * Convert between {@link RGB} to {@link CMY}.
 	 * 
 	 * @param red
 	 * @param green
@@ -297,7 +303,7 @@ public class ColorConversionUtils {
 	}
 
 	/**
-	 * Convert between {@link CMYColor} to {@link RGBColor}.
+	 * Convert between {@link CMY} to {@link RGB}.
 	 * 
 	 * @param cyan
 	 * @param magenta
@@ -315,7 +321,7 @@ public class ColorConversionUtils {
 	}
 	
 	/**
-	 * Convert between {@link XYZColor} to {@link YxyColor}.
+	 * Convert between {@link XYZ} to {@link Yxy}.
 	 * 
 	 * @param X
 	 * @param Y
@@ -335,7 +341,7 @@ public class ColorConversionUtils {
 	}
 	
 	/**
-	 * Convert from {@link YxyColor} to {@link XYZColor}.
+	 * Convert from {@link Yxy} to {@link XYZ}.
 	 * 
 	 * @param Y
 	 * @param x
@@ -354,7 +360,7 @@ public class ColorConversionUtils {
 	}
 	
 	/**
-	 * Convert from {@link XYZColor} to {@link HunterLabColor}.
+	 * Convert from {@link XYZ} to {@link HunterLAB}.
 	 * 
 	 * @param x
 	 * @param y
@@ -374,7 +380,7 @@ public class ColorConversionUtils {
 	}
 	
 	/**
-	 * Convert from {@link HunterLabColor} to {@link XYZColor}.
+	 * Convert from {@link HunterLAB} to {@link XYZ}.
 	 * 
 	 * @param hl
 	 * @param ha
@@ -396,7 +402,7 @@ public class ColorConversionUtils {
 	}
 	
 	/**
-	 * Convert from {@link RGBColor} to {@link YIQColor}.
+	 * Convert from {@link RGB} to {@link YIQ}.
 	 * 
 	 * @param red
 	 * @param green
@@ -414,7 +420,7 @@ public class ColorConversionUtils {
 	}
 	
 	/**
-	 * Convert from {@link YIQColor} to {@link RGBColor}.
+	 * Convert from {@link YIQ} to {@link RGB}.
 	 * 
 	 * @param y
 	 * @param i
@@ -432,7 +438,7 @@ public class ColorConversionUtils {
 	}
 	
 	/**
-	 * Convert from {@link RGBColor} to {@link YIQColor}.
+	 * Convert from {@link RGB} to {@link YIQ}.
 	 * 
 	 * @param red
 	 * @param green
@@ -466,7 +472,7 @@ public class ColorConversionUtils {
 	}
 	
 	/**
-	 * Convert from {@link YIQColor} to {@link RGBColor}.
+	 * Convert from {@link YIQ} to {@link RGB}.
 	 * 
 	 * @param y
 	 * @param u

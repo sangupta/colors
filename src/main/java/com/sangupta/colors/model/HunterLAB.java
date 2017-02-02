@@ -1,4 +1,4 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
 /**
  * HunterLAB color model. Refer
@@ -8,7 +8,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public class HunterLabColor {
+public class HunterLAB {
 	
 	public final float l;
 	
@@ -16,7 +16,7 @@ public class HunterLabColor {
 	
 	public final float b;
 
-	public HunterLabColor(float[] hlab) {
+	public HunterLAB(float[] hlab) {
 		if(hlab == null) {
 			throw new IllegalArgumentException("HunterLAB color cannot be null");
 		}
@@ -30,7 +30,7 @@ public class HunterLabColor {
 		this.b = hlab[2];
 	}
 	
-	public HunterLabColor(float l, float a, float b) {
+	public HunterLAB(float l, float a, float b) {
 		this.l = l;
 		this.a = a;
 		this.b = b;
@@ -56,11 +56,11 @@ public class HunterLabColor {
 			return true;
 		}
 		
-		if(!(obj instanceof LABColor)) {
+		if(!(obj instanceof LAB)) {
 			return false;
 		}
 		
-		LABColor color = (LABColor) obj;
+		LAB color = (LAB) obj;
 		return this.l == color.l && this.a == color.a && this.b == color.b;
 	}
 }

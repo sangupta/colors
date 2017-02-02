@@ -1,4 +1,4 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
 
 import java.awt.Color;
 
@@ -10,7 +10,7 @@ import java.awt.Color;
  * @author sangupta
  *
  */
-public class HSBColor {
+public class HSB {
 
 	/**
 	 * Hue component
@@ -28,20 +28,20 @@ public class HSBColor {
 	public final  float brightness;
 	
 	/**
-	 * Construct a {@link HSBColor} instance using a <code>float</code> array
+	 * Construct a {@link HSB} instance using a <code>float</code> array
 	 * with 3 values of hue, saturation and brightness in that order
 	 * 
 	 * @param hsb
 	 *            the float array
 	 */
-	public HSBColor(float[] hsb) {
+	public HSB(float[] hsb) {
 		this.hue = hsb[0];
 		this.saturation = hsb[1];
 		this.brightness = hsb[2];
 	}
 	
 	/**
-	 * Construct a {@link HSBColor} instance using given values of hue,
+	 * Construct a {@link HSB} instance using given values of hue,
 	 * saturation and brightness
 	 * 
 	 * @param hue
@@ -53,32 +53,32 @@ public class HSBColor {
 	 * @param brightness
 	 *            brightness value
 	 */
-	public HSBColor(float hue, float saturation, float brightness) {
+	public HSB(float hue, float saturation, float brightness) {
 		this.hue = hue;
 		this.saturation = saturation;
 		this.brightness = brightness;
 	}
 	
 	/**
-	 * Construct a {@link HSBColor} instance using another {@link HSBColor}
+	 * Construct a {@link HSB} instance using another {@link HSB}
 	 * instance
 	 * 
 	 * @param other
-	 *            the {@link HSBColor} instance to copy values from
+	 *            the {@link HSB} instance to copy values from
 	 */
-	public HSBColor(HSBColor other) {
+	public HSB(HSB other) {
 		this.hue = other.hue;
 		this.saturation = other.saturation;
 		this.brightness = other.brightness;
 	}
 	
 	/**
-	 * Construct a {@link HSBColor} instance using a {@link RGBColor} instance
+	 * Construct a {@link HSB} instance using a {@link RGB} instance
 	 * 
 	 * @param color
-	 *            the {@link RGBColor} instance
+	 *            the {@link RGB} instance
 	 */
-	public HSBColor(RGBColor color) {
+	public HSB(RGB color) {
 		float[] hsb = Color.RGBtoHSB(color.red, color.green, color.blue, null);
 		
 		this.hue = hsb[0];
@@ -116,11 +116,11 @@ public class HSBColor {
 			return true;
 		}
 		
-		if(!(obj instanceof HSBColor)) {
+		if(!(obj instanceof HSB)) {
 			return false;
 		}
 		
-		HSBColor color = (HSBColor) obj;
+		HSB color = (HSB) obj;
 		return this.hue ==  color.hue && this.saturation == color.saturation && this.brightness == color.brightness;
 	}
 	

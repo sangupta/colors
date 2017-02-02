@@ -1,4 +1,6 @@
-package com.sangupta.colors;
+package com.sangupta.colors.model;
+
+import com.sangupta.colors.utils.ColorConversionUtils;
 
 /**
  * Cyan-Magenta-Yellow color model.
@@ -10,7 +12,7 @@ package com.sangupta.colors;
  * @author sangupta
  *
  */
-public class CMYColor {
+public class CMY {
 	
 	public final float cyan;
 	
@@ -18,7 +20,7 @@ public class CMYColor {
 	
 	public final float yellow;
 
-	public CMYColor(float[] cmy) {
+	public CMY(float[] cmy) {
 		if(cmy == null) {
 			throw new IllegalArgumentException("CMY color cannot be null");
 		}
@@ -32,13 +34,13 @@ public class CMYColor {
 		this.yellow = cmy[2];
 	}
 	
-	public CMYColor(float cyan, float magenta, float yellow) {
+	public CMY(float cyan, float magenta, float yellow) {
 		this.cyan = cyan;
 		this.magenta = magenta;
 		this.yellow = yellow;
 	}
 	
-	public CMYColor(RGBColor rgbColor) {
+	public CMY(RGB rgbColor) {
 		if(rgbColor == null) {
 			throw new IllegalArgumentException("RGB color cannot be null");
 		}
@@ -70,11 +72,11 @@ public class CMYColor {
 			return true;
 		}
 		
-		if(!(obj instanceof CMYColor)) {
+		if(!(obj instanceof CMY)) {
 			return false;
 		}
 		
-		CMYColor color = (CMYColor) obj;
+		CMY color = (CMY) obj;
 		return this.cyan == color.cyan && this.magenta == color.magenta && this.yellow == color.yellow;
 	}
 	
