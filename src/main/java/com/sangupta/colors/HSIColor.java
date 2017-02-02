@@ -10,11 +10,11 @@ package com.sangupta.colors;
  */
 public class HSIColor {
 
-	protected float hue;
+	public final float hue;
 	
-	protected float saturation;
+	public final float saturation;
 	
-	protected float intensity;
+	public final float intensity;
 	
 	public HSIColor(float hue, float saturation, float intensity) {
 		this.hue = hue;
@@ -33,4 +33,27 @@ public class HSIColor {
 		return "HSI(" + this.hue + ", " + this.saturation + ", " + this.intensity + ")";
 	}
 	
+	@Override
+	public int hashCode() {
+		Float value = this.hue * 31f + this.saturation * 17f + this.intensity;
+		return value.intValue();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		
+		if(this == obj) {
+			return true;
+		}
+		
+		if(!(obj instanceof HSIColor)) {
+			return false;
+		}
+		
+		HSIColor color = (HSIColor) obj;
+		return this.hue ==  color.hue && this.saturation == color.saturation && this.intensity == color.intensity;
+	}
 }

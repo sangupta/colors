@@ -10,11 +10,11 @@ package com.sangupta.colors;
  */
 public class HSLColor {
 	
-	protected float hue;
+	public final float hue;
 	
-	protected float saturation;
+	public final float saturation;
 	
-	protected float luminosity;
+	public final float luminosity;
 
 	public HSLColor(float hue, float saturation, float luminosity) {
 		this.hue = hue;
@@ -73,50 +73,6 @@ public class HSLColor {
 		
 		HSLColor color = (HSLColor) obj;
 		return this.hue ==  color.hue && this.saturation == color.saturation && this.luminosity == color.luminosity;
-	}
-	
-	// Usual accessors follow
-
-	/**
-	 * @return the hue
-	 */
-	public float getHue() {
-		return hue;
-	}
-
-	/**
-	 * @param hue the hue to set
-	 */
-	public void setHue(float hue) {
-		this.hue = hue;
-	}
-
-	/**
-	 * @return the saturation
-	 */
-	public float getSaturation() {
-		return saturation;
-	}
-
-	/**
-	 * @param saturation the saturation to set
-	 */
-	public void setSaturation(float saturation) {
-		this.saturation = saturation;
-	}
-
-	/**
-	 * @return the luminosity
-	 */
-	public float getLuminosity() {
-		return luminosity;
-	}
-
-	/**
-	 * @param luminosity the luminosity to set
-	 */
-	public void setLuminosity(float luminosity) {
-		this.luminosity = luminosity;
 	}
 	
 }

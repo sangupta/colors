@@ -2,7 +2,9 @@ package com.sangupta.colors;
 
 public class RGBAColor extends RGBColor {
 	
-	protected int alpha;
+	public static final int DEFAULT_RGBA_ALPHA = 255;
+	
+	public final int alpha;
 
 	public RGBAColor(int color) {
 		super(color);
@@ -11,7 +13,7 @@ public class RGBAColor extends RGBColor {
 	
 	public RGBAColor(int red, int green, int blue) {
 		super(red, green, blue);
-		this.alpha = 1;
+		this.alpha = DEFAULT_RGBA_ALPHA;
 	}
 	
 	public RGBAColor(int red, int green, int blue, int alpha) {
@@ -21,6 +23,7 @@ public class RGBAColor extends RGBColor {
 	
 	public RGBAColor(RGBColor other) {
 		super(other);
+		this.alpha = DEFAULT_RGBA_ALPHA;
 	}
 	
 	public RGBAColor(RGBAColor other) {
@@ -33,19 +36,22 @@ public class RGBAColor extends RGBColor {
 		return "RGBA(" + this.red + ", " + this.green + ", " + this.blue + ", " + this.alpha + ")";
 	}
 	
-	// Usual accessors follow
-
-	/**
-	 * @return the alpha
-	 */
-	public int getAlpha() {
-		return alpha;
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		
+		if(this == obj) {
+			return true;
+		}
+		
+		if(!(obj instanceof RGBAColor)) {
+			return false;
+		}
+		
+		RGBAColor color = (RGBAColor) obj;
+		return this.red == color.red && this.green == color.green && this.blue == color.blue && this.alpha == color.alpha;
 	}
-
-	/**
-	 * @param alpha the alpha to set
-	 */
-	public void setAlpha(int alpha) {
-		this.alpha = alpha;
-	}
+	
 }

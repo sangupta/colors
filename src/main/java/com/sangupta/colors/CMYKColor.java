@@ -12,22 +12,22 @@ public class CMYKColor {
 	/**
 	 * Cyan component
 	 */
-	protected float cyan;
+	public final float cyan;
 	
 	/**
 	 * Magenta component
 	 */
-	protected float magenta;
+	public final float magenta;
 	
 	/**
 	 * Yellow component
 	 */
-	protected float yellow;
+	public final float yellow;
 	
 	/**
 	 * Black component
 	 */
-	protected float black;
+	public final float black;
 	
 	public CMYKColor(float[] cmyk) {
 		if(cmyk == null) {
@@ -69,4 +69,26 @@ public class CMYKColor {
 		return "CMYK(" + this.cyan + ", " + this.magenta + ", " + this.yellow + ", " + this.black + ")";
 	}
 	
+	@Override
+	public int hashCode() {
+		return new Float(this.cyan * 6900 + this.magenta * 3100 + this.yellow * 1700 + this.black * 100).intValue();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		
+		if(this == obj) {
+			return true;
+		}
+		
+		if(!(obj instanceof CMYKColor)) {
+			return false;
+		}
+		
+		CMYKColor color = (CMYKColor) obj;
+		return this.cyan == color.cyan && this.magenta == color.magenta && this.yellow == color.yellow && this.black == color.black;
+	}
 }

@@ -2,11 +2,11 @@ package com.sangupta.colors;
 
 public class LABColor {
 	
-	protected final double l;
+	public final float l;
 	
-	protected final double a;
+	public final float a;
 	
-	protected final double b;
+	public final float b;
 
 	public LABColor(float[] lab) {
 		if(lab == null) {
@@ -53,4 +53,31 @@ public class LABColor {
 		return !(r < 0 || r > 1 || g < 0 || g > 1 || b < 0 || b > 1);
 	}
 	
+	@Override
+	public String toString() {
+		return "LAB(" + this.l + ", " + this.a + ", " + this.b + ")";
+	}
+	
+	@Override
+	public int hashCode() {
+		return new Float(this.l * 3100 + this.a * 1700 + this.b * 100).intValue();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		
+		if(this == obj) {
+			return true;
+		}
+		
+		if(!(obj instanceof LABColor)) {
+			return false;
+		}
+		
+		LABColor color = (LABColor) obj;
+		return this.l == color.l && this.a == color.a && this.b == color.b;
+	}
 }

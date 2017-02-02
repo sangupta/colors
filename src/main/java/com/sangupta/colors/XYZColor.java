@@ -8,11 +8,11 @@ package com.sangupta.colors;
  */
 public class XYZColor {
 	
-	protected float x;
+	public final float x;
 	
-	protected float y;
+	public final float y;
 
-	protected float z;
+	public final float z;
 	
 	public XYZColor(float[] xyz) {
 		if(xyz == null) {
@@ -28,10 +28,14 @@ public class XYZColor {
 		this.z = xyz[2];
 	}
 	
-	public void multiply(float factor) {
-		this.x *= factor;
-		this.y *= factor;
-		this.z *= factor;
+	public XYZColor(float x, float y, float z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+	
+	public XYZColor multiply(float factor) {
+		return new XYZColor(this.x * factor, this.y * factor, this.z * factor);
 	}
 	
 	public void normalize() {
@@ -72,48 +76,4 @@ public class XYZColor {
 		return this.x == color.x && this.y == color.y && this.z == color.z;
 	}
 
-	// Convenience getters
-
-	/**
-	 * @return the x
-	 */
-	public float getX() {
-		return x;
-	}
-
-	/**
-	 * @param x the x to set
-	 */
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	/**
-	 * @return the y
-	 */
-	public float getY() {
-		return y;
-	}
-
-	/**
-	 * @param y the y to set
-	 */
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	/**
-	 * @return the z
-	 */
-	public float getZ() {
-		return z;
-	}
-
-	/**
-	 * @param z the z to set
-	 */
-	public void setZ(float z) {
-		this.z = z;
-	}
-	
 }

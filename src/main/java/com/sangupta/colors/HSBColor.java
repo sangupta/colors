@@ -15,17 +15,17 @@ public class HSBColor {
 	/**
 	 * Hue component
 	 */
-	protected float hue;
+	public final float hue;
 	
 	/**
 	 * Saturation component
 	 */
-	protected float saturation;
+	public final  float saturation;
 	
 	/**
 	 * Brightness component
 	 */
-	protected float brightness;
+	public final  float brightness;
 	
 	/**
 	 * Construct a {@link HSBColor} instance using a <code>float</code> array
@@ -122,50 +122,6 @@ public class HSBColor {
 		
 		HSBColor color = (HSBColor) obj;
 		return this.hue ==  color.hue && this.saturation == color.saturation && this.brightness == color.brightness;
-	}
-	
-	// Usual accessors follow
-
-	/**
-	 * @return the hue
-	 */
-	public float getHue() {
-		return hue;
-	}
-
-	/**
-	 * @param hue the hue to set
-	 */
-	public void setHue(float hue) {
-		this.hue = hue;
-	}
-
-	/**
-	 * @return the saturation
-	 */
-	public float getSaturation() {
-		return saturation;
-	}
-
-	/**
-	 * @param saturation the saturation to set
-	 */
-	public void setSaturation(float saturation) {
-		this.saturation = saturation;
-	}
-
-	/**
-	 * @return the brightness
-	 */
-	public float getBrightness() {
-		return brightness;
-	}
-
-	/**
-	 * @param brightness the brightness to set
-	 */
-	public void setBrightness(float brightness) {
-		this.brightness = brightness;
 	}
 	
 }
