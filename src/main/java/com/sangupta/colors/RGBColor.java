@@ -11,17 +11,17 @@ public class RGBColor {
 	/**
 	 * Red component between 0-255
 	 */
-	protected int red;
+	public final int red;
 	
 	/**
 	 * Green component between 0-255
 	 */
-	protected int green;
+	public final int green;
 	
 	/**
 	 * Blue component between 0-255
 	 */
-	protected int blue;
+	public final int blue;
 
 	/**
 	 * Construct an {@link RGBColor} instance using compound <code>int</code>
@@ -112,22 +112,19 @@ public class RGBColor {
 			color = color.substring(1);
 		}
 		
-		// TODO: fix this
-		if(color.length() == 6) {
-			
-		}
+		throw new RuntimeException("not yet implemented");
 	}
 	
-	public void invert() {
-		this.red = 255 - this.red;
-		this.green = 255 - this.green;
-		this.blue = 255 - this.blue;
+	public RGBColor invert() {
+		return new RGBColor(255 - this.red, 255 - this.green, 255 - this.blue);
 	}
 	
-	public void mix(RGBColor color) {
-		this.red = (this.red + color.red) / 2;
-		this.green = (this.green + color.green) / 2;
-		this.blue = (this.blue + color.blue) / 2;
+	public RGBColor mix(RGBColor color) {
+		int red = (this.red + color.red) / 2;
+		int green = (this.green + color.green) / 2;
+		int blue = (this.blue + color.blue) / 2;
+		
+		return new RGBColor(red, green, blue);
 	}
 	
 	public float asGrayScaleColor() {
@@ -141,6 +138,8 @@ public class RGBColor {
 	public int value() {
 		return (0xFF << 24) | (this.red << 16) | (this.green << 8) | this.blue;
 	}
+	
+	// Convenience duplicate getters
 	
 	@Override
 	public String toString() {
@@ -170,48 +169,4 @@ public class RGBColor {
 		return this.red == color.red && this.green == color.green && this.blue == color.blue;
 	}
 	
-	// Usual accessors follow
-
-	/**
-	 * @return the red
-	 */
-	public int getRed() {
-		return red;
-	}
-
-	/**
-	 * @param red the red to set
-	 */
-	public void setRed(int red) {
-		this.red = red;
-	}
-
-	/**
-	 * @return the blue
-	 */
-	public int getBlue() {
-		return blue;
-	}
-
-	/**
-	 * @param blue the blue to set
-	 */
-	public void setBlue(int blue) {
-		this.blue = blue;
-	}
-
-	/**
-	 * @return the green
-	 */
-	public int getGreen() {
-		return green;
-	}
-
-	/**
-	 * @param green the green to set
-	 */
-	public void setGreen(int green) {
-		this.green = green;
-	}
-
 }
