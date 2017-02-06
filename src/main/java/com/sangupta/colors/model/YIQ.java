@@ -5,7 +5,7 @@ package com.sangupta.colors.model;
  * for more details.
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class YIQ {
 

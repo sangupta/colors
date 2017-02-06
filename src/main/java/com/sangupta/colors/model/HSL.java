@@ -8,7 +8,7 @@ import com.sangupta.colors.utils.ColorConversionUtils;
  * Refer https://en.wikipedia.org/wiki/HSL_and_HSV
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class HSL {
 	

@@ -1,5 +1,10 @@
 package com.sangupta.colors;
 
+/**
+ * 
+ * @author sangupta
+ * @since 1.0.0
+ */
 public class CSS3Colors {
 	
 //	private static final RGBColor ALICE_BLUE = new RGBColor("#f0f8ff");

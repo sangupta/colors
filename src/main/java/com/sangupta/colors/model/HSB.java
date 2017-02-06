@@ -8,7 +8,7 @@ import java.awt.Color;
  * Refer https://en.wikipedia.org/wiki/HSL_and_HSV
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class HSB {
 

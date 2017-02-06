@@ -4,6 +4,10 @@ Strongly-typed immutable color-models and utility conversion functions in Java.
 
 ## Usage examples
 
+```java
+float[] hsl = new RGB("#a4b52f").invert().hsl().asArray();
+```
+
 ## Available Color Models
 
 * CMY - Cyan, Magenta, Yellow

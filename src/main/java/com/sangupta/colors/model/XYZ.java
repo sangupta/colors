@@ -1,11 +1,10 @@
 package com.sangupta.colors.model;
 
 /**
- * 
  * XYZ color model as per https://en.wikipedia.org/wiki/CIE_1931_color_space
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class XYZ {
 	

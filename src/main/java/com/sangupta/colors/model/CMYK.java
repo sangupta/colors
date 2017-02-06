@@ -7,7 +7,7 @@ import com.sangupta.colors.utils.ColorConversionUtils;
  * 
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class CMYK {
 	

@@ -1,5 +1,11 @@
 package com.sangupta.colors.model;
 
+/**
+ * LAB color model definition.
+ * 
+ * @author sangupta
+ * @since 1.0.0
+ */
 public class LAB {
 	
 	public final float l;

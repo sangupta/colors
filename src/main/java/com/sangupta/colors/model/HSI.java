@@ -1,12 +1,13 @@
 package com.sangupta.colors.model;
 
 /**
- * A third model, common in computer vision applications, is HSI, for hue, saturation, and intensity
+ * A third model, common in computer vision applications, is HSI, for hue,
+ * saturation, and intensity
  * 
  * Refer https://en.wikipedia.org/wiki/HSL_and_HSV
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class HSI {
 

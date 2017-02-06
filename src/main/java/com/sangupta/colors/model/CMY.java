@@ -10,7 +10,7 @@ import com.sangupta.colors.utils.ColorConversionUtils;
  * for more details.
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class CMY {
 	

@@ -6,7 +6,7 @@ package com.sangupta.colors.model;
  * alpha value is 255 (100% opaque).
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class RGBA extends RGB {
 	

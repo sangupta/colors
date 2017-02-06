@@ -8,7 +8,7 @@ package com.sangupta.colors.model;
  * http://chemaguerra.com/cie-xyz-yxy-rgb-and-gamuts/
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class Yxy {
 

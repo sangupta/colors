@@ -6,7 +6,7 @@ package com.sangupta.colors.model;
  * for details.
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class HunterLAB {
 	

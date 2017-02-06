@@ -24,7 +24,7 @@ import com.sangupta.colors.model.Yxy;
  * for more details.
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class ColorConversionUtils {
 	

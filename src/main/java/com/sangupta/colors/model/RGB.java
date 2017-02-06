@@ -6,8 +6,11 @@ import com.sangupta.colors.model.YUV.YUVQuality;
 import com.sangupta.colors.utils.ColorConversionUtils;
 
 /**
+ * RGBA color model for red, green, and blue channels. All values should be
+ * between 0-255.
+ * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class RGB {
 	
