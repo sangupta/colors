@@ -28,6 +28,10 @@ public class HSI {
 		this.intensity = other.intensity;
 	}
 	
+	public float[] asArray() {
+		return new float[] { this.hue, this.saturation, this.intensity };
+	}
+	
 	@Override
 	public String toString() {
 		return "HSI(" + this.hue + ", " + this.saturation + ", " + this.intensity + ")";

@@ -31,6 +31,10 @@ public class RGBA extends RGB {
 		this.alpha = other.alpha;
 	}
 	
+	public int[] asArray() {
+		return new int[] { this.red, this.green, this.blue, this.alpha };
+	}
+	
 	@Override
 	public String toString() {
 		return "RGBA(" + this.red + ", " + this.green + ", " + this.blue + ", " + this.alpha + ")";

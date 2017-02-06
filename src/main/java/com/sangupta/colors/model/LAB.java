@@ -53,6 +53,10 @@ public class LAB {
 		return !(r < 0 || r > 1 || g < 0 || g > 1 || b < 0 || b > 1);
 	}
 	
+	public float[] asArray() {
+		return new float[] { this.l, this.a, this.b };
+	}
+	
 	@Override
 	public String toString() {
 		return "LAB(" + this.l + ", " + this.a + ", " + this.b + ")";

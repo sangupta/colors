@@ -71,6 +71,10 @@ public class XYZ {
         this.multiply(factor);	
 	}
 	
+	public float[] asArray() {
+		return new float[] { this.x, this.y, this.z };
+	}
+	
 	@Override
 	public String toString() {
 		return "XYZ(" + this.x + ", " + this.y + ", " + this.z + ") @ " + this.illuminant + " illuminant";

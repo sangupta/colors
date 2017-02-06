@@ -27,6 +27,10 @@ public class YIQ {
 		this.q = q;
 	}
 	
+	public float[] asArray() {
+		return new float[] { this.y, this.i, this.q };
+	}
+	
 	@Override
 	public String toString() {
 		return "YIQ(" + this.y + ", " + this.i + ", " + this.q + ")";

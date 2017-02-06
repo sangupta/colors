@@ -38,6 +38,10 @@ public class Yxy {
 		this.y = y;
 	}
 	
+	public float[] asArray() {
+		return new float[] { this.Y, this.x, this.y };
+	}
+	
 	@Override
 	public String toString() {
 		return "Yxy(" + this.Y + ", " + this.x + ", " + this.y + ")";

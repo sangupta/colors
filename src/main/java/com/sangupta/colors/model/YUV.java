@@ -28,6 +28,10 @@ public class YUV {
 		this.v = v;
 	}
 	
+	public float[] asArray() {
+		return new float[] { this.y, this.u, this.v };
+	}
+	
 	@Override
 	public String toString() {
 		return "YUV(" + this.y + ", " + this.u + ", " + this.v + ")";

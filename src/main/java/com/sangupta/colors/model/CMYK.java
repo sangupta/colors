@@ -66,6 +66,10 @@ public class CMYK {
 		this.black = cmyk[3];
 	}
 	
+	public float[] asArray() {
+		return new float[] { this.cyan, this.magenta, this.yellow, this.black };
+	}
+	
 	@Override
 	public String toString() {
 		return "CMYK(" + this.cyan + ", " + this.magenta + ", " + this.yellow + ", " + this.black + ")";

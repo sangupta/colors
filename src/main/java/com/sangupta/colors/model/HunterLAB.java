@@ -35,6 +35,10 @@ public class HunterLAB {
 		this.a = a;
 		this.b = b;
 	}
+	
+	public float[] asArray() {
+		return new float[] { this.l, this.a, this.b };
+	}
 
 	@Override
 	public String toString() {

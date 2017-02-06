@@ -52,6 +52,10 @@ public class CMY {
 		this.yellow = cmy[2];
 	}
 	
+	public float[] asArray() {
+		return new float[] { this.cyan, this.magenta, this.yellow };
+	}
+	
 	@Override
 	public String toString() {
 		return "CMY(" + this.cyan + ", " + this.magenta + ", " + this.yellow + ")";
