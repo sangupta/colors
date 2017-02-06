@@ -38,6 +38,12 @@ public class Yxy {
 		this.y = y;
 	}
 	
+	/**
+	 * Return this color as a <code>float[]</code> array with the Y, x and y
+	 * values in order.
+	 * 
+	 * @return the <code>float[]</code> array
+	 */
 	public float[] asArray() {
 		return new float[] { this.Y, this.x, this.y };
 	}

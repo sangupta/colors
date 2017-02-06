@@ -87,9 +87,10 @@ public class HSB {
 	}
 	
 	/**
-	 * Return HSB values as a <code>float</code> array.
+	 * Return this color as a <code>float[]</code> array with the hue, saturation and
+	 * brightness channels in order.
 	 * 
-	 * @return the <code>float</code> array
+	 * @return the <code>float[]</code> array
 	 */
 	public float[] asArray() {
 		return new float[] { this.hue, this.saturation, this.brightness };

@@ -117,7 +117,7 @@ public class RGB {
 	}
 	
 	/**
-	 * Construct an {@link RGB} instance using another {@link HSB}
+	 * Construct a {@link RGB} instance using another {@link HSB}
 	 * instance
 	 * 
 	 * @param hsl
@@ -125,6 +125,44 @@ public class RGB {
 	 */
 	public RGB(HSB color) {
 		this(Color.HSBtoRGB(color.hue, color.saturation, color.brightness));
+	}
+	
+	/**
+	 * Construct a {@link RGB} instance using HEX-values in the format
+	 * <code>#rrggbb</code> or <code>#rgb</code> format.
+	 * 
+	 * @param color the hex-based color string
+	 */
+	public RGB(String color) {
+		if(color == null || color.isEmpty()) {
+			throw new IllegalArgumentException("Color cannot be empty/null");
+		}
+		
+		if(color.length() < 3) {
+			throw new IllegalArgumentException("Color value must be expressed as hex in either #rrggbb or #rgb format");
+		}
+		
+		if(color.startsWith("#")) {
+			color = color.substring(1);
+		}
+		
+		if(color.length() == 3) {
+			char[] chars = color.toCharArray();
+			
+			this.red = Integer.parseInt(new String(""+ chars[0] + chars[0]), 16);
+			this.green = Integer.parseInt(new String(""+ chars[1] + chars[1]), 16);
+			this.blue = Integer.parseInt(new String(""+ chars[2] + chars[2]), 16);
+			
+			return;
+		}
+		
+		if(color.length() == 6) {
+			this.red = Integer.parseInt(new String(color.substring(0, 2)), 16);
+			this.green = Integer.parseInt(new String(color.substring(2, 4)), 16);
+			this.blue = Integer.parseInt(new String(color.substring(4, 6)), 16);
+		}
+		
+		throw new IllegalArgumentException("Color value must be expressed as hex in either #rrggbb or #rgb format");
 	}
 	
 	// Conversion functions
@@ -211,12 +249,23 @@ public class RGB {
 		return new RGB(red, green, blue);
 	}
 	
+	// Other common functions
+
+	/**
+	 * Return the gray-scale color value for this {@link RGB} color.
+	 * 
+	 * @return the floating-point value
+	 */
 	public float asGrayScaleColor() {
 		return (float) (this.red * 0.3f + this.green * 0.59f + this.blue * 0.11f);
 	}
 	
-	// Other common functions
-	
+	/**
+	 * Return this color as an <code>int[]</code> array with the red, green and
+	 * blue channels in order.
+	 * 
+	 * @return the <code>int[]</code> array
+	 */
 	public int[] asArray() {
 		return new int[] { this.red, this.green, this.blue };
 	}

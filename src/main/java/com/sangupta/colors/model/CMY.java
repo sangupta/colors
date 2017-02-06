@@ -52,6 +52,12 @@ public class CMY {
 		this.yellow = cmy[2];
 	}
 	
+	/**
+	 * Return this color as a <code>float[]</code> array with the cyan, magenta and
+	 * yellow channels in order.
+	 * 
+	 * @return the <code>float[]</code> array
+	 */
 	public float[] asArray() {
 		return new float[] { this.cyan, this.magenta, this.yellow };
 	}

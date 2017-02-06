@@ -70,6 +70,11 @@ public class XYZ {
         this.multiply(factor);	
 	}
 	
+	/**
+	 * Return this color as a <code>float[]</code> array with the X, Y and Z values in order.
+	 * 
+	 * @return the <code>float[]</code> array
+	 */
 	public float[] asArray() {
 		return new float[] { this.x, this.y, this.z };
 	}

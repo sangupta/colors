@@ -27,6 +27,12 @@ public class YIQ {
 		this.q = q;
 	}
 	
+	/**
+	 * Return this color as a <code>float[]</code> array with the Y, I and Q
+	 * values in order.
+	 * 
+	 * @return the <code>float[]</code> array
+	 */
 	public float[] asArray() {
 		return new float[] { this.y, this.i, this.q };
 	}

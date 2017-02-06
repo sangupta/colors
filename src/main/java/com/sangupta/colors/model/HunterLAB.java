@@ -36,6 +36,11 @@ public class HunterLAB {
 		this.b = b;
 	}
 	
+	/**
+	 * Return this color as a <code>float[]</code> array with the LAB values in order.
+	 * 
+	 * @return the <code>float[]</code> array
+	 */
 	public float[] asArray() {
 		return new float[] { this.l, this.a, this.b };
 	}

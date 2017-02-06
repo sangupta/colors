@@ -44,6 +44,12 @@ public class HSL {
 		this.luminosity = hsl[2];
 	}
 	
+	/**
+	 * Return this color as a <code>float[]</code> array with the hue, saturation and
+	 * intensity channels in order.
+	 * 
+	 * @return the <code>float[]</code> array
+	 */
 	public float[] asArray() {
 		return new float[] { this.hue, this.saturation, this.luminosity };
 	}

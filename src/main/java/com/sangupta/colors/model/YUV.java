@@ -28,6 +28,12 @@ public class YUV {
 		this.v = v;
 	}
 	
+	/**
+	 * Return this color as a <code>float[]</code> array with the Y, U and V
+	 * values in order.
+	 * 
+	 * @return the <code>float[]</code> array
+	 */
 	public float[] asArray() {
 		return new float[] { this.y, this.u, this.v };
 	}

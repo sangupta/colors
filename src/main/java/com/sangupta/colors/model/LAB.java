@@ -165,6 +165,11 @@ public class LAB {
 		return !(r < 0 || r > 1 || g < 0 || g > 1 || b < 0 || b > 1);
 	}
 	
+	/**
+	 * Return this color as a <code>float[]</code> array with the L, A and B values in order.
+	 * 
+	 * @return the <code>float[]</code> array
+	 */
 	public float[] asArray() {
 		return new float[] { this.l, this.a, this.b };
 	}
