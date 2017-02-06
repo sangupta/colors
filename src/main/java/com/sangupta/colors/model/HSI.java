@@ -16,6 +16,20 @@ public class HSI {
 	
 	public final float intensity;
 	
+	public HSI(float[] hsi) {
+		if(hsi == null) {
+			throw new IllegalArgumentException("HSI array cannot be null");
+		}
+		
+		if(hsi.length != 3) {
+			throw new IllegalArgumentException("HSI array must have exactly 3 elements");
+		}
+		
+		this.hue = hsi[0];
+		this.saturation = hsi[1];
+		this.intensity = hsi[2];
+	}
+	
 	public HSI(float hue, float saturation, float intensity) {
 		this.hue = hue;
 		this.saturation = saturation;

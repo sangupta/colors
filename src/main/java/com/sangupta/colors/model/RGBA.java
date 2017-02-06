@@ -1,31 +1,95 @@
 package com.sangupta.colors.model;
 
+/**
+ * RGBA color model for red, green, blue and alpha channels.
+ * All values should be between 0-255 including alpha. The default
+ * alpha value is 255 (100% opaque).
+ * 
+ * @author sangupta
+ *
+ */
 public class RGBA extends RGB {
 	
+	/**
+	 * The default alpha value
+	 */
 	public static final int DEFAULT_RGBA_ALPHA = 255;
 	
+	/**
+	 * The alpha value for this color
+	 */
 	public final int alpha;
 
+	/**
+	 * Construct  a {@link RGBA} from 32-bit color value specified
+	 * as AARRGGBB value.
+	 * 
+	 * @param color
+	 */
 	public RGBA(int color) {
 		super(color);
 		this.alpha = color >>> 24;
 	}
 	
+	/**
+	 * Construct a {@link RGBA} from a 24-bit color value specified as
+	 * RRGGBB value, with the given alpha value.
+	 * 
+	 * @param color
+	 * @param alpha
+	 */
+	public RGBA(int color, int alpha) {
+		super(color);
+		
+		checkLimit("Alpha", alpha);
+		this.alpha = alpha;
+	}
+	
+	/**
+	 * Construct a {@link RGBA} from individual values of red, green and blue
+	 * channels. The alpha channel is assumed to be at default value.
+	 * 
+	 * @param red
+	 * @param green
+	 * @param blue
+	 */
 	public RGBA(int red, int green, int blue) {
 		super(red, green, blue);
 		this.alpha = DEFAULT_RGBA_ALPHA;
 	}
 	
+	/**
+	 * Construct a {@link RGBA} from individual values of red, green, blue and
+	 * alpha channels.
+	 * 
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * @param alpha
+	 */
 	public RGBA(int red, int green, int blue, int alpha) {
 		super(red, green, blue);
+		
+		checkLimit("Alpha", alpha);
 		this.alpha = alpha;
 	}
 	
+	/**
+	 * Construct a {@link RGBA} from another {@link RGB} instance. The alpha channel
+	 * is assigned the default value.
+	 * 
+	 * @param other
+	 */
 	public RGBA(RGB other) {
 		super(other);
 		this.alpha = DEFAULT_RGBA_ALPHA;
 	}
 	
+	/**
+	 * Construct a {@link RGBA} instance from another {@link RGBA} instance.
+	 * 
+	 * @param other
+	 */
 	public RGBA(RGBA other) {
 		super(other);
 		this.alpha = other.alpha;

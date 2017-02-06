@@ -1,6 +1,8 @@
 #colors
 
-Strongly typed color models and utility functions in Java.
+Strongly-typed immutable color-models and utility conversion functions in Java. 
+
+## Usage examples
 
 ## Available Color Models
 

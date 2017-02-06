@@ -408,6 +408,16 @@ public class ColorConversionUtils {
 	/**
 	 * Convert from {@link RGB} to {@link YIQ}.
 	 * 
+	 * @param rgb
+	 * @return
+	 */
+	public static float[] RGBtoYIQ(RGB rgb) {
+		return RGBtoYIQ(rgb.red, rgb.green, rgb.blue);
+	}
+	
+	/**
+	 * Convert from {@link RGB} to {@link YIQ}.
+	 * 
 	 * @param red
 	 * @param green
 	 * @param blue
@@ -439,6 +449,10 @@ public class ColorConversionUtils {
 		rgb[2] = new Double(1.0d * y - 1.106d * i + 1.703d * q).intValue();
 	
 		return rgb;
+	}
+	
+	public static float[] RGBtoYUV(RGB rgb, YUVQuality quality) {
+		return RGBtoYUV(rgb.red, rgb.green, rgb.blue, quality);
 	}
 	
 	/**
@@ -507,6 +521,16 @@ public class ColorConversionUtils {
 		}
 	
 		return rgb;
+	}
+	
+	/**
+	 * Convert from {@link RGB} to {@link HSI}.
+	 * 
+	 * @param rgb
+	 * @return
+	 */
+	public static float[] RGBtoHSI(RGB rgb) {
+		return RGBtoHSI(rgb.red, rgb.green, rgb.blue);
 	}
 	
 	/**

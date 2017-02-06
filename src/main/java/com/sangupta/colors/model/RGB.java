@@ -2,6 +2,7 @@ package com.sangupta.colors.model;
 
 import java.awt.Color;
 
+import com.sangupta.colors.model.YUV.YUVQuality;
 import com.sangupta.colors.utils.ColorConversionUtils;
 
 /**
@@ -46,6 +47,18 @@ public class RGB {
 	 *            the <code>int[]</code> array
 	 */
 	public RGB(int[] rgb) {
+		if(rgb == null) {
+			throw new IllegalArgumentException("RGB array cannot be null");
+		}
+		
+		if(rgb.length != 3) {
+			throw new IllegalArgumentException("RGB array must have exactly 3 elements");
+		}
+		
+		checkLimit("Red", rgb[0]);
+		checkLimit("Green", rgb[1]);
+		checkLimit("Blue", rgb[2]);
+		
 		this.red = rgb[0];
 		this.green = rgb[1];
 		this.blue = rgb[2];
@@ -64,6 +77,10 @@ public class RGB {
 	 *            between 0-255
 	 */
 	public RGB(int red, int green, int blue) {
+		checkLimit("Red", red);
+		checkLimit("Green", green);
+		checkLimit("Blue", blue);
+		
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
@@ -107,20 +124,82 @@ public class RGB {
 		this(Color.HSBtoRGB(color.hue, color.saturation, color.brightness));
 	}
 	
-	public RGB(String color) {
-		color = color.trim();
-		
-		if(color.startsWith("#")) {
-			color = color.substring(1);
-		}
-		
-		throw new RuntimeException("not yet implemented");
+	// Conversion functions
+	
+	/**
+	 * Convert to {@link HSB} model.
+	 * 
+	 * @return
+	 */
+	public HSB hsb() {
+		return new HSB(ColorConversionUtils.RGBtoHSB(this));
 	}
 	
+	/**
+	 * Convert to {@link HSI} model.
+	 * 
+	 * @return
+	 */
+	public HSI hsi() {
+		return new HSI(ColorConversionUtils.RGBtoHSI(this));
+	}
+	
+	/**
+	 * Convert to {@link HSL} model.
+	 * 
+	 * @return
+	 */
+	public HSL hsl() {
+		return new HSL(ColorConversionUtils.RGBtoHSL(this));
+	}
+	
+	/**
+	 * Convert the {@link XYZ} model.
+	 * 
+	 * @return
+	 */
+	public XYZ xyz() {
+		return new XYZ(ColorConversionUtils.RGBtoXYZ(this));
+	}
+	
+	/**
+	 * Convert the {@link YIQ} model.
+	 * 
+	 * @return
+	 */
+	public YIQ yiq() {
+		return new YIQ(ColorConversionUtils.RGBtoYIQ(this));
+	}
+	
+	/**
+	 * Convert the {@link YUV} model.
+	 * 
+	 * @param quality
+	 * @return
+	 */
+	public YUV yuv(YUVQuality quality) {
+		return new YUV(ColorConversionUtils.RGBtoYUV(this, quality));
+	}
+	
+	// Manipulation functions
+
+	/**
+	 * Invert this {@link RGB} color.
+	 * 
+	 * @return the new inverted {@link RGB} color.
+	 */
 	public RGB invert() {
 		return new RGB(255 - this.red, 255 - this.green, 255 - this.blue);
 	}
 	
+	/**
+	 * Mix this {@link RGB} color with given {@link RGB} color.
+	 * 
+	 * @param color
+	 *            the {@link RGB} color to mix with
+	 * 
+	 * @return the new mixed {@link RGB} color
+	 */
 	public RGB mix(RGB color) {
 		int red = (this.red + color.red) / 2;
 		int green = (this.green + color.green) / 2;
@@ -133,10 +212,17 @@ public class RGB {
 		return (float) (this.red * 0.3f + this.green * 0.59f + this.blue * 0.11f);
 	}
 	
+	// Other common functions
+	
 	public int[] asArray() {
 		return new int[] { this.red, this.green, this.blue };
 	}
 	
+	/**
+	 * Return the {@link RGB} color as a 24-bit RRGGBB value.
+	 * 
+	 * @return the 24-bit color value
+	 */
 	public int value() {
 		return (0xFF << 24) | (this.red << 16) | (this.green << 8) | this.blue;
 	}
@@ -171,4 +257,15 @@ public class RGB {
 		return this.red == color.red && this.green == color.green && this.blue == color.blue;
 	}
 	
+	/**
+	 * Check that component values are within range.
+	 * 
+	 * @param component
+	 * @param value
+	 */
+	protected void checkLimit(String component, int value) {
+		if(value < 0 || value > 255) {
+			throw new IllegalArgumentException(component + " value must be between 0-255 inclusive.");
+		}
+	}
 }
