@@ -23,7 +23,7 @@ Strongly typed color models and utility functions in Java.
 * CMY <> RGB
 * CMYK <> RGB
 * HSB <> RGB
-* HSI <>
+* HSI <> RGB
 * HSL <> RGB
 * HunterLAB <> XYZ
 * LAB <>
@@ -60,6 +60,15 @@ And constructed with the following guidelines:
 * Bug fixes and misc changes bump the patch
 
 For more information on SemVer, please visit http://semver.org/.
+
+## References
+
+* http://colormine.org/colors-by-name
+* https://en.wikipedia.org/wiki/CIE_1931_color_space
+* https://en.wikipedia.org/wiki/Lab_color_space
+* http://www.easyrgb.com/index.php?X=MATH&H=16
+* https://en.wikipedia.org/wiki/Color_temperature
+
 
 ## License
 

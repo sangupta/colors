@@ -3,6 +3,7 @@ package com.sangupta.colors.utils;
 import java.awt.Color;
 
 import com.sangupta.colors.model.CMY;
+import com.sangupta.colors.model.HSI;
 import com.sangupta.colors.model.HunterLAB;
 import com.sangupta.colors.model.RGB;
 import com.sangupta.colors.model.XYZ;
@@ -15,8 +16,11 @@ import com.sangupta.colors.model.Yxy;
  * Utility functions to work with colors.
  * 
  * Refer 
- * http://www.easyrgb.com/index.php?X=MATH&H=06
- * https://imagej.nih.gov/ij/plugins/download/Color_Space_Converter.java
+ * 
+ * * http://www.easyrgb.com/index.php?X=MATH&H=06
+ * * https://imagej.nih.gov/ij/plugins/download/Color_Space_Converter.java
+ * * https://gist.github.com/rzhukov/9129585
+ * 
  * for more details.
  * 
  * @author sangupta
@@ -504,4 +508,66 @@ public class ColorConversionUtils {
 	
 		return rgb;
 	}
+	
+	/**
+	 * Convert from {@link RGB} to {@link HSI}.
+	 * 
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * @return
+	 */
+	public static float[] RGBtoHSI(int red, int green, int blue) {
+		double sum = red + green + blue;
+		Double intensity = sum / 3.0d;
+
+		double rn = red / sum;
+		double gn = green / sum;
+		double bn = blue / sum;
+
+		Double hue = Math.acos((0.5 * ((rn - gn) + (rn - bn))) / (Math.sqrt((rn - gn) * (rn - gn) + (rn - bn) * (gn - bn))));
+		if(blue > green) {
+			hue = 2 * Math.PI - hue;	
+		}
+
+		Double saturation = 1 - 3 * Math.min(rn, Math.min(gn, bn));
+		
+		return new float[] { hue.floatValue(), saturation.floatValue(), intensity.floatValue() };
+	}
+	
+	/**
+	 * Convert from {@link HSI} to {@link RGB}.
+	 * 
+	 * @param hue
+	 * @param saturation
+	 * @param intensity
+	 * @return
+	 */
+	public static int[] HSItoRGB(double hue, double saturation, double intensity) {
+		Double x = intensity * (1 - saturation);
+		final double piDivThree = Math.PI / 3.0d;
+		
+		if (hue < 2 * piDivThree) {
+			Double y = intensity * (1 + (saturation * Math.cos(hue)) / (Math.cos(Math.PI / 3 - hue)));
+			Double z = 3 * intensity - (x + y);
+			
+			// *b = x; *r = y; *g = z;
+			return new int[] { y.intValue(), z.intValue(), x.intValue() };
+		}
+
+		if (hue < 4 * piDivThree) {
+			Double y = intensity * (1 + (saturation * Math.cos(hue - 2 * piDivThree)) / (Math.cos(piDivThree - (hue - 2 * piDivThree))));
+			Double z = 3 * intensity - (x + y);
+			
+			// *r = x; *g = y; *b = z;
+			return new int[] { x.intValue(), y.intValue(), z.intValue() };
+		}
+
+		Double y = intensity * (1 + (saturation * Math.cos(hue - 4 * piDivThree)) / (Math.cos(piDivThree - (hue - 4 * piDivThree))));
+		Double z = 3 * intensity - (x + y);
+		
+		// *r = z; *g = x; *b = y;
+		return new int[] { z.intValue(), x.intValue(), y.intValue() };
+	}
+	
 }
