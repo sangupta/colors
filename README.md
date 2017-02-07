@@ -7,12 +7,22 @@ Strongly-typed immutable color-models and utility conversion functions in Java.
 ```java
 float[] hsl = new RGB("#a4b52f").invert().hsl().asArray();
 
-// various ways to created colors
+// various ways to create colors
 CMY cmy = new RGB("#abc").cmy();
 CMYK cmyk = new RGB(29, 39, 49).cmyk();
 
 // multiple conversions
 HSL = new HSB(0.3f, 0.3f, 0.3f).rgb().hsi().rgb().hsl();
+
+// all models in a single chain
+RGB rgb = new RGB(new int[] { 29, 39, 49})		// obtain the RGB color
+		    .hsb()								// let's convert it to HSB
+		    .rgb().hsi()						// now over to HSI
+		    .rgb().hsl()						// over to HSL
+		    .rgb().xyz()						// to XYZ
+		    .hunterLAB()						// to HunterLAB
+		    .xyz().yxy()						// to Yxy
+		    .xyz().rgb()						// and back to RGB
 ```
 
 ## Available Color Models
