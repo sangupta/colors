@@ -1,4 +1,4 @@
-#colors
+# avu
 
 Strongly-typed immutable color-models and utility conversion functions in Java. 
 
@@ -6,6 +6,13 @@ Strongly-typed immutable color-models and utility conversion functions in Java.
 
 ```java
 float[] hsl = new RGB("#a4b52f").invert().hsl().asArray();
+
+// various ways to created colors
+CMY cmy = new RGB("#abc").cmy();
+CMYK cmyk = new RGB(29, 39, 49).cmyk();
+
+// multiple conversions
+HSL = new HSB(0.3f, 0.3f, 0.3f).rgb().hsi().rgb().hsl();
 ```
 
 ## Available Color Models
