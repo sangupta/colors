@@ -79,10 +79,10 @@ For more information on SemVer, please visit http://semver.org/.
 ## License
 
 ```
-colors - Strongly typed color models in Java
+avu - Strongly typed immutable color models
 Copyright (c) 2017, Sandeep Gupta
 
-https://sangupta.com/projects/avika
+https://sangupta.com/projects/avu
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

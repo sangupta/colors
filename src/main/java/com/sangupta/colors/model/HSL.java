@@ -1,3 +1,22 @@
+/**
+ * avu - Strongly typed immutable color models
+ * Copyright (c) 2017, Sandeep Gupta
+ * 
+ * https://sangupta.com/projects/avu
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.utils.ColorConversionUtils;
@@ -18,24 +37,62 @@ public class HSL {
 	
 	public final float luminosity;
 
+	/**
+	 * Construct a {@link HSL} color from given <code>float[]</code> array.
+	 * 
+	 * @param hsl the <code>float[]</code> array
+	 */
+	public HSL(float[] hsl) {
+		if(hsl == null) {
+			throw new IllegalArgumentException("HSL color cannot be null");
+		}
+		
+		if(hsl.length != 3) {
+			throw new IllegalArgumentException("HSL color array needs exactly 3 elements");
+		}
+		
+		this.hue = hsl[0];
+		this.saturation = hsl[1];
+		this.luminosity = hsl[2];
+	}
+	
+	/**
+	 * Construct a {@link HSL} color instance from given hue, saturation and
+	 * luminosity values.
+	 * 
+	 * @param hue
+	 *            the hue value
+	 * 
+	 * @param saturation
+	 *            the saturation value
+	 * 
+	 * @param luminosity
+	 *            the luminosity value
+	 */
 	public HSL(float hue, float saturation, float luminosity) {
 		this.hue = hue;
 		this.saturation = saturation;
 		this.luminosity = luminosity;
 	}
 	
-	public HSL(float[] hsl) {
-		this.hue = hsl[0];
-		this.saturation = hsl[1];
-		this.luminosity = hsl[2];
-	}
-	
+	/**
+	 * Construct a {@link HSL} color instance from another {@link HSL} instance
+	 * 
+	 * @param other
+	 *            the other {@link HSL} instance
+	 */
 	public HSL(HSL other) {
 		this.hue = other.hue;
 		this.saturation = other.saturation;
 		this.luminosity = other.luminosity;
 	}
 	
+	/**
+	 * Construct a {@link HSL} instance from a given {@link RGB} color instance
+	 * 
+	 * @param rgbColor
+	 *            the {@link RGB} color instance
+	 */
 	public HSL(RGB rgbColor) {
 		float hsl[] = ColorConversionUtils.RGBtoHSL(rgbColor);
 		
