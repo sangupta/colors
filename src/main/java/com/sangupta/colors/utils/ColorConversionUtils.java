@@ -22,6 +22,7 @@ package com.sangupta.colors.utils;
 import java.awt.Color;
 
 import com.sangupta.colors.model.CMY;
+import com.sangupta.colors.model.HSB;
 import com.sangupta.colors.model.HSI;
 import com.sangupta.colors.model.HunterLAB;
 import com.sangupta.colors.model.RGB;
@@ -163,14 +164,15 @@ public class ColorConversionUtils {
 	}
 
 	public static void HSLtoRGB (float[] hsl, int[] rgb) {
-        final float h = hsl[0];
-        final float s = hsl[1];
-        final float l = hsl[2];
-        
-        final float c = (1f - Math.abs(2 * l - 1f)) * s;
-        final float m = l - 0.5f * c;
-        final float x = c * (1f - Math.abs((h / 60f % 2f) - 1f));
-        final int hueSegment = (int) h / 60;
+	}
+	
+	public static int[] HSLtoRGB(final float hue, final float saturation, final float luminosity) {
+		int[] rgb = new int[3];
+		
+        final float c = (1f - Math.abs(2 * luminosity - 1f)) * saturation;
+        final float m = luminosity - 0.5f * c;
+        final float x = c * (1f - Math.abs((hue / 60f % 2f) - 1f));
+        final int hueSegment = (int) hue / 60;
         int red = 0, green = 0, blue = 0;
         
         switch (hueSegment) {
@@ -214,6 +216,8 @@ public class ColorConversionUtils {
         rgb[0] = red;
         rgb[1] = green;
         rgb[2] = blue;
+        
+        return rgb;
     }
 	
 	public static float[] RGBtoXYZ(RGB color) {
@@ -230,7 +234,9 @@ public class ColorConversionUtils {
 		xyz[2] = normalizer * (0.0f * color.red) + (0.01f * color.green) + (0.99f * color.blue);
 	}
 	
-	public static void XYZtoRGB(XYZ color, int[] rgb) {
+	public static int[] XYZtoRGB(XYZ color) {
+		int[] rgb = new int[3];
+		
 		Float red = (0.41847f * color.x) - (0.15866f * color.y) - (0.082835f * color.z);
 		Float green = (-0.091169f * color.x) + (0.25243f * color.y) + (0.015708f * color.z);
 		Float blue = (0.0009209f * color.x) - (0.0025498f * color.y) + (0.17860f * color.z);
@@ -238,6 +244,8 @@ public class ColorConversionUtils {
 		rgb[0] = red.intValue();
 		rgb[1] = green.intValue();
 		rgb[2] = blue.intValue();
+		
+		return rgb;
 	}
 	
 	public static double[] LABtoXYZ(double L, double a, double b, XYZIlluminant whitePoint) {
@@ -343,6 +351,10 @@ public class ColorConversionUtils {
 		return rgb;
 	}
 	
+	public static float[] XYZtoYxy(XYZ xyz) {
+		return XYZtoYxy(xyz.x, xyz.y, xyz.z);
+	}
+	
 	/**
 	 * Convert between {@link XYZ} to {@link Yxy}.
 	 * 
@@ -361,6 +373,10 @@ public class ColorConversionUtils {
 		Yxy[2] = Y / sum;
 		
 		return Yxy;
+	}
+	
+	public static float[] YxytoXYZ(Yxy yxy) {
+		return YxytoXYZ(yxy.Y, yxy.x, yxy.y);
 	}
 	
 	/**
@@ -382,6 +398,10 @@ public class ColorConversionUtils {
 		return XYZ; 
 	}
 	
+	public static float[] XYZtoHLAB(XYZ xyz) {
+		return XYZtoHLAB(xyz.x, xyz.y, xyz.z);
+	}
+	
 	/**
 	 * Convert from {@link XYZ} to {@link HunterLAB}.
 	 * 
@@ -400,6 +420,10 @@ public class ColorConversionUtils {
 		hlab[2] = 7.0f * ((y - (0.847f * z)) / sy);
 		
 		return hlab;
+	}
+	
+	public static float[] HLABtoXYZ(HunterLAB hlab) {
+		return HLABtoXYZ(hlab.l, hlab.a, hlab.b);
 	}
 	
 	/**
@@ -611,6 +635,10 @@ public class ColorConversionUtils {
 		
 		// *r = z; *g = x; *b = y;
 		return new int[] { z.intValue(), x.intValue(), y.intValue() };
+	}
+
+	public static int[] HSBtoRGB(HSB hsb) {
+		return null;
 	}
 	
 }

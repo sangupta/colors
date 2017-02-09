@@ -13,6 +13,15 @@ public class TestRGBColor {
 		Assert.assertEquals(29, rgb.red);
 		Assert.assertEquals(39, rgb.green);
 		Assert.assertEquals(49, rgb.blue);
+		
+		rgb = new RGB(new int[] { 29, 39, 49})		// obtain the RGB color
+			    .hsb()								// let's convert it to HSB
+			    .rgb().hsi()						// now over to HSI
+			    .rgb().hsl()						// over to HSL
+			    .rgb().xyz()						// to XYZ
+			    .hunterLAB()						// to HunterLAB
+			    .xyz().yxy()						// to Yxy
+			    .xyz().rgb();						// and back to RGB
 	}
 
 }

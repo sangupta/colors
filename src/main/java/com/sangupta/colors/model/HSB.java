@@ -21,6 +21,8 @@ package com.sangupta.colors.model;
 
 import java.awt.Color;
 
+import com.sangupta.colors.utils.ColorConversionUtils;
+
 /**
  * HSV stands for hue, saturation, and value, and is also often called HSB (B for brightness)
  * 
@@ -103,6 +105,15 @@ public class HSB {
 		this.hue = hsb[0];
 		this.saturation = hsb[1];
 		this.brightness = hsb[2];
+	}
+	
+	/**
+	 * Convert this to {@link RGB} color model
+	 * 
+	 * @return the {@link RGB} color
+	 */
+	public RGB rgb() {
+		return new RGB(ColorConversionUtils.HSBtoRGB(this));
 	}
 	
 	/**

@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.utils.ColorConversionUtils;
+
 /**
  * XYZ color model as per https://en.wikipedia.org/wiki/CIE_1931_color_space
  * 
@@ -73,6 +75,33 @@ public class XYZ {
 		this.z = z;
 		
 		this.illuminant = illuminant;
+	}
+	
+	/**
+	 * Convert this to {@link HunterLAB} color model
+	 * 
+	 * @return the {@link HunterLAB} color
+	 */
+	public HunterLAB hunterLAB() {
+		return new HunterLAB(ColorConversionUtils.XYZtoHLAB(this));
+	}
+	
+	/**
+	 * Convert this to {@link Yxy} color model.
+	 * 
+	 * @return the {@link Yxy} color
+	 */
+	public Yxy yxy() {
+		return new Yxy(ColorConversionUtils.XYZtoYxy(this));
+	}
+	
+	/**
+	 * Convert this to {@link RGB} color model.
+	 * 
+	 * @return the {@link RGB} color
+	 */
+	public RGB rgb() {
+		return new RGB(ColorConversionUtils.XYZtoRGB(this));
 	}
 	
 	public XYZ multiply(float factor) {

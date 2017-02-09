@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.utils.ColorConversionUtils;
+
 /**
  * HunterLAB color model. Refer
  * https://en.wikipedia.org/wiki/Lab_color_space#Hunter_Lab
@@ -53,6 +55,10 @@ public class HunterLAB {
 		this.l = l;
 		this.a = a;
 		this.b = b;
+	}
+	
+	public XYZ xyz() {
+		return new XYZ(ColorConversionUtils.HLABtoXYZ(this));
 	}
 	
 	/**

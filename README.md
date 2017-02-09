@@ -1,6 +1,6 @@
 # avu
 
-Strongly-typed immutable color-models and utility conversion functions in Java. 
+Strongly-typed immutable color-models and utility conversion functions in Java.  
 
 ## Usage examples
 
@@ -67,7 +67,7 @@ RGB rgb = new RGB(new int[] { 29, 39, 49})		// obtain the RGB color
 ## Versioning
 
 For transparency and insight into our release cycle, and for striving to maintain backward 
-compatibility, `colors` will be  maintained under the Semantic Versioning guidelines 
+compatibility, `avu` will be  maintained under the Semantic Versioning guidelines 
 as much as possible.
 
 Releases will be numbered with the follow format:

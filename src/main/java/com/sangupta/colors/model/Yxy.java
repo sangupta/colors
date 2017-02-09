@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.utils.ColorConversionUtils;
+
 /**
  * Yxy Color Model
  * 
@@ -55,6 +57,10 @@ public class Yxy {
 		this.Y = Y;
 		this.x = x;
 		this.y = y;
+	}
+	
+	public XYZ xyz() {
+		return new XYZ(ColorConversionUtils.YxytoXYZ(this));
 	}
 	
 	/**

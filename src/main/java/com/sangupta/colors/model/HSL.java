@@ -101,6 +101,10 @@ public class HSL {
 		this.luminosity = hsl[2];
 	}
 	
+	public RGB rgb() {
+		return new RGB(ColorConversionUtils.HSLtoRGB(this.hue, this.saturation, this.luminosity));
+	}
+	
 	/**
 	 * Return this color as a <code>float[]</code> array with the hue, saturation and
 	 * intensity channels in order.

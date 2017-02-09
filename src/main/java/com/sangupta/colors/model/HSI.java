@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.utils.ColorConversionUtils;
+
 /**
  * A third model, common in computer vision applications, is HSI, for hue,
  * saturation, and intensity
@@ -60,6 +62,10 @@ public class HSI {
 		this.hue = other.hue;
 		this.saturation = other.saturation;
 		this.intensity = other.intensity;
+	}
+	
+	public RGB rgb() {
+		return new RGB(ColorConversionUtils.HSItoRGB(this.hue, this.saturation, this.intensity));
 	}
 	
 	/**
