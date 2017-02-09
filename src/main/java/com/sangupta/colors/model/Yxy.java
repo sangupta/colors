@@ -59,6 +59,11 @@ public class Yxy {
 		this.y = y;
 	}
 	
+	/**
+	 * Convert this color to {@link XYZ} color model
+	 * 
+	 * @return the {@link XYZ} color
+	 */
 	public XYZ xyz() {
 		return new XYZ(ColorConversionUtils.YxytoXYZ(this));
 	}

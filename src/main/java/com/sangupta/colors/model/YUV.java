@@ -29,13 +29,30 @@ package com.sangupta.colors.model;
  */
 public class YUV {
 	
+	/**
+	 * The y component
+	 */
 	public final float y;
 	
+	/**
+	 * The u component
+	 */
 	public final float u;
 	
+	/**
+	 * The v component
+	 */
 	public final float v;
 	
 	public YUV(float[] yuv) {
+		if(yuv == null) {
+			throw new IllegalArgumentException("YUV array cannot be null");
+		}
+		
+		if(yuv.length != 3) {
+			throw new IllegalArgumentException("YUV array must have exactly 3 elements");
+		}
+		
 		this.y = yuv[0];
 		this.u = yuv[1];
 		this.v = yuv[2];
@@ -85,6 +102,15 @@ public class YUV {
 		return this.y == color.y && this.u == color.u && this.v == color.v;
 	}
 
+	/**
+	 * The quality level for the {@link YUV} color model.
+	 * 
+	 * Refer <a href="https://en.wikipedia.org/wiki/YUV#Conversion_to.2Ffrom_RGB">Wikipedia page</a>
+	 * for more details. 
+	 * 
+	 * @author sangupta
+	 *
+	 */
 	public static enum YUVQuality {
 		
 		SDTV,
