@@ -24,6 +24,7 @@ import java.awt.Color;
 import com.sangupta.colors.model.CMY;
 import com.sangupta.colors.model.HSB;
 import com.sangupta.colors.model.HSI;
+import com.sangupta.colors.model.HSL;
 import com.sangupta.colors.model.HunterLAB;
 import com.sangupta.colors.model.RGB;
 import com.sangupta.colors.model.XYZ;
@@ -157,15 +158,14 @@ public class ColorConversionUtils {
         hsl[2] = lumin * 100f;
 	}
 	
-	public static int[] HSLtoRGB (float[] hsl) {
-		int[] rgb = new int[3];
-		HSLtoRGB(hsl, rgb);
-		return rgb;
-	}
-
-	public static void HSLtoRGB (float[] hsl, int[] rgb) {
+	public static int[] HSLtoRGB(HSL hsl) {
+		return HSLtoRGB(hsl.hue, hsl.saturation, hsl.luminosity);
 	}
 	
+	public static int[] HSLtoRGB (float[] hsl) {
+		return HSLtoRGB(hsl);
+	}
+
 	public static int[] HSLtoRGB(final float hue, final float saturation, final float luminosity) {
 		int[] rgb = new int[3];
 		

@@ -57,6 +57,11 @@ public class HunterLAB {
 		this.b = b;
 	}
 	
+	/**
+	 * Convert this to {@link XYZ} color model
+	 * 
+	 * @return the {@link XYZ} color
+	 */
 	public XYZ xyz() {
 		return new XYZ(ColorConversionUtils.HLABtoXYZ(this));
 	}

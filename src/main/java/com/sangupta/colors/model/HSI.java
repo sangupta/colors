@@ -64,6 +64,11 @@ public class HSI {
 		this.intensity = other.intensity;
 	}
 	
+	/**
+	 * Convert this color to {@link RGB} color model
+	 * 
+	 * @return the RGB color
+	 */
 	public RGB rgb() {
 		return new RGB(ColorConversionUtils.HSItoRGB(this.hue, this.saturation, this.intensity));
 	}

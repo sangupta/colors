@@ -31,12 +31,28 @@ package com.sangupta.colors.model;
  */
 public class LAB {
 	
+	/**
+	 * The <code>l</code> component 
+	 */
 	public final float l;
 	
+	/**
+	 * The <code>a</code> component
+	 */
 	public final float a;
 	
+	/**
+	 * The <code>b</code> component
+	 */
 	public final float b;
 
+	/**
+	 * Construct an instance from a <code>float[]</code> array
+	 * 
+	 * @param lab
+	 *            the <code>float[]</code> array with exactly 3 elements
+	 *            specifying LAB values in order
+	 */
 	public LAB(float[] lab) {
 		if(lab == null) {
 			throw new IllegalArgumentException("LAB color cannot be null");
@@ -51,6 +67,18 @@ public class LAB {
 		this.b = lab[2];
 	}
 	
+	/**
+	 * Construct an instance from given LAB value
+	 * 
+	 * @param l
+	 *            the l component
+	 * 
+	 * @param a
+	 *            the a component
+	 * 
+	 * @param b
+	 *            the b component
+	 */
 	public LAB(float l, float a, float b) {
 		this.l = l;
 		this.a = a;

@@ -196,46 +196,48 @@ public class RGB {
 	}
 	
 	/**
-	 * Convert to {@link HSI} model.
+	 * Convert this color to {@link HSI} color model
 	 * 
-	 * @return
+	 * @return the {@link HSI} color
 	 */
 	public HSI hsi() {
 		return new HSI(ColorConversionUtils.RGBtoHSI(this));
 	}
 	
 	/**
-	 * Convert to {@link HSL} model.
+	 * Convert this color to {@link HSL} color model
 	 * 
-	 * @return
+	 * @return the {@link HSL} color
 	 */
 	public HSL hsl() {
 		return new HSL(ColorConversionUtils.RGBtoHSL(this));
 	}
 	
 	/**
-	 * Convert the {@link XYZ} model.
+	 * Convert this color to {@link XYZ} color model
 	 * 
-	 * @return
+	 * @return the {@link XYZ} color
 	 */
 	public XYZ xyz() {
 		return new XYZ(ColorConversionUtils.RGBtoXYZ(this));
 	}
 	
 	/**
-	 * Convert the {@link YIQ} model.
+	 * Convert this color to {@link YIQ} color model
 	 * 
-	 * @return
+	 * @return the {@link YIQ} color
 	 */
 	public YIQ yiq() {
 		return new YIQ(ColorConversionUtils.RGBtoYIQ(this));
 	}
 	
 	/**
-	 * Convert the {@link YUV} model.
+	 * Convert this color to {@link YUV} color model
 	 * 
 	 * @param quality
-	 * @return
+	 *            the {@link YUVQuality} quality to use for conversion
+	 * 
+	 * @return the {@link YUV} color
 	 */
 	public YUV yuv(YUVQuality quality) {
 		return new YUV(ColorConversionUtils.RGBtoYUV(this, quality));

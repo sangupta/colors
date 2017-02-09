@@ -101,8 +101,13 @@ public class HSL {
 		this.luminosity = hsl[2];
 	}
 	
+	/**
+	 * Convert this color to {@link RGB} color model
+	 * 
+	 * @return the RGB color
+	 */
 	public RGB rgb() {
-		return new RGB(ColorConversionUtils.HSLtoRGB(this.hue, this.saturation, this.luminosity));
+		return new RGB(ColorConversionUtils.HSLtoRGB(this));
 	}
 	
 	/**
