@@ -12,6 +12,9 @@ float[] hsl = new RGB("#a4b52f").invert().hsl().asArray();
 CMY cmy = new RGB("#abc").cmy();
 CMYK cmyk = new RGB(29, 39, 49).cmyk();
 
+// using color names
+CMY cmy = CSS3Colors.ORANGE.cmy();
+
 // multiple conversions
 HSL = new HSB(0.3f, 0.3f, 0.3f).rgb().hsi().rgb().hsl();
 
