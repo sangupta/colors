@@ -5,6 +5,7 @@ Strongly-typed immutable color-models and utility conversion functions in Java.
 ## Usage examples
 
 ```java
+// from RGB to HSL model, in float[] array
 float[] hsl = new RGB("#a4b52f").invert().hsl().asArray();
 
 // various ways to create colors
@@ -49,8 +50,8 @@ RGB rgb = new RGB(new int[] { 29, 39, 49})		// obtain the RGB color
 * HSI <> RGB
 * HSL <> RGB
 * HunterLAB <> XYZ
-* LAB <>
-* RGB (base)
+* LAB <> XYZ
+* RGB
 * RGBA
 * XYZ <> RGB
 * YIQ <> RGB
