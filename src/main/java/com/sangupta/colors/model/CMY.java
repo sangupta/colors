@@ -79,7 +79,7 @@ public class CMY {
 	}
 	
 	/**
-	 * Create {@link CMY} color from givne values of cyan, magenta and yellow
+	 * Create {@link CMY} color from given values of cyan, magenta and yellow
 	 * components. All values must be within <code>0.0f</code> to
 	 * <code>1.0f</code>
 	 * 
