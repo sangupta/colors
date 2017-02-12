@@ -33,12 +33,33 @@ import com.sangupta.colors.utils.ColorConversionUtils;
  */
 public class CMY {
 	
+	/**
+	 * the cyan component
+	 */
 	public final float cyan;
 	
+	/**
+	 * the magenta component
+	 */
 	public final float magenta;
 	
+	/**
+	 * the yellow component
+	 */
 	public final float yellow;
 
+	/**
+	 * Create a {@link CMY} color from given values of cyan, magenta and yellow
+	 * in a 3-member floating point array. All values must be within
+	 * <code>0.0f</code> to <code>1.0f</code>
+	 * 
+	 * @param cmy
+	 *            the <code>float[]</code> array
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if array is null, or is not exactly 3-member
+	 * 
+	 */
 	public CMY(float[] cmy) {
 		if(cmy == null) {
 			throw new IllegalArgumentException("CMY color cannot be null");
@@ -48,17 +69,48 @@ public class CMY {
 			throw new IllegalArgumentException("CMY color array needs exactly 3 elements");
 		}
 		
+		checkLimit("Cyan", cmy[0]);
+		checkLimit("Magneta", cmy[1]);
+		checkLimit("Yellow", cmy[2]);
+		
 		this.cyan = cmy[0];
 		this.magenta = cmy[1];
 		this.yellow = cmy[2];
 	}
 	
+	/**
+	 * Create {@link CMY} color from givne values of cyan, magenta and yellow
+	 * components. All values must be within <code>0.0f</code> to
+	 * <code>1.0f</code>
+	 * 
+	 * @param cyan
+	 *            the cyan component
+	 * 
+	 * @param magenta
+	 *            the magenta component
+	 * 
+	 * @param yellow
+	 *            the yellow component
+	 */
 	public CMY(float cyan, float magenta, float yellow) {
+		checkLimit("Cyan", cyan);
+		checkLimit("Magneta", magenta);
+		checkLimit("Yellow", yellow);
+		
 		this.cyan = cyan;
 		this.magenta = magenta;
 		this.yellow = yellow;
 	}
 	
+	/**
+	 * Create a {@link CMY} color from an {@link RGB} color.
+	 * 
+	 * @param rgbColor
+	 *            the {@link RGB} color to convert from
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if {@link RGB} color is <code>null</code>
+	 */
 	public CMY(RGB rgbColor) {
 		if(rgbColor == null) {
 			throw new IllegalArgumentException("RGB color cannot be null");
@@ -107,6 +159,18 @@ public class CMY {
 		
 		CMY color = (CMY) obj;
 		return this.cyan == color.cyan && this.magenta == color.magenta && this.yellow == color.yellow;
+	}
+	
+	/**
+	 * Check that component values are within range.
+	 * 
+	 * @param component
+	 * @param value
+	 */
+	protected void checkLimit(String component, float value) {
+		if(value < 0.f || value > 1.0f) {
+			throw new IllegalArgumentException(component + " value must be between 0.0f to 1.0f inclusive.");
+		}
 	}
 	
 }
