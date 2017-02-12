@@ -19,169 +19,748 @@
 
 package com.sangupta.colors;
 
+import com.sangupta.colors.model.RGB;
+
 /**
  * 
  * @author sangupta
  * @since 1.0.0
  */
-public class CSS3Colors {
+public interface CSS3Colors {
+
+	/**
+	 * Color Alice Blue
+	 */
+	public static final RGB ALICE_BLUE = new RGB("#f0f8ff");
+
+	/**
+	 * Color Antique White
+	 */
+	public static final RGB ANTIQUE_WHITE = new RGB("#faebd7");
+
+	/**
+	 * Color Aqua
+	 */
+	public static final RGB AQUA = new RGB("#00ffff");
+
+	/**
+	 * Color Aqua Marine
+	 */
+	public static final RGB AQUA_MARINE = new RGB("#7fffd4");
+
+	/**
+	 * Color Azure
+	 */
+	public static final RGB AZURE = new RGB("#f0ffff");
+
+	/**
+	 * Color Beige
+	 */
+	public static final RGB BEIGE = new RGB("#f5f5dc");
+
+	/**
+	 * Color Bisque
+	 */
+	public static final RGB BISQUE = new RGB("#ffe4c4");
+
+	/**
+	 * Color Black
+	 */
+	public static final RGB BLACK = new RGB("#000000");
+
+	/**
+	 * Color Blanched Almond
+	 */
+	public static final RGB BLANCHED_ALMOND = new RGB("#ffebcd");
+
+	/**
+	 * Color Blue
+	 */
+	public static final RGB BLUE = new RGB("#0000ff");
+
+	/**
+	 * Color Blue Violet
+	 */
+	public static final RGB BLUE_VIOLET = new RGB("#8a2be2");
 	
-//	private static final RGBColor ALICE_BLUE = new RGBColor("#f0f8ff");
-//	
-//	private static final RGBColor antiquewhite = new RGBColor("#faebd7");
-//    
-//	private static final RGBColor aqua = new RGBColor("#00ffff");
-//    
-//	private static final RGBColor aquamarine = new RGBColor("#7fffd4");
-//    
-//	private static final RGBColor azure = new RGBColor("#f0ffff");
-//    
-//	private static final RGBColor beige = new RGBColor("#f5f5dc");
-//    
-//	private static final RGBColor bisque = new RGBColor("#ffe4c4");
-//    
-//	private static final RGBColor black = new RGBColor("#000000");
-//    
-//	private static final RGBColor blanchedalmond = new RGBColor("#ffebcd");
-//    
-//	private static final RGBColor blue = new RGBColor("#0000ff");
-//    
-//	private static final RGBColor blueviolet = new RGBColor("#8a2be2");
-//	private static final RGBColor brown = new RGBColor("#a52a2a");
-//	private static final RGBColor burlywood = new RGBColor("#deb887");
-//	private static final RGBColor cadetblue = new RGBColor("#5f9ea0");
-//	private static final RGBColor chartreuse = new RGBColor("#7fff00");
-//	private static final RGBColor chocolate = new RGBColor("#d2691e");
-//	private static final RGBColor coral = new RGBColor("#ff7f50");
-//	private static final RGBColor cornflowerblue = new RGBColor("#6495ed");
-//	private static final RGBColor cornsilk = new RGBColor("#fff8dc");
-//	private static final RGBColor crimson = new RGBColor("#dc143c");
-//	private static final RGBColor cyan = new RGBColor("#00ffff");
-//	private static final RGBColor darkblue = new RGBColor("#00008b");
-//	private static final RGBColor darkcyan = new RGBColor("#008b8b");
-//	private static final RGBColor darkgoldenrod = new RGBColor("#b8860b");
-//	private static final RGBColor darkgray = new RGBColor("#a9a9a9");
-//	private static final RGBColor darkgrey = new RGBColor("#a9a9a9");
-//	private static final RGBColor darkgreen = new RGBColor("#006400");
-//	private static final RGBColor darkkhaki = new RGBColor("#bdb76b");
-//	private static final RGBColor darkmagenta = new RGBColor("#8b008b");
-//	private static final RGBColor darkolivegreen = new RGBColor("#556b2f");
-//	private static final RGBColor darkorange = new RGBColor("#ff8c00");
-//	private static final RGBColor darkorchid = new RGBColor("#9932cc");
-//	private static final RGBColor darkred = new RGBColor("#8b0000");
-//	private static final RGBColor darksalmon = new RGBColor("#e9967a");
-//	private static final RGBColor darkseagreen = new RGBColor("#8fbc8f");
-//	private static final RGBColor darkslateblue = new RGBColor("#483d8b");
-//	private static final RGBColor darkslategray = new RGBColor("#2f4f4f");
-//	private static final RGBColor darkslategrey = new RGBColor("#2f4f4f");
-//	private static final RGBColor darkturquoise = new RGBColor("#00ced1");
-//	private static final RGBColor darkviolet = new RGBColor("#9400d3");
-//	private static final RGBColor deeppink = new RGBColor("#ff1493");
-//	private static final RGBColor deepskyblue = new RGBColor("#00bfff");
-//	private static final RGBColor dimgray = new RGBColor("#696969");
-//	private static final RGBColor dimgrey = new RGBColor("#696969");
-//	private static final RGBColor dodgerblue = new RGBColor("#1e90ff");
-//	private static final RGBColor firebrick = new RGBColor("#b22222");
-//	private static final RGBColor floralwhite = new RGBColor("#fffaf0");
-//	private static final RGBColor forestgreen = new RGBColor("#228b22");
-//	private static final RGBColor fuchsia = new RGBColor("#ff00ff");
-//	private static final RGBColor gainsboro = new RGBColor("#dcdcdc");
-//	private static final RGBColor ghostwhite = new RGBColor("#f8f8ff");
-//	private static final RGBColor gold = new RGBColor("#ffd700");
-//	private static final RGBColor goldenrod = new RGBColor("#daa520");
-//    "gray = new RGBColor("#808080");
-//    "grey = new RGBColor("#808080");
-//    "green = new RGBColor("#008000");
-//    "greenyellow = new RGBColor("#adff2f");
-//    "honeydew = new RGBColor("#f0fff0");
-//    "hotpink = new RGBColor("#ff69b4");
-//    "indianred = new RGBColor("#cd5c5c");
-//    "indigo = new RGBColor("#4b0082");
-//    "ivory = new RGBColor("#fffff0");
-//    "khaki = new RGBColor("#f0e68c");
-//    "lavender = new RGBColor("#e6e6fa");
-//    "lavenderblush = new RGBColor("#fff0f5");
-//    "lawngreen = new RGBColor("#7cfc00");
-//    "lemonchiffon = new RGBColor("#fffacd");
-//    "lightblue = new RGBColor("#add8e6");
-//    "lightcoral = new RGBColor("#f08080");
-//    "lightcyan = new RGBColor("#e0ffff");
-//    "lightgoldenrodyellow = new RGBColor("#fafad2");
-//    "lightgray = new RGBColor("#d3d3d3");
-//    "lightgrey = new RGBColor("#d3d3d3");
-//    "lightgreen = new RGBColor("#90ee90");
-//    "lightpink = new RGBColor("#ffb6c1");
-//    "lightsalmon = new RGBColor("#ffa07a");
-//    "lightseagreen = new RGBColor("#20b2aa");
-//    "lightskyblue = new RGBColor("#87cefa");
-//    "lightslategray = new RGBColor("#778899");
-//    "lightslategrey = new RGBColor("#778899");
-//    "lightsteelblue = new RGBColor("#b0c4de");
-//    "lightyellow = new RGBColor("#ffffe0");
-//    "lime = new RGBColor("#00ff00");
-//    "limegreen = new RGBColor("#32cd32");
-//    "linen = new RGBColor("#faf0e6");
-//    "magenta = new RGBColor("#ff00ff");
-//    "maroon = new RGBColor("#800000");
-//    "mediumaquamarine = new RGBColor("#66cdaa");
-//    "mediumblue = new RGBColor("#0000cd");
-//    "mediumorchid = new RGBColor("#ba55d3");
-//    "mediumpurple = new RGBColor("#9370d8");
-//    "mediumseagreen = new RGBColor("#3cb371");
-//    "mediumslateblue = new RGBColor("#7b68ee");
-//    "mediumspringgreen = new RGBColor("#00fa9a");
-//    "mediumturquoise = new RGBColor("#48d1cc");
-//    "mediumvioletred = new RGBColor("#c71585");
-//    "midnightblue = new RGBColor("#191970");
-//    "mintcream = new RGBColor("#f5fffa");
-//    "mistyrose = new RGBColor("#ffe4e1");
-//    "moccasin = new RGBColor("#ffe4b5");
-//    "navajowhite = new RGBColor("#ffdead");
-//    "navy = new RGBColor("#000080");
-//    "oldlace = new RGBColor("#fdf5e6");
-//    "olive = new RGBColor("#808000");
-//    "olivedrab = new RGBColor("#6b8e23");
-//    "orange = new RGBColor("#ffa500");
-//    "orangered = new RGBColor("#ff4500");
-//    "orchid = new RGBColor("#da70d6");
-//    "palegoldenrod = new RGBColor("#eee8aa");
-//    "palegreen = new RGBColor("#98fb98");
-//    "paleturquoise = new RGBColor("#afeeee");
-//    "palevioletred = new RGBColor("#d87093");
-//    "papayawhip = new RGBColor("#ffefd5");
-//    "peachpuff = new RGBColor("#ffdab9");
-//    "peru = new RGBColor("#cd853f");
-//    "pink = new RGBColor("#ffc0cb");
-//    "plum = new RGBColor("#dda0dd");
-//    "powderblue = new RGBColor("#b0e0e6");
-//    "purple = new RGBColor("#800080");
-//    "red = new RGBColor("#ff0000");
-//    "rosybrown = new RGBColor("#bc8f8f");
-//    "royalblue = new RGBColor("#4169e1");
-//    "saddlebrown = new RGBColor("#8b4513");
-//    "salmon = new RGBColor("#fa8072");
-//    "sandybrown = new RGBColor("#f4a460");
-//    "seagreen = new RGBColor("#2e8b57");
-//    "seashell = new RGBColor("#fff5ee");
-//    "sienna = new RGBColor("#a0522d");
-//    "silver = new RGBColor("#c0c0c0");
-//    "skyblue = new RGBColor("#87ceeb");
-//    "slateblue = new RGBColor("#6a5acd");
-//    "slategray = new RGBColor("#708090");
-//    "slategrey = new RGBColor("#708090");
-//    "snow = new RGBColor("#fffafa");
-//    "springgreen = new RGBColor("#00ff7f");
-//    "steelblue = new RGBColor("#4682b4");
-//    "tan = new RGBColor("#d2b48c");
-//    "teal = new RGBColor("#008080");
-//    "thistle = new RGBColor("#d8bfd8");
-//    "tomato = new RGBColor("#ff6347");
-//    "turquoise = new RGBColor("#40e0d0");
-//    "violet = new RGBColor("#ee82ee");
-//    "wheat = new RGBColor("#f5deb3");
-//    "white = new RGBColor("#ffffff");
-//    "whitesmoke = new RGBColor("#f5f5f5");
-//    "yellow = new RGBColor("#ffff00");
-//    "yellowgreen = new RGBColor("#9acd32"
+	/**
+	 * Color Brown
+	 */
+	public static final RGB BROWN = new RGB("#a52a2a");
+	
+	/**
+	 * Color Burly Wood
+	 */
+	public static final RGB BURLY_WOOD = new RGB("#deb887");
+	
+	/**
+	 * Color Cadet Blue
+	 */
+	public static final RGB CADET_BLUE = new RGB("#5f9ea0");
+	
+	/**
+	 * Color Chart Reuse
+	 */
+	public static final RGB CHART_REUSE = new RGB("#7fff00");
+	
+	/**
+	 * Color Chocolate
+	 */
+	public static final RGB CHOCOLATE = new RGB("#d2691e");
+	
+	/**
+	 * Color Coral
+	 */
+	public static final RGB CORAL = new RGB("#ff7f50");
+	
+	/**
+	 * Color Corn Flower Blue 
+	 */
+	public static final RGB CORN_FLOWER_BLUE = new RGB("#6495ed");
+	
+	/**
+	 * Color Corn Silk
+	 */
+	public static final RGB CORN_SILK = new RGB("#fff8dc");
+	
+	/**
+	 * Color Crimson
+	 */
+	public static final RGB CRIMSON = new RGB("#dc143c");
+	
+	/**
+	 * Color Cyan
+	 */
+	public static final RGB CYAN = new RGB("#00ffff");
+	
+	/**
+	 * Color Dark Blue
+	 */
+	public static final RGB DARK_BLUE = new RGB("#00008b");
+	
+	/**
+	 * Color Dark Cyan
+	 */
+	public static final RGB DARK_CYAN = new RGB("#008b8b");
+	
+	/**
+	 * Color Dark Golden Rod
+	 */
+	public static final RGB DARK_GOLDEN_ROD = new RGB("#b8860b");
+	
+	/**
+	 * Color Dark Gray
+	 */
+	public static final RGB DARK_GRAY = new RGB("#a9a9a9");
+	
+	/**
+	 * Color Dark Grey
+	 */
+	public static final RGB DARK_GREY = new RGB("#a9a9a9");
+	
+	/**
+	 * Color Dark Green
+	 */
+	public static final RGB DARK_GREEN = new RGB("#006400");
+	
+	/**
+	 * Color Dark Khaki
+	 */
+	public static final RGB DARK_KHAKI = new RGB("#bdb76b");
+	
+	/**
+	 * Color Dark Magenta
+	 */
+	public static final RGB DARK_MAGENTA = new RGB("#8b008b");
+	
+	/**
+	 * Color Dark Olive Grene
+	 */
+	public static final RGB DARK_OLIVE_GREEN = new RGB("#556b2f");
+	
+	/**
+	 * Color Dark Orange
+	 */
+	public static final RGB DARK_ORANGE = new RGB("#ff8c00");
+	
+	/**
+	 * Color Dark Orchid
+	 */
+	public static final RGB DARK_ORCHID = new RGB("#9932cc");
+	
+	/**
+	 * Color Dark Red
+	 */
+	public static final RGB DARK_RED = new RGB("#8b0000");
+	
+	/**
+	 * Color Dark Salmon
+	 */
+	public static final RGB DARK_SALMON = new RGB("#e9967a");
+	
+	/**
+	 * Color Dark Sea Green
+	 */
+	public static final RGB DARK_SEA_GREEN = new RGB("#8fbc8f");
+	
+	/**
+	 * Color Dark Slate Blue
+	 */
+	public static final RGB DARK_SLATE_BLUE = new RGB("#483d8b");
+	
+	/**
+	 * Color Dark Slate Gray
+	 */
+	public static final RGB DARK_SLATE_GRAY = new RGB("#2f4f4f");
+	
+	/**
+	 * Color Dark Slate Grey
+	 */
+	public static final RGB DARK_SLATE_GREY = new RGB("#2f4f4f");
+	
+	/**
+	 * Color Dark Turquoise
+	 */
+	public static final RGB DARK_TURQUOISE = new RGB("#00ced1");
+	
+	/**
+	 * Color Dark Violet
+	 */
+	public static final RGB DARK_VIOLET = new RGB("#9400d3");
+	
+	/**
+	 * Color Deep Pink
+	 */
+	public static final RGB DEEP_PINK = new RGB("#ff1493");
+	
+	/**
+	 * Color Deep Sky Blue
+	 */
+	public static final RGB DEEP_SKY_BLUE = new RGB("#00bfff");
+	
+	/**
+	 * Color Dim Gray
+	 */
+	public static final RGB DIM_GRAY = new RGB("#696969");
+	
+	/**
+	 * Color Dim Grey
+	 */
+	public static final RGB DIM_GREY = new RGB("#696969");
+	
+	/**
+	 * Color Dodge Blue
+	 */
+	public static final RGB DODGER_BLUE = new RGB("#1e90ff");
+	
+	/**
+	 * Color Fire Brick
+	 */
+	public static final RGB FIRE_BRICK = new RGB("#b22222");
+	
+	/**
+	 * Color Floral White
+	 */
+	public static final RGB FLORAL_WHITE = new RGB("#fffaf0");
+	
+	/**
+	 * Color Forest Green
+	 */
+	public static final RGB FOREST_GREEN = new RGB("#228b22");
+	
+	/**
+	 * Color Fuchsia
+	 */
+	public static final RGB FUCHSIA = new RGB("#ff00ff");
+	
+	/**
+	 * Color Gains Boro
+	 */
+	public static final RGB GAINS_BORO = new RGB("#dcdcdc");
+	
+	/**
+	 * Color Ghost White
+	 */
+	public static final RGB GHOST_WHITE = new RGB("#f8f8ff");
+	
+	/**
+	 * Color Gold
+	 */
+	public static final RGB GOLD = new RGB("#ffd700");
+	
+	/**
+	 * Color Golden Rod
+	 */
+	public static final RGB GOLDEN_ROD = new RGB("#daa520");
+	
+	/**
+	 * Color Gray
+	 */
+	public static final RGB GRAY = new RGB("#808080");
+	
+	/**
+	 * Color Grey
+	 */
+	public static final RGB GREY = new RGB("#808080");
+	
+	/**
+	 * Color Green
+	 */
+	public static final RGB GREEN = new RGB("#008000");
+	
+	/**
+	 * Color Green Yellow
+	 */
+	public static final RGB GREEN_YELLOW = new RGB("#adff2f");
+	
+	/**
+	 * Color Honey Dew
+	 */
+	public static final RGB HONEY_DEW = new RGB("#f0fff0");
+	
+	/**
+	 * Color Hot Pink
+	 */
+	public static final RGB HOT_PINK = new RGB("#ff69b4");
+	
+	/**
+	 * Color Indian Red
+	 */
+	public static final RGB INDIAN_RED = new RGB("#cd5c5c");
+	
+	/**
+	 * Color Indigo
+	 */
+	public static final RGB INDIGO = new RGB("#4b0082");
+	
+	/**
+	 * Color Ivory
+	 */
+	public static final RGB IVORY = new RGB("#fffff0");
+	
+	/**
+	 * Color Khaki
+	 */
+	public static final RGB KHAKI = new RGB("#f0e68c");
+	
+	/**
+	 * Color Lavender
+	 */
+	public static final RGB LAVENDER = new RGB("#e6e6fa");
+	
+	/**
+	 * Color Lavendar Blush
+	 */
+	public static final RGB LAVENDER_BLUSH = new RGB("#fff0f5");
+	
+	/**
+	 * Color Lawn Green
+	 */
+	public static final RGB LAWN_GREEN = new RGB("#7cfc00");
+	
+	/**
+	 * Color Lemon Chiffon
+	 */
+	public static final RGB LEMON_CHIFFON = new RGB("#fffacd");
+	
+	/**
+	 * Color Light Blue
+	 */
+	public static final RGB LIGHT_BLUE = new RGB("#add8e6");
+	
+	/**
+	 * Color Light Coral
+	 */
+	public static final RGB LIGHT_CORAL = new RGB("#f08080");
+	
+	/**
+	 * Color Light Cyan
+	 */
+	public static final RGB LIGHT_CYAN = new RGB("#e0ffff");
+	
+	/**
+	 * Color Light Golden Rod Yello 
+	 */
+	public static final RGB LIGHT_GOLDEN_ROD_YELLOW = new RGB("#fafad2");
+	
+	/**
+	 * Color Light Gray
+	 */
+	public static final RGB LIGHT_GRAY = new RGB("#d3d3d3");
+	
+	/**
+	 * Color Light Grey
+	 */
+	public static final RGB LIGHT_GREY = new RGB("#d3d3d3");
+	
+	/**
+	 * Color Light Green
+	 */
+	public static final RGB LIGHT_GREEN = new RGB("#90ee90");
+	
+	/**
+	 * Color Light Pink
+	 */
+	public static final RGB LIGHT_PINK = new RGB("#ffb6c1");
+	
+	/**
+	 * Color Light Salmon
+	 */
+	public static final RGB LIGHT_SALMON = new RGB("#ffa07a");
+	
+	/**
+	 * Color Light Sea Green
+	 */
+	public static final RGB LIGHT_SEA_GREEN = new RGB("#20b2aa");
+	
+	/**
+	 * Color Light Sky Blue
+	 */
+	public static final RGB LIGHT_SKY_BLUE = new RGB("#87cefa");
+	
+	/**
+	 * Color Light Slate Gray
+	 */
+	public static final RGB LIGHT_SLATE_GRAY = new RGB("#778899");
+	
+	/**
+	 * Color Light Slate Grey
+	 */
+	public static final RGB LIGHT_SLATE_GREY = new RGB("#778899");
+	
+	/**
+	 * Color Light Steel Blue
+	 */
+	public static final RGB LIGHT_STEEL_BLUE = new RGB("#b0c4de");
+	
+	/**
+	 * Color Light Yellow
+	 */
+	public static final RGB LIGHT_YELLOW = new RGB("#ffffe0");
+	
+	/**
+	 * Color Lime 
+	 */
+	public static final RGB LIME = new RGB("#00ff00");
+	
+	/**
+	 * Color 
+	 */
+	public static final RGB LIME_GREEN = new RGB("#32cd32");
+	
+	/**
+	 * Color Linen  
+	 */
+	public static final RGB LINEN = new RGB("#faf0e6");
+	
+	/**
+	 * Color Magenta  
+	 */
+	public static final RGB MAGENTA = new RGB("#ff00ff");
+	
+	/**
+	 * Color Maroon
+	 */
+	public static final RGB MAROON = new RGB("#800000");
+	
+	/**
+	 * Color Medium Aqua Marine
+	 */
+	public static final RGB MEDIUM_AQUA_MARINE = new RGB("#66cdaa");
+	
+	/**
+	 * Color Medium Blue
+	 */
+	public static final RGB MEDIUM_BLUE = new RGB("#0000cd");
+	
+	/**
+	 * Color Medium Orchid
+	 */
+	public static final RGB MEDIUM_ORCHID = new RGB("#ba55d3");
+	
+	/**
+	 * Color Medium Purple
+	 */
+	public static final RGB MEDIUM_PURPLE = new RGB("#9370d8");
+	
+	/**
+	 * Color Medium Sea Green
+	 */
+	public static final RGB MEDIUM_SEA_GREEN = new RGB("#3cb371");
+	
+	/**
+	 * Color Medium Slate Blue
+	 */
+	public static final RGB MEDIUM_SLATE_BLUE = new RGB("#7b68ee");
+	
+	/**
+	 * Color Medium Spring Green
+	 */
+	public static final RGB MEDIUM_SPRING_GREEN = new RGB("#00fa9a");
+	
+	/**
+	 * Color Medium Turquoise
+	 */
+	public static final RGB MEDIUM_TURQUOISE = new RGB("#48d1cc");
+	
+	/**
+	 * Color Medium Violet Red
+	 */
+	public static final RGB MEDIUM_VIOLET_RED = new RGB("#c71585");
+	
+	/**
+	 * Color Midnight Blue
+	 */
+	public static final RGB MIDNIGHT_BLUE = new RGB("#191970");
+	
+	/**
+	 * Color Mint Cream
+	 */
+	public static final RGB MINT_CREAM = new RGB("#f5fffa");
+	
+	/**
+	 * Color Misty Rose
+	 */
+	public static final RGB MISTY_ROSE = new RGB("#ffe4e1");
+	
+	/**
+	 * Color Moccasin
+	 */
+	public static final RGB MOCCASIN = new RGB("#ffe4b5");
+	
+	/**
+	 * Color Navajo White
+	 */
+	public static final RGB NAVAJO_WHITE = new RGB("#ffdead");
+	
+	/**
+	 * Color Navy
+	 */
+	public static final RGB NAVY = new RGB("#000080");
+	
+	/**
+	 * Color Old Lace
+	 */
+	public static final RGB OLD_LACE = new RGB("#fdf5e6");
+	
+	/**
+	 * Color Olive
+	 */
+	public static final RGB OLIVE = new RGB("#808000");
+	
+	/**
+	 * Color Olive Drab
+	 */
+	public static final RGB OLIVE_DRAB = new RGB("#6b8e23");
+	
+	/**
+	 * Color Orange
+	 */
+	public static final RGB ORANGE = new RGB("#ffa500");
+	
+	/**
+	 * Color Red
+	 */
+	public static final RGB ORANGE_RED = new RGB("#ff4500");
+	
+	/**
+	 * Color Orchid
+	 */
+	public static final RGB ORCHID = new RGB("#da70d6");
+	
+	/**
+	 * Color Pale Golden Rod
+	 */
+	public static final RGB PALE_GOLDEN_ROD = new RGB("#eee8aa");
+	
+	/**
+	 * Color Pale Green
+	 */
+	public static final RGB PALE_GREEN = new RGB("#98fb98");
+	
+	/**
+	 * Color Pale Turquoise
+	 */
+	public static final RGB PALE_TURQUOISE = new RGB("#afeeee");
+	
+	/**
+	 * Color Pale Violet Red
+	 */
+	public static final RGB PALE_VIOLET_RED = new RGB("#d87093");
+	
+	/**
+	 * Color Papaya Whip
+	 */
+	public static final RGB PAPAYA_WHIP = new RGB("#ffefd5");
+	
+	/**
+	 * Color Peach Puff
+	 */
+	public static final RGB PEACH_PUFF = new RGB("#ffdab9");
+	
+	/**
+	 * Color Peru
+	 */
+	public static final RGB PERU = new RGB("#cd853f");
+	
+	/**
+	 * Color Pink
+	 */
+	public static final RGB PINK = new RGB("#ffc0cb");
+	
+	/**
+	 * Color Plum
+	 */
+	public static final RGB PLUM = new RGB("#dda0dd");
+	
+	/**
+	 * Color Powder Blue
+	 */
+	public static final RGB POWDER_BLUE = new RGB("#b0e0e6");
+	
+	/**
+	 * Color Purple
+	 */
+	public static final RGB PURPLE = new RGB("#800080");
+	
+	/**
+	 * Color Red
+	 */
+	public static final RGB RED = new RGB("#ff0000");
+	
+	/**
+	 * Color Rosy Brown
+	 */
+	public static final RGB ROSY_BROWN = new RGB("#bc8f8f");
+	
+	/**
+	 * Color Royal Blue
+	 */
+	public static final RGB ROYAL_BLUE = new RGB("#4169e1");
+	
+	/**
+	 * Color Saddle Brown
+	 */
+	public static final RGB SADDLE_BROWN = new RGB("#8b4513");
+	
+	/**
+	 * Color Salmon
+	 */
+	public static final RGB SALMON = new RGB("#fa8072");
+	
+	/**
+	 * Color Sandy Brown
+	 */
+	public static final RGB SANDY_BROWN = new RGB("#f4a460");
+	
+	/**
+	 * Color Sea Green
+	 */
+	public static final RGB SEA_GREEN = new RGB("#2e8b57");
+	
+	/**
+	 * Color Sea Shell
+	 */
+	public static final RGB SEA_SHELL = new RGB("#fff5ee");
+	
+	/**
+	 * Color Sienna
+	 */
+	public static final RGB SIENNA = new RGB("#a0522d");
+	
+	/**
+	 * Color Silver
+	 */
+	public static final RGB SILVER = new RGB("#c0c0c0");
+	
+	/**
+	 * Color Sky Blue
+	 */
+	public static final RGB SKY_BLUE = new RGB("#87ceeb");
+	
+	/**
+	 * Color Slate Blue
+	 */
+	public static final RGB SLATE_BLUE = new RGB("#6a5acd");
+	
+	/**
+	 * Color Slate Gray
+	 */
+	public static final RGB SLATE_GRAY = new RGB("#708090");
+	
+	/**
+	 * Color Slate Grey
+	 */
+	public static final RGB SLATE_GREY = new RGB("#708090");
+	
+	/**
+	 * Color Snow
+	 */
+	public static final RGB SNOW = new RGB("#fffafa");
+	
+	/**
+	 * Color Spring Green
+	 */
+	public static final RGB SPRING_GREEN = new RGB("#00ff7f");
+	
+	/**
+	 * Color Steel Blue
+	 */
+	public static final RGB STEEL_BLUE = new RGB("#4682b4");
+	
+	/**
+	 * Color Tan
+	 */
+	public static final RGB TAN = new RGB("#d2b48c");
+	
+	/**
+	 * Color Teal
+	 */
+	public static final RGB TEAL = new RGB("#008080");
+	
+	/**
+	 * Color Thistle
+	 */
+	public static final RGB THISTLE = new RGB("#d8bfd8");
+	
+	/**
+	 * Color Tomato
+	 */
+	public static final RGB TOMATO = new RGB("#ff6347");
+	
+	/**
+	 * Color Turquoise
+	 */
+	public static final RGB TURQUOISE = new RGB("#40e0d0");
+	
+	/**
+	 * Color Violet
+	 */
+	public static final RGB VIOLET = new RGB("#ee82ee");
+	
+	/**
+	 * Color Wheat
+	 */
+	public static final RGB WHEAT = new RGB("#f5deb3");
+	
+	/**
+	 * Color White
+	 */
+	public static final RGB WHITE = new RGB("#ffffff");
+	
+	/**
+	 * Color White Smoke
+	 */
+	public static final RGB WHITE_SMOKE = new RGB("#f5f5f5");
+	
+	/**
+	 * Color Yellow
+	 */
+	public static final RGB YELLOW = new RGB("#ffff00");
+	
+	/**
+	 * Color Yellow Green
+	 */
+	public static final RGB YELLOW_GREEN = new RGB("#9acd32");
 
 }
