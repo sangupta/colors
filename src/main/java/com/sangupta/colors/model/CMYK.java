@@ -50,6 +50,18 @@ public class CMYK {
 	 */
 	public final float black;
 	
+	/**
+	 * Create a {@link CMYK} color from given values of cyan, magenta, yellow and
+	 * black in a 4-member floating point array. All values must be within
+	 * <code>0.0f</code> to <code>1.0f</code>
+	 * 
+	 * @param cmy
+	 *            the <code>float[]</code> array
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if array is null, or is not exactly 4-member
+	 * 
+	 */
 	public CMYK(float[] cmyk) {
 		if(cmyk == null) {
 			throw new IllegalArgumentException("Array cannot be null");
@@ -59,19 +71,55 @@ public class CMYK {
 			throw new IllegalArgumentException("Array needs to have 4 elements only");
 		}
 		
+		checkLimit("Cyan", cmyk[0]);
+		checkLimit("Magneta", cmyk[1]);
+		checkLimit("Yellow", cmyk[2]);
+		checkLimit("Black", cmyk[3]);
+		
 		this.cyan = cmyk[0];
 		this.magenta = cmyk[1];
 		this.yellow = cmyk[2];
 		this.black = cmyk[3];
 	}
 	
+	/**
+	 * Create {@link CMYK} color from given values of cyan, magenta, yellow and
+	 * black components. All values must be within <code>0.0f</code> to
+	 * <code>1.0f</code>
+	 * 
+	 * @param cyan
+	 *            the cyan component
+	 * 
+	 * @param magenta
+	 *            the magenta component
+	 * 
+	 * @param yellow
+	 *            the yellow component
+	 * 
+	 * @param black
+	 *            the black component
+	 */
 	public CMYK(float cyan, float magenta, float yellow, float black) {
+		checkLimit("Cyan", cyan);
+		checkLimit("Magneta", magenta);
+		checkLimit("Yellow", yellow);
+		checkLimit("Black", black);
+		
 		this.cyan = cyan;
 		this.magenta = magenta;
 		this.yellow = yellow;
 		this.black = black;
 	}
 	
+	/**
+	 * Create a {@link CMYK} color from an {@link RGB} color.
+	 * 
+	 * @param rgbColor
+	 *            the {@link RGB} color to convert from
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if {@link RGB} color is <code>null</code>
+	 */
 	public CMYK(RGB color) {
 		if(color == null) {
 			throw new IllegalArgumentException("RGBColor cannot be null");
@@ -121,5 +169,17 @@ public class CMYK {
 		
 		CMYK color = (CMYK) obj;
 		return this.cyan == color.cyan && this.magenta == color.magenta && this.yellow == color.yellow && this.black == color.black;
+	}
+	
+	/**
+	 * Check that component values are within range.
+	 * 
+	 * @param component
+	 * @param value
+	 */
+	protected void checkLimit(String component, float value) {
+		if(value < 0.f || value > 1.0f) {
+			throw new IllegalArgumentException(component + " value must be between 0.0f to 1.0f inclusive.");
+		}
 	}
 }
