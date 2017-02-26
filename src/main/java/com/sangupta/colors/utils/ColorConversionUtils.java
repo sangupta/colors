@@ -26,6 +26,8 @@ import com.sangupta.colors.model.HSB;
 import com.sangupta.colors.model.HSI;
 import com.sangupta.colors.model.HSL;
 import com.sangupta.colors.model.HunterLAB;
+import com.sangupta.colors.model.LAB;
+import com.sangupta.colors.model.LCH;
 import com.sangupta.colors.model.RGB;
 import com.sangupta.colors.model.XYZ;
 import com.sangupta.colors.model.XYZ.XYZIlluminant;
@@ -639,6 +641,33 @@ public class ColorConversionUtils {
 
 	public static int[] HSBtoRGB(HSB hsb) {
 		return null;
+	}
+	
+	public static float[] LABtoLCH(LAB lab) {
+		return LABtoLCH(lab.l, lab.a, lab.b);
+	}
+	
+	public static float[] LABtoLCH(float l, float a, float b) {
+		Double hr = Math.atan2(b, a);
+		Double h = hr * 360 / 2 / Math.PI;
+		if(h < 0) {
+			h = h + 360;
+		}
+		Double c = Math.sqrt(a * a + b * b);
+		
+		return new float[] { l, c.floatValue(), h.floatValue() };
+	}
+	
+	public static float[] LCHtoLAB(LCH lch) {
+		return LCHtoLAB(lch.lightness, lch.chroma, lch.hue);
+	}
+	
+	public static float[] LCHtoLAB(float lightness, float chroma, float hue) {
+		Double hr = hue / 360 * 2 * Math.PI;
+		Double a = chroma * Math.cos(hr);
+		Double b = chroma * Math.sin(hr);
+		
+		return new float[] { lightness, a.floatValue(), b.floatValue() };
 	}
 	
 }

@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.utils.ColorConversionUtils;
+
 /**
  * LAB color model definition.
  * <br><br>
@@ -83,6 +85,18 @@ public class LAB {
 		this.l = l;
 		this.a = a;
 		this.b = b;
+	}
+	
+	public LAB(LCH lch) {
+		if(lch == null) {
+			throw new IllegalArgumentException("LCH color cannot be null");
+		}
+		
+		float[] lab = ColorConversionUtils.LCHtoLAB(lch);
+		
+		this.l = lab[0];
+		this.a = lab[1];
+		this.b = lab[2];
 	}
 	
 	/**
