@@ -87,18 +87,6 @@ public class LAB {
 		this.b = b;
 	}
 	
-	public LAB(LCH lch) {
-		if(lch == null) {
-			throw new IllegalArgumentException("LCH color cannot be null");
-		}
-		
-		float[] lab = ColorConversionUtils.LCHtoLAB(lch);
-		
-		this.l = lab[0];
-		this.a = lab[1];
-		this.b = lab[2];
-	}
-	
 	/**
 	 * Compute the ciede2000 distance between this and a given {@link LAB} color
 	 * 
@@ -224,6 +212,10 @@ public class LAB {
 
 		// third, check sRGB values
 		return !(r < 0 || r > 1 || g < 0 || g > 1 || b < 0 || b > 1);
+	}
+	
+	public LCH lch() {
+		return ColorConversionUtils.LABtoLCH(this);
 	}
 	
 	/**

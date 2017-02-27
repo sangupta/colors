@@ -33,6 +33,7 @@ import com.sangupta.colors.model.RGB;
 import com.sangupta.colors.model.XYZ;
 import com.sangupta.colors.model.XYZ.XYZIlluminant;
 import com.sangupta.colors.model.YIQ;
+import com.sangupta.colors.model.YUV;
 import com.sangupta.colors.model.YUV.YUVQuality;
 import com.sangupta.colors.model.Yxy;
 
@@ -454,42 +455,40 @@ public class ColorConversionUtils {
 		return new RGB(red.intValue(), green.intValue(), blue.intValue());
 	}
 	
-	public static float[] RGBtoYUV(RGB rgb, YUVQuality quality) {
-		return RGBtoYUV(rgb.red, rgb.green, rgb.blue, quality);
-	}
-	
 	/**
-	 * Convert from {@link RGB} to {@link YIQ}.
+	 * Convert from {@link RGB} color to {@link YUV} color. 
 	 * 
-	 * @param red
-	 * @param green
-	 * @param blue
+	 * @param rgb
+	 * @param quality
 	 * @return
 	 */
-	public static float[] RGBtoYUV(int red, int green, int blue, YUVQuality quality) {
+	public static YUV RGBtoYUV(RGB rgb, YUVQuality quality) {
 		if(quality == null) {
 			throw new IllegalArgumentException("YUVQuality cannot be null");
 		}
-		
-		float[] yuv = new float[3];
+
+		Double y, u, v;
 		
 		switch(quality) {
 			case SDTV:
 			case BT_601:
-				yuv[0] = new Double(0.299d * red + 0.587d * green + 0.114d * blue).floatValue();
-				yuv[1] = new Double(-0.14173d * red - 0.28886d * green + 0.436d * blue).floatValue();
-				yuv[2] = new Double(0.615d * red - 0.51499d * green - 0.10001d * blue).floatValue();
+				y = 0.299d * rgb.red + 0.587d * rgb.green + 0.114d * rgb.blue;
+				u = -0.14173d * rgb.red - 0.28886d * rgb.green + 0.436d * rgb.blue;
+				v = 0.615d * rgb.red - 0.51499d * rgb.green - 0.10001d * rgb.blue;
 				break;
 				
 			case HDTV:
 			case BT_709:
-				yuv[0] = new Double(0.2126d * red + 0.7152d * green + 0.0722d * blue).floatValue();
-				yuv[1] = new Double(-0.09991 * red - 0.33609d * green + 0.436d * blue).floatValue();
-				yuv[2] = new Double(0.615d * red - 0.55861d * green - 0.05639d * blue).floatValue();
+				y = 0.2126d * rgb.red + 0.7152d * rgb.green + 0.0722d * rgb.blue;
+				u = -0.09991 * rgb.red - 0.33609d * rgb.green + 0.436d * rgb.blue;
+				v = 0.615d * rgb.red - 0.55861d * rgb.green - 0.05639d * rgb.blue;
 				break;
+				
+			default:
+				throw new IllegalStateException("Unknown YUVQuality");
 		}
 		
-		return yuv;
+		return new YUV(y.floatValue(), u.floatValue(), v.floatValue());
 	}
 	
 	/**
@@ -500,128 +499,123 @@ public class ColorConversionUtils {
 	 * @param v
 	 * @return
 	 */
-	public static int[] YUVtoRGB(float y, float u, float v, YUVQuality quality) {
+	public static RGB YUVtoRGB(YUV yuv, YUVQuality quality) {
 		if(quality == null) {
 			throw new IllegalArgumentException("YUVQuality cannot be null");
 		}
-		
-		int[] rgb = new int[3];
+
+		Double red, green, blue;
 		
 		switch(quality) {
 			case SDTV:
 			case BT_601:
-				rgb[0] = new Double(1.0d * y + 1.13983d * v).intValue();
-				rgb[1] = new Double(1.0d * y - 0.39465d * u - 0.58060d * v).intValue();
-				rgb[2] = new Double(1.0d * y + 2.03211d * u).intValue();
+				red = 1.0d * yuv.y + 1.13983d * yuv.v;
+				green = 1.0d * yuv.y - 0.39465d * yuv.u - 0.58060d * yuv.v;
+				blue = 1.0d * yuv.y + 2.03211d * yuv.u;
 				break;
 				
 			case HDTV:
 			case BT_709:
-				rgb[0] = new Double(1.0d * y + 1.28033 * v).intValue();
-				rgb[1] = new Double(1.0d * y - 0.21482d * u - 0.38059d * v).intValue();
-				rgb[2] = new Double(1.0d * y + 2.12798d * u).intValue();
+				red = 1.0d * yuv.y + 1.28033 * yuv.v;
+				green = 1.0d * yuv.y - 0.21482d * yuv.u - 0.38059d * yuv.v;
+				blue = 1.0d * yuv.y + 2.12798d * yuv.u;
 				break;
+				
+			default:
+				throw new IllegalStateException("Unknown YUVQuality");
 		}
 	
-		return rgb;
+		return new RGB(red.intValue(), green.intValue(), blue.intValue());
 	}
 	
 	/**
-	 * Convert from {@link RGB} to {@link HSI}.
+	 * Convert from {@link RGB} color to {@link HSI} color.
 	 * 
 	 * @param rgb
 	 * @return
 	 */
-	public static float[] RGBtoHSI(RGB rgb) {
-		return RGBtoHSI(rgb.red, rgb.green, rgb.blue);
-	}
-	
-	/**
-	 * Convert from {@link RGB} to {@link HSI}.
-	 * 
-	 * @param red
-	 * @param green
-	 * @param blue
-	 * @return
-	 */
-	public static float[] RGBtoHSI(int red, int green, int blue) {
-		double sum = red + green + blue;
+	public static HSI RGBtoHSI(RGB rgb) {
+		double sum = rgb.red + rgb.green + rgb.blue;
 		Double intensity = sum / 3.0d;
 
-		double rn = red / sum;
-		double gn = green / sum;
-		double bn = blue / sum;
+		double rn = rgb.red / sum;
+		double gn = rgb.green / sum;
+		double bn = rgb.blue / sum;
 
 		Double hue = Math.acos((0.5 * ((rn - gn) + (rn - bn))) / (Math.sqrt((rn - gn) * (rn - gn) + (rn - bn) * (gn - bn))));
-		if(blue > green) {
+		if(rgb.blue > rgb.green) {
 			hue = 2 * Math.PI - hue;	
 		}
 
 		Double saturation = 1 - 3 * Math.min(rn, Math.min(gn, bn));
 		
-		return new float[] { hue.floatValue(), saturation.floatValue(), intensity.floatValue() };
+		return new HSI(hue.floatValue(), saturation.floatValue(), intensity.floatValue());
 	}
 	
 	/**
-	 * Convert from {@link HSI} to {@link RGB}.
+	 * Convert from {@link HSI} color to {@link RGB} color.
 	 * 
 	 * @param hue
 	 * @param saturation
 	 * @param intensity
 	 * @return
 	 */
-	public static int[] HSItoRGB(double hue, double saturation, double intensity) {
-		Double x = intensity * (1 - saturation);
+	public static RGB HSItoRGB(HSI hsi) {
+		Double x = hsi.intensity * (1.0d - hsi.saturation);
 		final double piDivThree = Math.PI / 3.0d;
 		
-		if (hue < 2 * piDivThree) {
-			Double y = intensity * (1 + (saturation * Math.cos(hue)) / (Math.cos(Math.PI / 3 - hue)));
-			Double z = 3 * intensity - (x + y);
+		if (hsi.hue < 2 * piDivThree) {
+			Double y = hsi.intensity * (1 + (hsi.saturation * Math.cos(hsi.hue)) / (Math.cos(Math.PI / 3 - hsi.hue)));
+			Double z = 3 * hsi.intensity - (x + y);
 			
 			// *b = x; *r = y; *g = z;
-			return new int[] { y.intValue(), z.intValue(), x.intValue() };
+			return new RGB(y.intValue(), z.intValue(), x.intValue());
 		}
 
-		if (hue < 4 * piDivThree) {
-			Double y = intensity * (1 + (saturation * Math.cos(hue - 2 * piDivThree)) / (Math.cos(piDivThree - (hue - 2 * piDivThree))));
-			Double z = 3 * intensity - (x + y);
+		if (hsi.hue < 4 * piDivThree) {
+			Double y = hsi.intensity * (1 + (hsi.saturation * Math.cos(hsi.hue - 2 * piDivThree)) / (Math.cos(piDivThree - (hsi.hue - 2 * piDivThree))));
+			Double z = 3 * hsi.intensity - (x + y);
 			
 			// *r = x; *g = y; *b = z;
-			return new int[] { x.intValue(), y.intValue(), z.intValue() };
+			return new RGB(x.intValue(), y.intValue(), z.intValue());
 		}
 
-		Double y = intensity * (1 + (saturation * Math.cos(hue - 4 * piDivThree)) / (Math.cos(piDivThree - (hue - 4 * piDivThree))));
-		Double z = 3 * intensity - (x + y);
+		Double y = hsi.intensity * (1 + (hsi.saturation * Math.cos(hsi.hue - 4 * piDivThree)) / (Math.cos(piDivThree - (hsi.hue - 4 * piDivThree))));
+		Double z = 3 * hsi.intensity - (x + y);
 		
 		// *r = z; *g = x; *b = y;
-		return new int[] { z.intValue(), x.intValue(), y.intValue() };
+		return new RGB(z.intValue(), x.intValue(), y.intValue());
 	}
 
-	public static float[] LABtoLCH(LAB lab) {
-		return LABtoLCH(lab.l, lab.a, lab.b);
-	}
-	
-	public static float[] LABtoLCH(float l, float a, float b) {
-		Double hr = Math.atan2(b, a);
+	/**
+	 * Convert from {@link LAB} color to {@link LCH} color.
+	 * 
+	 * @param lab
+	 * @return
+	 */
+	public static LCH LABtoLCH(LAB lab) {
+		Double hr = Math.atan2(lab.b, lab.a);
 		Double h = hr * 360 / 2 / Math.PI;
 		if(h < 0) {
 			h = h + 360;
 		}
-		Double c = Math.sqrt(a * a + b * b);
+		Double c = Math.sqrt(lab.a * lab.a + lab.b * lab.b);
 		
-		return new float[] { l, c.floatValue(), h.floatValue() };
+		return new LCH(lab.l, c.floatValue(), h.floatValue());
 	}
 	
-	public static float[] LCHtoLAB(LCH lch) {
-		return LCHtoLAB(lch.lightness, lch.chroma, lch.hue);
-	}
-	
-	public static float[] LCHtoLAB(float lightness, float chroma, float hue) {
-		Double hr = hue / 360 * 2 * Math.PI;
-		Double a = chroma * Math.cos(hr);
-		Double b = chroma * Math.sin(hr);
+	/**
+	 * Convert from {@link LCH} color to {@link LAB} color.
+	 * 
+	 * @param lch
+	 * @return
+	 */
+	public static LAB LCHtoLAB(LCH lch) {
+		Double hr = lch.hue / 360 * 2 * Math.PI;
+		Double a = lch.chroma * Math.cos(hr);
+		Double b = lch.chroma * Math.sin(hr);
 		
-		return new float[] { lightness, a.floatValue(), b.floatValue() };
+		return new LAB(lch.lightness, a.floatValue(), b.floatValue());
 	}
 	
 }

@@ -214,7 +214,7 @@ public class RGB {
 	 * @return the {@link YUV} color
 	 */
 	public YUV yuv(YUVQuality quality) {
-		return new YUV(ColorConversionUtils.RGBtoYUV(this, quality));
+		return ColorConversionUtils.RGBtoYUV(this, quality);
 	}
 	
 	// Manipulation functions

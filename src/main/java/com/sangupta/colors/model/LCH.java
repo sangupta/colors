@@ -41,16 +41,8 @@ public class LCH {
 		this.hue = hue;
 	}
 	
-	public LCH(LAB lab) {
-		if(lab == null) {
-			throw new IllegalArgumentException("LAB color cannot be null");
-		}
-		
-		float[] lch = ColorConversionUtils.LABtoLCH(lab);
-		
-		this.lightness = lch[0];
-		this.chroma = lch[1];
-		this.hue = lch[2];
+	public LAB lab() {
+		return ColorConversionUtils.LCHtoLAB(this);
 	}
 	
 	public float[] asArray() {
