@@ -19,7 +19,7 @@
 
 package com.sangupta.colors.model;
 
-import com.sangupta.colors.utils.ColorConversionUtils;
+import com.sangupta.colors.ColorConversionUtils;
 
 /**
  * HSL stands for hue, saturation, and lightness (or luminosity), and is also often called HLS

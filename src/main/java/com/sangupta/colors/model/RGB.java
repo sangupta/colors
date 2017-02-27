@@ -19,8 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.ColorConversionUtils;
 import com.sangupta.colors.model.YUV.YUVQuality;
-import com.sangupta.colors.utils.ColorConversionUtils;
 
 /**
  * RGBA color model for red, green, and blue channels. All values should be

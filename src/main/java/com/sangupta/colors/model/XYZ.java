@@ -19,7 +19,7 @@
 
 package com.sangupta.colors.model;
 
-import com.sangupta.colors.utils.ColorConversionUtils;
+import com.sangupta.colors.ColorConversionUtils;
 
 /**
  * XYZ color model as per https://en.wikipedia.org/wiki/CIE_1931_color_space

@@ -19,7 +19,7 @@
 
 package com.sangupta.colors.model;
 
-import com.sangupta.colors.utils.ColorConversionUtils;
+import com.sangupta.colors.ColorConversionUtils;
 
 /**
  * HunterLAB color model. Refer

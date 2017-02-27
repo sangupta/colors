@@ -19,7 +19,7 @@
 
 package com.sangupta.colors.model;
 
-import com.sangupta.colors.utils.ColorConversionUtils;
+import com.sangupta.colors.ColorConversionUtils;
 
 /**
  * LAB color model definition.

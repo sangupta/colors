@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package com.sangupta.colors.utils;
+package com.sangupta.colors;
 
 import java.awt.Color;
 
