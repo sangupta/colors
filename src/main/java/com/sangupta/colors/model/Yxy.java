@@ -65,7 +65,7 @@ public class Yxy {
 	 * @return the {@link XYZ} color
 	 */
 	public XYZ xyz() {
-		return new XYZ(ColorConversionUtils.YxytoXYZ(this));
+		return ColorConversionUtils.YxytoXYZ(this);
 	}
 	
 	/**

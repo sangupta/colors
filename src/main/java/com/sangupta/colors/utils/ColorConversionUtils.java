@@ -341,164 +341,117 @@ public class ColorConversionUtils {
 	}
 
 	/**
-	 * Convert between {@link CMY} to {@link RGB}.
+	 * Convert from {@link CMY} color to {@link RGB} color.
 	 * 
 	 * @param cyan
 	 * @param magenta
 	 * @param yellow
 	 * @return
 	 */
-	public static int[] CMYtoRGB(float cyan, float magenta, float yellow) {
-		int[] rgb = new int[3];
+	public static RGB CMYtoRGB(CMY cmyColor) {
+		int red = new Float((1 - cmyColor.cyan) * 255).intValue();
+		int green = new Float((1 - cmyColor.magenta) * 255).intValue();
+		int blue = new Float((1 - cmyColor.yellow) * 255).intValue();
 		
-		rgb[0] = new Float((1 - cyan) * 255).intValue();
-		rgb[1] = new Float((1 - magenta) * 255).intValue();
-		rgb[2] = new Float((1 - yellow) * 255).intValue();
-		
-		return rgb;
-	}
-	
-	public static float[] XYZtoYxy(XYZ xyz) {
-		return XYZtoYxy(xyz.x, xyz.y, xyz.z);
+		return new RGB(red, green, blue);
 	}
 	
 	/**
-	 * Convert between {@link XYZ} to {@link Yxy}.
+	 * Convert from {@link XYZ} color to {@link Yxy} color.
 	 * 
-	 * @param X
-	 * @param Y
-	 * @param Z
+	 * @param xyz
 	 * @return
 	 */
-	public static float[] XYZtoYxy(float X, float Y, float Z) {
-		float[] Yxy = new float[3];
+	public static Yxy XYZtoYxy(XYZ xyz) {
 		
-		float sum = X + Y + Z;
+		float sum = xyz.x + xyz.y + xyz.z;
 		
-		Yxy[0] = Y;
-		Yxy[1] = X / sum;
-		Yxy[2] = Y / sum;
+		float YY = xyz.y;
+		float xx = xyz.x / sum;
+		float yy = xyz.y / sum;
 		
-		return Yxy;
-	}
-	
-	public static float[] YxytoXYZ(Yxy yxy) {
-		return YxytoXYZ(yxy.Y, yxy.x, yxy.y);
+		return new Yxy(YY, xx, yy);
 	}
 	
 	/**
-	 * Convert from {@link Yxy} to {@link XYZ}.
+	 * Convert from {@link Yxy} color to {@link XYZ} color.
 	 * 
-	 * @param Y
-	 * @param x
-	 * @param y
+	 * @param yxy
 	 * @return
 	 */
-	public static float[] YxytoXYZ(float Y, float x, float y) {
-		float[] XYZ = new float[3];
-		float div = Y / y;
+	public static XYZ YxytoXYZ(Yxy yxy) {
+		float div = yxy.Y / yxy.y;
 		
-		XYZ[0] = x * div;
-		XYZ[1] = Y;
-		XYZ[2] = (1 - x - y) * div;
+		float xx = yxy.x * div;
+		float yy = yxy.Y;
+		float zz = (1 - yxy.x - yxy.y) * div;
 		
-		return XYZ; 
-	}
-	
-	public static float[] XYZtoHLAB(XYZ xyz) {
-		return XYZtoHLAB(xyz.x, xyz.y, xyz.z);
+		return new XYZ(xx, yy, zz);
 	}
 	
 	/**
-	 * Convert from {@link XYZ} to {@link HunterLAB}.
+	 * Convert from {@link XYZ} color to {@link HunterLAB} color.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param z
+	 * @param xyz
 	 * @return
 	 */
-	public static float[] XYZtoHLAB(float x, float y, float z) {
-		float[] hlab = new float[3];
+	public static HunterLAB XYZtoHLAB(XYZ xyz) {
+		float sy = new Double(Math.sqrt(xyz.y)).floatValue();
 		
-		float sy = new Double(Math.sqrt(y)).floatValue();
+		float l = 10f * sy;
+		float a = 17.5f * (((1.02f * xyz.x) - xyz.y) / sy);
+		float b = 7.0f * ((xyz.y - (0.847f * xyz.z)) / sy);
 		
-		hlab[0] = 10f * sy;
-		hlab[1] = 17.5f * (((1.02f * x) - y) / sy);
-		hlab[2] = 7.0f * ((y - (0.847f * z)) / sy);
-		
-		return hlab;
-	}
-	
-	public static float[] HLABtoXYZ(HunterLAB hlab) {
-		return HLABtoXYZ(hlab.l, hlab.a, hlab.b);
+		return new HunterLAB(l, a, b);
 	}
 	
 	/**
-	 * Convert from {@link HunterLAB} to {@link XYZ}.
+	 * Convert from {@link HunterLAB} color to {@link XYZ} color.
 	 * 
-	 * @param hl
-	 * @param ha
-	 * @param hb
+	 * @param hlab
 	 * @return
 	 */
-	public static float[] HLABtoXYZ(float hl, float ha, float hb) {
-		float[] xyz = new float[3];
+	public static XYZ HLABtoXYZ(HunterLAB hlab) {
 		
-		float varY = hl / 10f;
-		float varX = ha / 17.5f * hl / 10.0f;
-		float varZ = hb / 7.0f * hl / 10.0f;
+		float varY = hlab.l / 10f;
+		float varX = hlab.a / 17.5f * hlab.l / 10.0f;
+		float varZ = hlab.b / 7.0f * hlab.l / 10.0f;
 		
-		xyz[1] = varY * varY;
-		xyz[0] = (varX + xyz[1]) / 1.02f;
-		xyz[2] = -(varZ - xyz[1]) / 0.847f;
+		float y = varY * varY;
+		float x = (varX + y) / 1.02f;
+		float z = -(varZ - y) / 0.847f;
 		
-		return xyz;
+		return new XYZ(x, y, z);
 	}
 	
 	/**
-	 * Convert from {@link RGB} to {@link YIQ}.
+	 * Convert from {@link RGB} color to {@link YIQ} color.
 	 * 
 	 * @param rgb
 	 * @return
 	 */
-	public static float[] RGBtoYIQ(RGB rgb) {
-		return RGBtoYIQ(rgb.red, rgb.green, rgb.blue);
+	public static YIQ RGBtoYIQ(RGB rgb) {
+		Double y = 0.299d * rgb.red + 0.587d * rgb.green + 0.114d * rgb.blue;
+		Double i = 0.596d * rgb.red - 0.274d * rgb.green - 0.332d * rgb.blue;
+		Double q = 0.211d * rgb.red - 0.523d * rgb.green + 0.312d * rgb.blue;
+		
+		return new YIQ(y.floatValue(), i.floatValue(), q.floatValue());
 	}
 	
 	/**
-	 * Convert from {@link RGB} to {@link YIQ}.
-	 * 
-	 * @param red
-	 * @param green
-	 * @param blue
-	 * @return
-	 */
-	public static float[] RGBtoYIQ(int red, int green, int blue) {
-		float[] yiq = new float[3];
-		
-		yiq[0] = new Double(0.299d * red + 0.587d * green + 0.114d * blue).floatValue();
-		yiq[1] = new Double(0.596d * red - 0.274d * green - 0.332d * blue).floatValue();
-		yiq[2] = new Double(0.211d * red - 0.523d * green + 0.312d * blue).floatValue();
-		
-		return yiq;
-	}
-	
-	/**
-	 * Convert from {@link YIQ} to {@link RGB}.
+	 * Convert from {@link YIQ} color to {@link RGB} color.
 	 * 
 	 * @param y
 	 * @param i
 	 * @param q
 	 * @return
 	 */
-	public static int[] YIQtoRGB(float y, float i, float q) {
-		int[] rgb = new int[3];
-		
-		rgb[0] = new Double(1.0d * y + 0.956d * i + 0.621d * q).intValue();
-		rgb[1] = new Double(1.0d * y - 0.272d * i - 0.647d * q).intValue();
-		rgb[2] = new Double(1.0d * y - 1.106d * i + 1.703d * q).intValue();
+	public static RGB YIQtoRGB(YIQ yiq) {
+		Double red   = 1.0d * yiq.y + 0.956d * yiq.i + 0.621d * yiq.q;
+		Double green = 1.0d * yiq.y - 0.272d * yiq.i - 0.647d * yiq.q;
+		Double blue  = 1.0d * yiq.y - 1.106d * yiq.i + 1.703d * yiq.q;
 	
-		return rgb;
+		return new RGB(red.intValue(), green.intValue(), blue.intValue());
 	}
 	
 	public static float[] RGBtoYUV(RGB rgb, YUVQuality quality) {

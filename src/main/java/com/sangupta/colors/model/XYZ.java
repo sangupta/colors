@@ -83,7 +83,7 @@ public class XYZ {
 	 * @return the {@link HunterLAB} color
 	 */
 	public HunterLAB hunterLAB() {
-		return new HunterLAB(ColorConversionUtils.XYZtoHLAB(this));
+		return ColorConversionUtils.XYZtoHLAB(this);
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class XYZ {
 	 * @return the {@link Yxy} color
 	 */
 	public Yxy yxy() {
-		return new Yxy(ColorConversionUtils.XYZtoYxy(this));
+		return ColorConversionUtils.XYZtoYxy(this);
 	}
 	
 	/**

@@ -63,7 +63,7 @@ public class HunterLAB {
 	 * @return the {@link XYZ} color
 	 */
 	public XYZ xyz() {
-		return new XYZ(ColorConversionUtils.HLABtoXYZ(this));
+		return ColorConversionUtils.HLABtoXYZ(this);
 	}
 	
 	/**

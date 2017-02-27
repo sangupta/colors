@@ -194,7 +194,7 @@ public class RGB {
 	 * @return the {@link YIQ} color
 	 */
 	public YIQ yiq() {
-		return new YIQ(ColorConversionUtils.RGBtoYIQ(this));
+		return ColorConversionUtils.RGBtoYIQ(this);
 	}
 	
 	public CMY cmy() {
