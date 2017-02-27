@@ -29,6 +29,7 @@ import com.sangupta.colors.model.HSL;
 import com.sangupta.colors.model.HunterLAB;
 import com.sangupta.colors.model.LAB;
 import com.sangupta.colors.model.LCH;
+import com.sangupta.colors.model.LUV;
 import com.sangupta.colors.model.RGB;
 import com.sangupta.colors.model.XYZ;
 import com.sangupta.colors.model.XYZ.XYZIlluminant;
@@ -286,15 +287,15 @@ public class ColorConversionUtils {
 	 * Convert from {@link LAB} color to {@link XYZ} color.
 	 * 
 	 * @param lab
-	 * @param whitePoint
+	 * @param illuminant
 	 * @return
 	 */
-	public static XYZ LABtoXYZ(LAB lab, XYZIlluminant whitePoint) {
+	public static XYZ LABtoXYZ(LAB lab, XYZIlluminant illuminant) {
 		if(lab == null) {
 			throw new IllegalArgumentException("LAB Color cannot be null");
 		}
 		
-		if(whitePoint == null) {
+		if(illuminant == null) {
 			throw new IllegalArgumentException("XYZ Whitepoint illuminant cannot be null");
 		}
 		
@@ -321,9 +322,9 @@ public class ColorConversionUtils {
 			z = (z - (16.0 / 116.0)) / 7.787;
 		}
 
-		Double xx = x * whitePoint.x2();
-		Double yy = y * whitePoint.y2();
-		Double zz = z * whitePoint.z2();
+		Double xx = x * illuminant.x2();
+		Double yy = y * illuminant.y2();
+		Double zz = z * illuminant.z2();
 
 		return new XYZ(xx.floatValue(), yy.floatValue(), zz.floatValue());
 	}
@@ -718,4 +719,82 @@ public class ColorConversionUtils {
 		return new LAB(lch.lightness, a.floatValue(), b.floatValue());
 	}
 	
+	/**
+	 * Convert from {@link XYZ} color to {@link LUV} color.
+	 * 
+	 * @param xyz
+	 * @return
+	 */
+	public static LUV XYZtoLUV(XYZ xyz) {
+		if(xyz == null) {
+			throw new IllegalArgumentException("XYZ Color cannot be null");
+		}
+		
+		double denominator = xyz.x + (15 * xyz.y) + (3 * xyz.z);
+		double varU = (4 * xyz.x) / denominator;
+		double varV = (9 * xyz.y) / denominator;
+
+		double varY = xyz.y / 100d;
+		if (varY > 0.008856d) {
+			varY = Math.pow(varY, 1d / 3d);
+		} else {
+			varY = (7.787d * varY) + (16d / 116d);
+		}
+
+		double refX = xyz.illuminant.x2(); // Observer= 2°
+		double refY = xyz.illuminant.y2();
+		double refZ = xyz.illuminant.z2();
+
+		double ref_U = (4 * refX) / (refX + (15 * refY) + (3 * refZ));
+		double ref_V = (9 * refY) / (refX + (15 * refY) + (3 * refZ));
+
+		Double l = (116 * varY) - 16;
+		Double u = 13 * l * (varU - ref_U);
+		Double v = 13 * l * (varV - ref_V);
+
+		return new LUV(l.floatValue(), u.floatValue(), v.floatValue());
+	}
+	
+	/**
+	 * Convert from {@link LUV} color to {@link XYZ} color.
+	 * 
+	 * @param luv
+	 * @param illuminant
+	 * @return
+	 */
+	public static XYZ LUVtoXYZ(LUV luv, XYZIlluminant illuminant) {
+		if(luv == null) {
+			throw new IllegalArgumentException("LUV Color cannot be null");
+		}
+		
+		if(illuminant == null) {
+			throw new IllegalArgumentException("XYZ Whitepoint illuminant cannot be null");
+		}
+		
+		double varY = (luv.l + 16) / 116d;
+		double yPower3 = Math.pow(varY, 3d);
+		if (yPower3 > 0.008856d) {
+			varY = yPower3;
+		} else {
+			varY = (varY - 16 / 116) / 7.787d;
+		}
+
+		double refX = illuminant.x2(); // Observer= 2°, Illuminant= D65
+		double refY = illuminant.y2();
+		double refZ = illuminant.z2();
+
+		double denominator = refX + (15 * refY) + (3 * refZ);
+		
+		double refU = (4 * refX) / denominator;
+		double refV = (9 * refY) / denominator;
+
+		double varU = luv.u / (13 * luv.l) + refU;
+		double varV = luv.v / (13 * luv.l) + refV;
+
+		Double Y = varY * 100;
+		Double X = -(9 * Y * varU) / ((varU - 4) * varV - varU * varV);
+		Double Z = (9 * Y - (15 * varV * Y) - (varV * X)) / (3 * varV);
+
+		return new XYZ(X.floatValue(), Y.floatValue(), Z.floatValue(), illuminant);
+	}
 }

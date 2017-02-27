@@ -51,8 +51,8 @@ public class TestColorUtils {
 		// test values picked up from http://www.rapidtables.com/convert/color/rgb-to-hsl.htm
 		
 		testHSB(0, 0, 0, 0f, 0f, 0f); // black
-		testHSB(255, 255, 255, 0f, 0f, 100f); // white
-		testHSB(255, 0, 0, 0f, 100f, 50f); // red
+		testHSB(255, 255, 255, 0f, 0f, 1f); // white
+		testHSB(255, 0, 0, 0f, 1f, 50f); // red
 		testHSB(0, 255, 255, 180f, 100f, 50f); // green
 		testHSB(0, 0, 255, 240f, 100f, 50f); // blue
 		testHSB(255, 255, 0, 60f, 100f, 50f); // yellow

@@ -95,6 +95,10 @@ public class XYZ {
 		return ColorConversionUtils.XYZtoYxy(this);
 	}
 	
+	public LUV luv() {
+		return ColorConversionUtils.XYZtoLUV(this);
+	}
+	
 	/**
 	 * Convert this to {@link RGB} color model.
 	 * 
