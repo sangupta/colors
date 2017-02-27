@@ -63,6 +63,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static CMYK RGBtoCMYK(RGB rgb) {
+		if(rgb == null) {
+			throw new IllegalArgumentException("RGB Color cannot be null");
+		}
+		
 		float cyan = 1 - rgb.red / 255f;
 		float magenta = 1 - rgb.green / 255f;
 		float yellow = 1 - rgb.blue / 255f;
@@ -88,8 +92,17 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static RGB CMYKtoRGB(CMYK cmyk) {
-		// TODO: fix this
-		return null;
+		if(cmyk == null) {
+			throw new IllegalArgumentException("CMYK Color cannot be null");
+		}
+		
+		double delta = 255 * (1.0d - cmyk.black);
+
+		Double red = delta * (1.0d - cmyk.cyan);
+		Double green = delta * (1.0d - cmyk.magenta);
+		Double blue = delta * (1.0d - cmyk.yellow);
+		
+		return new RGB(red.intValue(), green.intValue(), blue.intValue());
 	}
 	
 	/**
@@ -100,7 +113,7 @@ public class ColorConversionUtils {
 	 */
 	public static HSB RGBtoHSB(RGB rgbColor) {
 		if(rgbColor == null) {
-			throw new IllegalArgumentException("Color cannot be null");
+			throw new IllegalArgumentException("RGB Color cannot be null");
 		}
 		
 		float[] hsb = new float[3];
@@ -113,11 +126,19 @@ public class ColorConversionUtils {
 	 * Convert a {@link HSB} color to {@link RGB} color.
 	 * 
 	 * @param hsb
-	 * @return
+	 *            the {@link HSB} color
+	 * 
+	 * @return the {@link RGB} color
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if {@link HSB} color is <code>null</code>
 	 */
-	public static int[] HSBtoRGB(HSB hsb) {
-		// TODO: fix this
-		return null;
+	public static RGB HSBtoRGB(HSB hsb) {
+		if(hsb == null) {
+			throw new IllegalArgumentException("HSB Color cannot be null");
+		}
+		
+		return new RGB(Color.HSBtoRGB(hsb.hue, hsb.saturation, hsb.brightness));
 	}
 	
 	/**
@@ -128,7 +149,7 @@ public class ColorConversionUtils {
 	 */
 	public static HSL RGBtoHSL(RGB rgb) {
 		if(rgb == null) {
-			throw new IllegalArgumentException("Color cannot be null");
+			throw new IllegalArgumentException("RGB Color cannot be null");
 		}
 		
 		final float redFloat = rgb.red / 255f;
@@ -172,6 +193,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static RGB HSLtoRGB(HSL hsl) {
+		if(hsl == null) {
+			throw new IllegalArgumentException("HSL Color cannot be null");
+		}
+		
         final float c = (1f - Math.abs(2 * hsl.luminosity - 1f)) * hsl.saturation;
         final float m = hsl.luminosity - 0.5f * c;
         final float x = c * (1f - Math.abs((hsl.hue / 60f % 2f) - 1f));
@@ -226,6 +251,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static XYZ RGBtoXYZ(RGB rgbColor) {
+		if(rgbColor == null) {
+			throw new IllegalArgumentException("RGB Color cannot be null");
+		}
+		
 		float normalizer = 1.0f / 0.17697f;
 		
 		float x = normalizer * (0.490f * rgbColor.red) + (0.310f * rgbColor.green) + (0.20f * rgbColor.blue);
@@ -242,6 +271,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static RGB XYZtoRGB(XYZ xyzColor) {
+		if(xyzColor == null) {
+			throw new IllegalArgumentException("XYZ Color cannot be null");
+		}
+		
 		Float red = (0.41847f * xyzColor.x) - (0.15866f * xyzColor.y) - (0.082835f * xyzColor.z);
 		Float green = (-0.091169f * xyzColor.x) + (0.25243f * xyzColor.y) + (0.015708f * xyzColor.z);
 		Float blue = (0.0009209f * xyzColor.x) - (0.0025498f * xyzColor.y) + (0.17860f * xyzColor.z);
@@ -257,6 +290,14 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static XYZ LABtoXYZ(LAB lab, XYZIlluminant whitePoint) {
+		if(lab == null) {
+			throw new IllegalArgumentException("LAB Color cannot be null");
+		}
+		
+		if(whitePoint == null) {
+			throw new IllegalArgumentException("XYZ Whitepoint illuminant cannot be null");
+		}
+		
 		double y = (lab.l + 16.0) / 116.0;
 		double y3 = Math.pow(y, 3.0);
 		double x = (lab.a / 500.0) + y;
@@ -295,35 +336,40 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static LAB XYZtoLAB(XYZ xyz, XYZIlluminant whitePoint) {
-	      double x = xyz.x / whitePoint.x2();
-	      double y = xyz.y / whitePoint.y2();
-	      double z = xyz.z / whitePoint.z2();
+		if(xyz == null) {
+			throw new IllegalArgumentException("XYZ Color cannot be null");
+		}
+		
+		if(whitePoint == null) {
+			throw new IllegalArgumentException("XYZ Whitepoint illuminant cannot be null");
+		}
+		
+		double x = xyz.x / whitePoint.x2();
+		double y = xyz.y / whitePoint.y2();
+		double z = xyz.z / whitePoint.z2();
 
-	      if (x > 0.008856) {
-	        x = Math.pow(x, 1.0 / 3.0);
-	      }
-	      else {
-	        x = (7.787 * x) + (16.0 / 116.0);
-	      }
-	      if (y > 0.008856) {
-	        y = Math.pow(y, 1.0 / 3.0);
-	      }
-	      else {
-	        y = (7.787 * y) + (16.0 / 116.0);
-	      }
-	      if (z > 0.008856) {
-	        z = Math.pow(z, 1.0 / 3.0);
-	      }
-	      else {
-	        z = (7.787 * z) + (16.0 / 116.0);
-	      }
+		if (x > 0.008856) {
+			x = Math.pow(x, 1.0 / 3.0);
+		} else {
+			x = (7.787 * x) + (16.0 / 116.0);
+		}
+		if (y > 0.008856) {
+			y = Math.pow(y, 1.0 / 3.0);
+		} else {
+			y = (7.787 * y) + (16.0 / 116.0);
+		}
+		if (z > 0.008856) {
+			z = Math.pow(z, 1.0 / 3.0);
+		} else {
+			z = (7.787 * z) + (16.0 / 116.0);
+		}
 
-	      Double l = (116.0 * y) - 16.0;
-	      Double a = 500.0 * (x - y);
-	      Double b = 200.0 * (y - z);
+		Double l = (116.0 * y) - 16.0;
+		Double a = 500.0 * (x - y);
+		Double b = 200.0 * (y - z);
 
-	      return new LAB(l.floatValue(), a.floatValue(), b.floatValue());
-	    }
+		return new LAB(l.floatValue(), a.floatValue(), b.floatValue());
+	}
 
 	/**
 	 * Convert from {@link RGB} color to {@link CMY} color.
@@ -334,6 +380,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static CMY RGBtoCMY(RGB rgbColor) {
+		if(rgbColor == null) {
+			throw new IllegalArgumentException("RGB Color cannot be null");
+		}
+		
 		float cyan = 1 - (rgbColor.red / 255f);
 		float magenta = 1 - (rgbColor.green / 255f);
 		float yellow = 1 - (rgbColor.blue / 255f);
@@ -350,6 +400,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static RGB CMYtoRGB(CMY cmyColor) {
+		if(cmyColor == null) {
+			throw new IllegalArgumentException("CMY Color cannot be null");
+		}
+		
 		int red = new Float((1 - cmyColor.cyan) * 255).intValue();
 		int green = new Float((1 - cmyColor.magenta) * 255).intValue();
 		int blue = new Float((1 - cmyColor.yellow) * 255).intValue();
@@ -364,6 +418,9 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static Yxy XYZtoYxy(XYZ xyz) {
+		if(xyz == null) {
+			throw new IllegalArgumentException("XYZ Color cannot be null");
+		}
 		
 		float sum = xyz.x + xyz.y + xyz.z;
 		
@@ -381,6 +438,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static XYZ YxytoXYZ(Yxy yxy) {
+		if(yxy == null) {
+			throw new IllegalArgumentException("Yxy Color cannot be null");
+		}
+		
 		float div = yxy.Y / yxy.y;
 		
 		float xx = yxy.x * div;
@@ -397,6 +458,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static HunterLAB XYZtoHLAB(XYZ xyz) {
+		if(xyz == null) {
+			throw new IllegalArgumentException("XYZ Color cannot be null");
+		}
+		
 		float sy = new Double(Math.sqrt(xyz.y)).floatValue();
 		
 		float l = 10f * sy;
@@ -413,6 +478,9 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static XYZ HLABtoXYZ(HunterLAB hlab) {
+		if(hlab == null) {
+			throw new IllegalArgumentException("HunterLAB Color cannot be null");
+		}
 		
 		float varY = hlab.l / 10f;
 		float varX = hlab.a / 17.5f * hlab.l / 10.0f;
@@ -432,6 +500,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static YIQ RGBtoYIQ(RGB rgb) {
+		if(rgb == null) {
+			throw new IllegalArgumentException("RGB Color cannot be null");
+		}
+		
 		Double y = 0.299d * rgb.red + 0.587d * rgb.green + 0.114d * rgb.blue;
 		Double i = 0.596d * rgb.red - 0.274d * rgb.green - 0.332d * rgb.blue;
 		Double q = 0.211d * rgb.red - 0.523d * rgb.green + 0.312d * rgb.blue;
@@ -448,6 +520,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static RGB YIQtoRGB(YIQ yiq) {
+		if(yiq == null) {
+			throw new IllegalArgumentException("YIQ Color cannot be null");
+		}
+		
 		Double red   = 1.0d * yiq.y + 0.956d * yiq.i + 0.621d * yiq.q;
 		Double green = 1.0d * yiq.y - 0.272d * yiq.i - 0.647d * yiq.q;
 		Double blue  = 1.0d * yiq.y - 1.106d * yiq.i + 1.703d * yiq.q;
@@ -463,6 +539,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static YUV RGBtoYUV(RGB rgb, YUVQuality quality) {
+		if(rgb == null) {
+			throw new IllegalArgumentException("RGB Color cannot be null");
+		}
+		
 		if(quality == null) {
 			throw new IllegalArgumentException("YUVQuality cannot be null");
 		}
@@ -500,6 +580,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static RGB YUVtoRGB(YUV yuv, YUVQuality quality) {
+		if(yuv == null) {
+			throw new IllegalArgumentException("YUV Color cannot be null");
+		}
+		
 		if(quality == null) {
 			throw new IllegalArgumentException("YUVQuality cannot be null");
 		}
@@ -535,6 +619,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static HSI RGBtoHSI(RGB rgb) {
+		if(rgb == null) {
+			throw new IllegalArgumentException("RGB Color cannot be null");
+		}
+		
 		double sum = rgb.red + rgb.green + rgb.blue;
 		Double intensity = sum / 3.0d;
 
@@ -561,6 +649,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static RGB HSItoRGB(HSI hsi) {
+		if(hsi == null) {
+			throw new IllegalArgumentException("HSI Color cannot be null");
+		}
+		
 		Double x = hsi.intensity * (1.0d - hsi.saturation);
 		final double piDivThree = Math.PI / 3.0d;
 		
@@ -594,6 +686,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static LCH LABtoLCH(LAB lab) {
+		if(lab == null) {
+			throw new IllegalArgumentException("LAB Color cannot be null");
+		}
+		
 		Double hr = Math.atan2(lab.b, lab.a);
 		Double h = hr * 360 / 2 / Math.PI;
 		if(h < 0) {
@@ -611,6 +707,10 @@ public class ColorConversionUtils {
 	 * @return
 	 */
 	public static LAB LCHtoLAB(LCH lch) {
+		if(lch == null) {
+			throw new IllegalArgumentException("LCH Color cannot be null");
+		}
+		
 		Double hr = lch.hue / 360 * 2 * Math.PI;
 		Double a = lch.chroma * Math.cos(hr);
 		Double b = lch.chroma * Math.sin(hr);
