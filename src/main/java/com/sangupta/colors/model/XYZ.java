@@ -101,7 +101,7 @@ public class XYZ {
 	 * @return the {@link RGB} color
 	 */
 	public RGB rgb() {
-		return new RGB(ColorConversionUtils.XYZtoRGB(this));
+		return ColorConversionUtils.XYZtoRGB(this);
 	}
 	
 	public XYZ multiply(float factor) {
@@ -156,7 +156,7 @@ public class XYZ {
 	}
 
 	/**
-	 * Illuminance values for XYZ color space.
+	 * Illuminant values for XYZ color space.
 	 * 
 	 * Reference white in XYZ coordinates
 	 * 

@@ -19,8 +19,6 @@
 
 package com.sangupta.colors.model;
 
-import com.sangupta.colors.utils.ColorConversionUtils;
-
 /**
  * CMYK color based on https://en.wikipedia.org/wiki/CMYK_color_model
  * 
@@ -109,28 +107,6 @@ public class CMYK {
 		this.magenta = magenta;
 		this.yellow = yellow;
 		this.black = black;
-	}
-	
-	/**
-	 * Create a {@link CMYK} color from an {@link RGB} color.
-	 * 
-	 * @param rgbColor
-	 *            the {@link RGB} color to convert from
-	 * 
-	 * @throws IllegalArgumentException
-	 *             if {@link RGB} color is <code>null</code>
-	 */
-	public CMYK(RGB color) {
-		if(color == null) {
-			throw new IllegalArgumentException("RGBColor cannot be null");
-		}
-		
-		float[] cmyk = ColorConversionUtils.RGBtoCMYK(color);
-		
-		this.cyan = cmyk[0];
-		this.magenta = cmyk[1];
-		this.yellow = cmyk[2];
-		this.black = cmyk[3];
 	}
 	
 	/**

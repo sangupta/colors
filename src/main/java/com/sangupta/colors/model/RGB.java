@@ -19,8 +19,6 @@
 
 package com.sangupta.colors.model;
 
-import java.awt.Color;
-
 import com.sangupta.colors.model.YUV.YUVQuality;
 import com.sangupta.colors.utils.ColorConversionUtils;
 
@@ -47,7 +45,13 @@ public class RGB {
 	 * Blue component between 0-255
 	 */
 	public final int blue;
-
+	
+	protected RGB(RGB other) {
+		this.red = other.red;
+		this.green = other.green;
+		this.blue = other.blue;
+	}
+	
 	/**
 	 * Construct an {@link RGB} instance using compound <code>int</code>
 	 * value.
@@ -106,44 +110,6 @@ public class RGB {
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
-	}
-	
-	/**
-	 * Construct an {@link RGB} instance using another instance
-	 * 
-	 * @param other
-	 *            the {@link RGB} instance to copy values from
-	 */
-	public RGB(RGB other) {
-		this.red = other.red;
-		this.green = other.green;
-		this.blue = other.blue;
-	}
-	
-	/**
-	 * Construct an {@link RGB} instance using another {@link HSL}
-	 * instance
-	 * 
-	 * @param hsl
-	 *            {@link HSL} instance to use
-	 */
-	public RGB(HSL hsl) {
-		int rgb[] = ColorConversionUtils.HSLtoRGB(hsl.asArray());
-		
-		this.red = rgb[0];
-		this.green = rgb[1];
-		this.blue = rgb[2];
-	}
-	
-	/**
-	 * Construct a {@link RGB} instance using another {@link HSB}
-	 * instance
-	 * 
-	 * @param hsl
-	 *            {@link HSB} instance to use
-	 */
-	public RGB(HSB color) {
-		this(Color.HSBtoRGB(color.hue, color.saturation, color.brightness));
 	}
 	
 	/**
@@ -219,7 +185,7 @@ public class RGB {
 	 * @return the {@link XYZ} color
 	 */
 	public XYZ xyz() {
-		return new XYZ(ColorConversionUtils.RGBtoXYZ(this));
+		return ColorConversionUtils.RGBtoXYZ(this);
 	}
 	
 	/**
@@ -229,6 +195,14 @@ public class RGB {
 	 */
 	public YIQ yiq() {
 		return new YIQ(ColorConversionUtils.RGBtoYIQ(this));
+	}
+	
+	public CMY cmy() {
+		return ColorConversionUtils.RGBtoCMY(this);
+	}
+	
+	public CMYK cmyk() {
+		return ColorConversionUtils.RGBtoCMYK(this);
 	}
 	
 	/**

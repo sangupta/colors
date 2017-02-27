@@ -3,6 +3,9 @@ package com.sangupta.colors;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.sangupta.colors.model.CMYK;
+import com.sangupta.colors.model.HSB;
+import com.sangupta.colors.model.HSL;
 import com.sangupta.colors.model.RGB;
 import com.sangupta.colors.utils.ColorConversionUtils;
 
@@ -67,28 +70,28 @@ public class TestColorUtils {
 	}
 	
 	public void testCMYK(int red, int green, int blue, float cyan, float magenta, float yellow, float black) {
-		float[] cmyk = ColorConversionUtils.RGBtoCMYK(new RGB(red, green, blue));
+		CMYK cmyk = ColorConversionUtils.RGBtoCMYK(new RGB(red, green, blue));
 		
-		Assert.assertEquals(cyan, cmyk[0], 0f);
-		Assert.assertEquals(magenta, cmyk[1], 0f);
-		Assert.assertEquals(yellow, cmyk[2], 0f);
-		Assert.assertEquals(black, cmyk[3], 0f);
+		Assert.assertEquals(cyan, cmyk.cyan, 0f);
+		Assert.assertEquals(magenta, cmyk.magenta, 0f);
+		Assert.assertEquals(yellow, cmyk.yellow, 0f);
+		Assert.assertEquals(black, cmyk.black, 0f);
 	}
 	
 	public void testHSL(int red, int green, int blue, float hue, float saturation, float lumen) {
-		float[] hsl = ColorConversionUtils.RGBtoHSL(new RGB(red, green, blue));
+		HSL hsl = ColorConversionUtils.RGBtoHSL(new RGB(red, green, blue));
 		
-		Assert.assertEquals(hue, hsl[0], 0f);
-		Assert.assertEquals(saturation, hsl[1], 0f);
-		Assert.assertEquals(lumen, hsl[2], 0.3f);
+		Assert.assertEquals(hue, hsl.hue, 0f);
+		Assert.assertEquals(saturation, hsl.saturation, 0f);
+		Assert.assertEquals(lumen, hsl.luminosity, 0.3f);
 	}
 	
 	public void testHSB(int red, int green, int blue, float hue, float saturation, float brightness) {
-		float[] hsb = ColorConversionUtils.RGBtoHSB(new RGB(red, green, blue));
+		HSB hsb = ColorConversionUtils.RGBtoHSB(new RGB(red, green, blue));
 		
-		Assert.assertEquals(hue, hsb[0], 0f);
-		Assert.assertEquals(saturation, hsb[1], 0f);
-		Assert.assertEquals(brightness, hsb[2], 0.3f);
+		Assert.assertEquals(hue, hsb.hue, 0f);
+		Assert.assertEquals(saturation, hsb.saturation, 0f);
+		Assert.assertEquals(brightness, hsb.brightness, 0.3f);
 	}
 
 }

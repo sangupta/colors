@@ -19,8 +19,6 @@
 
 package com.sangupta.colors.model;
 
-import com.sangupta.colors.utils.ColorConversionUtils;
-
 /**
  * Cyan-Magenta-Yellow color model.
  * 
@@ -100,27 +98,6 @@ public class CMY {
 		this.cyan = cyan;
 		this.magenta = magenta;
 		this.yellow = yellow;
-	}
-	
-	/**
-	 * Create a {@link CMY} color from an {@link RGB} color.
-	 * 
-	 * @param rgbColor
-	 *            the {@link RGB} color to convert from
-	 * 
-	 * @throws IllegalArgumentException
-	 *             if {@link RGB} color is <code>null</code>
-	 */
-	public CMY(RGB rgbColor) {
-		if(rgbColor == null) {
-			throw new IllegalArgumentException("RGB color cannot be null");
-		}
-		
-		float[] cmy = ColorConversionUtils.RGBtoCMY(rgbColor.red, rgbColor.green, rgbColor.blue);
-		
-		this.cyan = cmy[0];
-		this.magenta = cmy[1];
-		this.yellow = cmy[2];
 	}
 	
 	/**

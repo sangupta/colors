@@ -22,6 +22,7 @@ package com.sangupta.colors.utils;
 import java.awt.Color;
 
 import com.sangupta.colors.model.CMY;
+import com.sangupta.colors.model.CMYK;
 import com.sangupta.colors.model.HSB;
 import com.sangupta.colors.model.HSI;
 import com.sangupta.colors.model.HSL;
@@ -38,13 +39,16 @@ import com.sangupta.colors.model.Yxy;
 /**
  * Utility functions to work with colors.
  * 
- * Refer 
+ * <br><br>
  * 
- * * http://www.easyrgb.com/index.php?X=MATH&H=06
- * * https://imagej.nih.gov/ij/plugins/download/Color_Space_Converter.java
- * * https://gist.github.com/rzhukov/9129585
+ * Refer the following for more details: 
  * 
- * for more details.
+ * <ul>
+ * <li><a href="http://www.easyrgb.com/index.php?X=MATH&H=06">http://www.easyrgb.com/index.php?X=MATH&H=06</a></li>
+ * <li><a href="https://imagej.nih.gov/ij/plugins/download/Color_Space_Converter.java">https://imagej.nih.gov/ij/plugins/download/Color_Space_Converter.java</a></li>
+ * <li><a href="https://gist.github.com/rzhukov/9129585">https://gist.github.com/rzhukov/9129585</a></li>
+ * <li><a href="https://github.com/Qix-/color-convert/blob/master/conversions.js">https://github.com/Qix-/color-convert/blob/master/conversions.js</a></li>
+ * </ul>
  * 
  * @author sangupta
  * @since 1.0.0
@@ -52,32 +56,20 @@ import com.sangupta.colors.model.Yxy;
 public class ColorConversionUtils {
 	
 	/**
-	 * Convert and return CMYK float array from a given {@link RGB}
+	 * Convert a {@link RGB} color to {@link CMYK} color.
 	 * 
-	 * @param color
-	 *            the {@link RGB}
-	 * 
-	 * @return <code>float</code>-array with 4 elements
+	 * @param rgb
+	 * @return
 	 */
-	public static float[] RGBtoCMYK(RGB color) {
-		float[] cmyk = new float[4];
-		RGBtoCMYK(color, cmyk);
-		return cmyk;
-	}
-	
-	public static void RGBtoCMYK(RGB color, float[] cmyk) {
-		float cyan = 1 - color.red / 255f;
-		float magenta = 1 - color.green / 255f;
-		float yellow = 1 - color.blue / 255f;
+	public static CMYK RGBtoCMYK(RGB rgb) {
+		float cyan = 1 - rgb.red / 255f;
+		float magenta = 1 - rgb.green / 255f;
+		float yellow = 1 - rgb.blue / 255f;
 		
 		float black = Math.min(cyan, Math.min(magenta, yellow));
 		
 		if(black == 1f) {
-			cmyk[0] = 0f;
-			cmyk[1] = 0f;
-			cmyk[2] = 0f;
-			cmyk[3] = 1f;
-			return;
+			return new CMYK(0f, 0f, 0f, 1f);
 		}
 		
 		float divider = 1 - black;
@@ -85,48 +77,62 @@ public class ColorConversionUtils {
 		magenta = (magenta - black) / divider;
 		yellow = (yellow - black) / divider;
 		
-		cmyk[0] = cyan;
-		cmyk[1] = magenta;
-		cmyk[2] = yellow;
-		cmyk[3] = black;
+		return new CMYK(cyan, magenta, yellow, black);
 	}
 	
-	public static float[] RGBtoHSB(RGB rgbColor) {
+	/**
+	 * Convert a {@link CMYK} color to {@link RGB} color.
+	 * 
+	 * @param cmyk
+	 * @return
+	 */
+	public static RGB CMYKtoRGB(CMYK cmyk) {
+		// TODO: fix this
+		return null;
+	}
+	
+	/**
+	 * Convert a {@link RGB} color to {@link HSB} color.
+	 * 
+	 * @param rgbColor
+	 * @return
+	 */
+	public static HSB RGBtoHSB(RGB rgbColor) {
 		if(rgbColor == null) {
 			throw new IllegalArgumentException("Color cannot be null");
 		}
 		
 		float[] hsb = new float[3];
-		RGBtoHSB(rgbColor, hsb);
-		return hsb;
-	}
-	
-	public static void RGBtoHSB(RGB rgbColor, float[] hsb) {
-		if(rgbColor == null) {
-			throw new IllegalArgumentException("Color cannot be null");
-		}
 		
 		Color.RGBtoHSB(rgbColor.red, rgbColor.green, rgbColor.blue, hsb);
+		return new HSB(hsb);
 	}
 	
-	public static float[] RGBtoHSL(RGB rgbColor) {
-		if(rgbColor == null) {
+	/**
+	 * Convert a {@link HSB} color to {@link RGB} color.
+	 * 
+	 * @param hsb
+	 * @return
+	 */
+	public static int[] HSBtoRGB(HSB hsb) {
+		// TODO: fix this
+		return null;
+	}
+	
+	/**
+	 * Convert a {@link RGB} color to {@link HSL} color.
+	 * 
+	 * @param rgb
+	 * @return
+	 */
+	public static HSL RGBtoHSL(RGB rgb) {
+		if(rgb == null) {
 			throw new IllegalArgumentException("Color cannot be null");
 		}
 		
-		float[] hsl = new float[3];
-		RGBtoHSL(rgbColor, hsl);
-		return hsl;
-	}
-	
-	public static void RGBtoHSL(RGB rgbColor, float[] hsl) {
-		if(rgbColor == null) {
-			throw new IllegalArgumentException("Color cannot be null");
-		}
-		
-		final float redFloat = rgbColor.red / 255f;
-        final float greenFloat = rgbColor.green / 255f;
-        final float blueFloat = rgbColor.blue / 255f;
+		final float redFloat = rgb.red / 255f;
+        final float greenFloat = rgb.green / 255f;
+        final float blueFloat = rgb.blue / 255f;
 
         final float max = Math.max(redFloat, Math.max(greenFloat, blueFloat));
         final float min = Math.min(redFloat, Math.min(greenFloat, blueFloat));
@@ -155,26 +161,20 @@ public class ColorConversionUtils {
         	hue = 360f + hue;
         }
         
-        hsl[0] = hue;
-        hsl[1] = saturation * 100f;
-        hsl[2] = lumin * 100f;
-	}
-	
-	public static int[] HSLtoRGB(HSL hsl) {
-		return HSLtoRGB(hsl.hue, hsl.saturation, hsl.luminosity);
-	}
-	
-	public static int[] HSLtoRGB (float[] hsl) {
-		return HSLtoRGB(hsl);
+        return new HSL(hue, saturation * 100f, lumin * 100f);
 	}
 
-	public static int[] HSLtoRGB(final float hue, final float saturation, final float luminosity) {
-		int[] rgb = new int[3];
-		
-        final float c = (1f - Math.abs(2 * luminosity - 1f)) * saturation;
-        final float m = luminosity - 0.5f * c;
-        final float x = c * (1f - Math.abs((hue / 60f % 2f) - 1f));
-        final int hueSegment = (int) hue / 60;
+	/**
+	 * Convert a {@link HSL} color to {@link RGB} color.
+	 * 
+	 * @param hsl
+	 * @return
+	 */
+	public static RGB HSLtoRGB(HSL hsl) {
+        final float c = (1f - Math.abs(2 * hsl.luminosity - 1f)) * hsl.saturation;
+        final float m = hsl.luminosity - 0.5f * c;
+        final float x = c * (1f - Math.abs((hsl.hue / 60f % 2f) - 1f));
+        final int hueSegment = (int) hsl.hue / 60;
         int red = 0, green = 0, blue = 0;
         
         switch (hueSegment) {
@@ -215,49 +215,52 @@ public class ColorConversionUtils {
         green = Math.max(0, Math.min(255, green));
         blue = Math.max(0, Math.min(255, blue));
         
-        rgb[0] = red;
-        rgb[1] = green;
-        rgb[2] = blue;
-        
-        return rgb;
+        return new RGB(red, green, blue);
     }
 	
-	public static float[] RGBtoXYZ(RGB color) {
-		float[] xyz = new float[3];
-		RGBtoXYZ(color, xyz);
-		return xyz;
-	}
-	
-	public static void RGBtoXYZ(RGB color, float[] xyz) {
+	/**
+	 * Convert from {@link RGB} color to {@link XYZ} color.
+	 * 
+	 * @param rgbColor
+	 * @return
+	 */
+	public static XYZ RGBtoXYZ(RGB rgbColor) {
 		float normalizer = 1.0f / 0.17697f;
 		
-		xyz[0] = normalizer * (0.490f * color.red) + (0.310f * color.green) + (0.20f * color.blue);
-		xyz[1] = normalizer * (0.17697f * color.red) + (0.8124f * color.green) + (0.01063f * color.blue);
-		xyz[2] = normalizer * (0.0f * color.red) + (0.01f * color.green) + (0.99f * color.blue);
+		float x = normalizer * (0.490f * rgbColor.red) + (0.310f * rgbColor.green) + (0.20f * rgbColor.blue);
+		float y = normalizer * (0.17697f * rgbColor.red) + (0.8124f * rgbColor.green) + (0.01063f * rgbColor.blue);
+		float z = normalizer * (0.0f * rgbColor.red) + (0.01f * rgbColor.green) + (0.99f * rgbColor.blue);
+		
+		return new XYZ(x, y, z);
 	}
-	
-	public static int[] XYZtoRGB(XYZ color) {
-		int[] rgb = new int[3];
-		
-		Float red = (0.41847f * color.x) - (0.15866f * color.y) - (0.082835f * color.z);
-		Float green = (-0.091169f * color.x) + (0.25243f * color.y) + (0.015708f * color.z);
-		Float blue = (0.0009209f * color.x) - (0.0025498f * color.y) + (0.17860f * color.z);
-		
-		rgb[0] = red.intValue();
-		rgb[1] = green.intValue();
-		rgb[2] = blue.intValue();
-		
-		return rgb;
-	}
-	
-	public static double[] LABtoXYZ(double L, double a, double b, XYZIlluminant whitePoint) {
-		double[] result = new double[3];
 
-		double y = (L + 16.0) / 116.0;
+	/**
+	 * Convert from {@link XYZ} color to {@link RGB} color.
+	 * 
+	 * @param xyzColor
+	 * @return
+	 */
+	public static RGB XYZtoRGB(XYZ xyzColor) {
+		Float red = (0.41847f * xyzColor.x) - (0.15866f * xyzColor.y) - (0.082835f * xyzColor.z);
+		Float green = (-0.091169f * xyzColor.x) + (0.25243f * xyzColor.y) + (0.015708f * xyzColor.z);
+		Float blue = (0.0009209f * xyzColor.x) - (0.0025498f * xyzColor.y) + (0.17860f * xyzColor.z);
+		
+		return new RGB(red.intValue(), green.intValue(), blue.intValue());
+	}
+	
+	/**
+	 * Convert from {@link LAB} color to {@link XYZ} color.
+	 * 
+	 * @param lab
+	 * @param whitePoint
+	 * @return
+	 */
+	public static XYZ LABtoXYZ(LAB lab, XYZIlluminant whitePoint) {
+		double y = (lab.l + 16.0) / 116.0;
 		double y3 = Math.pow(y, 3.0);
-		double x = (a / 500.0) + y;
+		double x = (lab.a / 500.0) + y;
 		double x3 = Math.pow(x, 3.0);
-		double z = y - (b / 200.0);
+		double z = y - (lab.b / 200.0);
 		double z3 = Math.pow(z, 3.0);
 
 		if (y3 > 0.008856) {
@@ -276,18 +279,24 @@ public class ColorConversionUtils {
 			z = (z - (16.0 / 116.0)) / 7.787;
 		}
 
-		result[0] = x * whitePoint.x2();
-		result[1] = y * whitePoint.y2();
-		result[2] = z * whitePoint.z2();
+		Double xx = x * whitePoint.x2();
+		Double yy = y * whitePoint.y2();
+		Double zz = z * whitePoint.z2();
 
-		return result;
+		return new XYZ(xx.floatValue(), yy.floatValue(), zz.floatValue());
 	}
 	
-	public static double[] XYZtoLAB(double X, double Y, double Z, XYZIlluminant whitePoint) {
-
-	      double x = X / whitePoint.x2();
-	      double y = Y / whitePoint.y2();
-	      double z = Z / whitePoint.z2();
+	/**
+	 * Convert from {@link XYZ} color to {@link LAB} color.
+	 * 
+	 * @param xyz
+	 * @param whitePoint
+	 * @return
+	 */
+	public static LAB XYZtoLAB(XYZ xyz, XYZIlluminant whitePoint) {
+	      double x = xyz.x / whitePoint.x2();
+	      double y = xyz.y / whitePoint.y2();
+	      double z = xyz.z / whitePoint.z2();
 
 	      if (x > 0.008856) {
 	        x = Math.pow(x, 1.0 / 3.0);
@@ -308,31 +317,27 @@ public class ColorConversionUtils {
 	        z = (7.787 * z) + (16.0 / 116.0);
 	      }
 
-	      double[] result = new double[3];
+	      Double l = (116.0 * y) - 16.0;
+	      Double a = 500.0 * (x - y);
+	      Double b = 200.0 * (y - z);
 
-	      result[0] = (116.0 * y) - 16.0;
-	      result[1] = 500.0 * (x - y);
-	      result[2] = 200.0 * (y - z);
-
-	      return result;
+	      return new LAB(l.floatValue(), a.floatValue(), b.floatValue());
 	    }
 
 	/**
-	 * Convert between {@link RGB} to {@link CMY}.
+	 * Convert from {@link RGB} color to {@link CMY} color.
 	 * 
 	 * @param red
 	 * @param green
 	 * @param blue
 	 * @return
 	 */
-	public static float[] RGBtoCMY(int red, int green, int blue) {
-		float[] cmy = new float[3];
+	public static CMY RGBtoCMY(RGB rgbColor) {
+		float cyan = 1 - (rgbColor.red / 255f);
+		float magenta = 1 - (rgbColor.green / 255f);
+		float yellow = 1 - (rgbColor.blue / 255f);
 		
-		cmy[0] = 1 - (red / 255f);
-		cmy[1] = 1 - (green / 255f);
-		cmy[2] = 1 - (blue / 255f);
-		
-		return cmy;
+		return new CMY(cyan, magenta, yellow);
 	}
 
 	/**
@@ -639,10 +644,6 @@ public class ColorConversionUtils {
 		return new int[] { z.intValue(), x.intValue(), y.intValue() };
 	}
 
-	public static int[] HSBtoRGB(HSB hsb) {
-		return null;
-	}
-	
 	public static float[] LABtoLCH(LAB lab) {
 		return LABtoLCH(lab.l, lab.a, lab.b);
 	}

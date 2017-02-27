@@ -88,26 +88,12 @@ public class HSL {
 	}
 	
 	/**
-	 * Construct a {@link HSL} instance from a given {@link RGB} color instance
-	 * 
-	 * @param rgbColor
-	 *            the {@link RGB} color instance
-	 */
-	public HSL(RGB rgbColor) {
-		float hsl[] = ColorConversionUtils.RGBtoHSL(rgbColor);
-		
-		this.hue = hsl[0];
-		this.saturation = hsl[1];
-		this.luminosity = hsl[2];
-	}
-	
-	/**
 	 * Convert this color to {@link RGB} color model
 	 * 
 	 * @return the RGB color
 	 */
 	public RGB rgb() {
-		return new RGB(ColorConversionUtils.HSLtoRGB(this));
+		return ColorConversionUtils.HSLtoRGB(this);
 	}
 	
 	/**
