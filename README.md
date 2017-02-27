@@ -68,8 +68,6 @@ RGB rgb = new RGB(new int[] { 29, 39, 49})		// obtain the RGB color
 ## RoadMap
 
 * Add YCbCr family of color models - https://en.wikipedia.org/wiki/YCbCr
-* CIELUV color model - https://en.wikipedia.org/wiki/CIELUV
-* CIE-Lch color model
 * Test cases
 
 ## Versioning
