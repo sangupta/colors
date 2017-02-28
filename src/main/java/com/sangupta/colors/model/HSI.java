@@ -50,18 +50,28 @@ public class HSI {
 		this.hue = hsi[0];
 		this.saturation = hsi[1];
 		this.intensity = hsi[2];
+		
+		this.checkLimit();
 	}
 	
 	public HSI(float hue, float saturation, float intensity) {
 		this.hue = hue;
 		this.saturation = saturation;
 		this.intensity = intensity;
+		
+		this.checkLimit();
 	}
 	
-	public HSI(HSI other) {
-		this.hue = other.hue;
-		this.saturation = other.saturation;
-		this.intensity = other.intensity;
+	public int hueDegrees() {
+		return ColorConversionUtils.asInt(this.hue * 360d);
+	}
+	
+	public int saturationPercent() {
+		return ColorConversionUtils.asInt(this.saturation * 100d);
+	}
+	
+	public int intensityPercent() {
+		return ColorConversionUtils.asInt(this.intensity * 100d);
 	}
 	
 	/**
@@ -110,5 +120,19 @@ public class HSI {
 		
 		HSI color = (HSI) obj;
 		return this.hue ==  color.hue && this.saturation == color.saturation && this.intensity == color.intensity;
+	}
+	
+	private void checkLimit() {
+		if(this.hue < 0f || this.hue > 1f) {
+			throw new IllegalArgumentException("Hue component must be between (0, 1), got: " + this.hue);
+		}
+		
+		if(this.saturation < 0f || this.saturation > 1f) {
+			throw new IllegalArgumentException("Saturation component must be between (0, 1), got: " + this.saturation);
+		}
+		
+		if(this.intensity < 0f || this.intensity > 1f) {
+			throw new IllegalArgumentException("Intensity component must be between (0, 1), got: " + this.intensity);
+		}
 	}
 }

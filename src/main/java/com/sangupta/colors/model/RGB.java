@@ -160,7 +160,7 @@ public class RGB {
 	 * @return
 	 */
 	public HSB hsb() {
-		return new HSB(ColorConversionUtils.RGBtoHSB(this));
+		return ColorConversionUtils.RGBtoHSB(this);
 	}
 	
 	/**
@@ -169,7 +169,7 @@ public class RGB {
 	 * @return the {@link HSI} color
 	 */
 	public HSI hsi() {
-		return new HSI(ColorConversionUtils.RGBtoHSI(this));
+		return ColorConversionUtils.RGBtoHSI(this);
 	}
 	
 	/**
@@ -178,7 +178,7 @@ public class RGB {
 	 * @return the {@link HSL} color
 	 */
 	public HSL hsl() {
-		return new HSL(ColorConversionUtils.RGBtoHSL(this));
+		return ColorConversionUtils.RGBtoHSL(this);
 	}
 	
 	/**

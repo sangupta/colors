@@ -54,6 +54,8 @@ public class HSL {
 		this.hue = hsl[0];
 		this.saturation = hsl[1];
 		this.luminosity = hsl[2];
+		
+		this.checkLimit();
 	}
 	
 	/**
@@ -73,6 +75,8 @@ public class HSL {
 		this.hue = hue;
 		this.saturation = saturation;
 		this.luminosity = luminosity;
+		
+		this.checkLimit();
 	}
 	
 	public int hueDegrees() {
@@ -85,18 +89,6 @@ public class HSL {
 	
 	public int luminosityPercent() {
 		return ColorConversionUtils.asInt(this.luminosity * 100d);
-	}
-	
-	/**
-	 * Construct a {@link HSL} color instance from another {@link HSL} instance
-	 * 
-	 * @param other
-	 *            the other {@link HSL} instance
-	 */
-	public HSL(HSL other) {
-		this.hue = other.hue;
-		this.saturation = other.saturation;
-		this.luminosity = other.luminosity;
 	}
 	
 	/**
@@ -147,4 +139,17 @@ public class HSL {
 		return this.hue ==  color.hue && this.saturation == color.saturation && this.luminosity == color.luminosity;
 	}
 	
+	private void checkLimit() {
+		if(this.hue < 0f || this.hue > 1f) {
+			throw new IllegalArgumentException("Hue component must be between (0, 1), got: " + this.hue);
+		}
+		
+		if(this.saturation < 0f || this.saturation > 1f) {
+			throw new IllegalArgumentException("Saturation component must be between (0, 1), got: " + this.saturation);
+		}
+		
+		if(this.luminosity < 0f || this.luminosity > 1f) {
+			throw new IllegalArgumentException("Luminosity component must be between (0, 1), got: " + this.luminosity);
+		}
+	}
 }

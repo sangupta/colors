@@ -19,8 +19,6 @@
 
 package com.sangupta.colors.model;
 
-import java.awt.Color;
-
 import com.sangupta.colors.ColorConversionUtils;
 
 /**
@@ -78,33 +76,6 @@ public class HSB {
 		this.hue = hue;
 		this.saturation = saturation;
 		this.brightness = brightness;
-	}
-	
-	/**
-	 * Construct a {@link HSB} instance using another {@link HSB}
-	 * instance
-	 * 
-	 * @param other
-	 *            the {@link HSB} instance to copy values from
-	 */
-	public HSB(HSB other) {
-		this.hue = other.hue;
-		this.saturation = other.saturation;
-		this.brightness = other.brightness;
-	}
-	
-	/**
-	 * Construct a {@link HSB} instance using a {@link RGB} instance
-	 * 
-	 * @param color
-	 *            the {@link RGB} instance
-	 */
-	public HSB(RGB color) {
-		float[] hsb = Color.RGBtoHSB(color.red, color.green, color.blue, null);
-		
-		this.hue = hsb[0];
-		this.saturation = hsb[1];
-		this.brightness = hsb[2];
 	}
 	
 	public int hueDegrees() {
