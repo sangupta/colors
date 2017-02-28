@@ -805,7 +805,7 @@ public class ColorConversionUtils {
 	 * @param value
 	 * @return
 	 */
-	private static int asInt(double value) {
+	public static int asInt(double value) {
 		Long longValue = Math.round(value);
 		return longValue.intValue();
 	}

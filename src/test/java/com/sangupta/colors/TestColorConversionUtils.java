@@ -7,17 +7,20 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.sangupta.colors.model.CMYK;
+import com.sangupta.colors.model.HSB;
 import com.sangupta.colors.model.RGB;
 import com.sangupta.jerry.util.ReflectionUtils;
 
-public class TestColorConversionUtils {
+public class TestColorConversionUtils extends AbstractTestColorConversionUtils {
 	
 	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
 		List<Field> fields = ReflectionUtils.getAllFields(CSS3Colors.class);
 		for(Field field : fields) {
 			RGB rgb = (RGB) field.get(null);
-			CMYK cmyk = ColorConversionUtils.RGBtoCMYK(rgb);
-			System.out.println("testRGBtoCMYK(CSS3Colors." + field.getName() + ", " + cmyk.cyan + "f, " + cmyk.magenta + "f, " + cmyk.yellow + "f, " + cmyk.black + "f);");
+			HSB hsb = ColorConversionUtils.RGBtoHSB(rgb);
+//			System.out.println(rgb + " <> " + hsb + " <> " + hsb.hueDegrees() + ", " + hsb.saturationPercent() + ", " + hsb.brightnessPercent());
+//			CMYK cmyk = ColorConversionUtils.RGBtoCMYK(rgb);
+			System.out.println("testRGBtoHSB(CSS3Colors." + field.getName() + ", " + hsb.hue + "f, " + hsb.saturation + "f, " + hsb.brightness + "f);");
 		}
 	}
 
@@ -172,14 +175,6 @@ public class TestColorConversionUtils {
 		testRGBtoCMYK(CSS3Colors.YELLOW_GREEN, 0.24878047f, 0.0f, 0.75609756f, 0.19607842f);
 	}
 	
-	private void testRGBtoCMYK(RGB rgbColor, float cyan, float magenta, float yellow, float black) {
-		CMYK cmyk = ColorConversionUtils.RGBtoCMYK(rgbColor);
-		Assert.assertEquals(cyan, cmyk.cyan, 0.001f);
-		Assert.assertEquals(magenta, cmyk.magenta, 0.001f);
-		Assert.assertEquals(yellow, cmyk.yellow, 0.001f);
-		Assert.assertEquals(black, cmyk.black, 0.001f);
-	}
-	
 	@Test
 	public void testCMYKtoRGB() throws IllegalArgumentException, IllegalAccessException {
 		List<Field> fields = ReflectionUtils.getAllFields(CSS3Colors.class);
@@ -187,6 +182,168 @@ public class TestColorConversionUtils {
 			RGB rgb = (RGB) field.get(null);
 			CMYK cmyk = ColorConversionUtils.RGBtoCMYK(rgb);
 			RGB rgb2 = ColorConversionUtils.CMYKtoRGB(cmyk);
+			Assert.assertEquals(rgb, rgb2);
+		}
+	}
+	
+	@Test
+	public void testRGBtoHSB() {
+		testRGBtoHSB(CSS3Colors.ALICE_BLUE, 0.5777778f, 0.05882353f, 1.0f);
+		testRGBtoHSB(CSS3Colors.ANTIQUE_WHITE, 0.09523809f, 0.14f, 0.98039216f);
+		testRGBtoHSB(CSS3Colors.AQUA, 0.5f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.AQUA_MARINE, 0.4440104f, 0.5019608f, 1.0f);
+		testRGBtoHSB(CSS3Colors.AZURE, 0.5f, 0.05882353f, 1.0f);
+		testRGBtoHSB(CSS3Colors.BEIGE, 0.16666667f, 0.10204082f, 0.9607843f);
+		testRGBtoHSB(CSS3Colors.BISQUE, 0.09039548f, 0.23137255f, 1.0f);
+		testRGBtoHSB(CSS3Colors.BLACK, 0.0f, 0.0f, 0.0f);
+		testRGBtoHSB(CSS3Colors.BLANCHED_ALMOND, 0.1f, 0.19607843f, 1.0f);
+		testRGBtoHSB(CSS3Colors.BLUE, 0.6666667f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.BLUE_VIOLET, 0.7531876f, 0.8097345f, 0.8862745f);
+		testRGBtoHSB(CSS3Colors.BROWN, 0.0f, 0.74545455f, 0.64705884f);
+		testRGBtoHSB(CSS3Colors.BURLY_WOOD, 0.09386972f, 0.3918919f, 0.87058824f);
+		testRGBtoHSB(CSS3Colors.CADET_BLUE, 0.5051282f, 0.40625f, 0.627451f);
+		testRGBtoHSB(CSS3Colors.CHART_REUSE, 0.25032678f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.CHOCOLATE, 0.06944445f, 0.85714287f, 0.8235294f);
+		testRGBtoHSB(CSS3Colors.CORAL, 0.044761907f, 0.6862745f, 1.0f);
+		testRGBtoHSB(CSS3Colors.CORN_FLOWER_BLUE, 0.60705596f, 0.5780591f, 0.92941177f);
+		testRGBtoHSB(CSS3Colors.CORN_SILK, 0.13333334f, 0.13725491f, 1.0f);
+		testRGBtoHSB(CSS3Colors.CRIMSON, 0.9666667f, 0.90909094f, 0.8627451f);
+		testRGBtoHSB(CSS3Colors.CYAN, 0.5f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.DARK_BLUE, 0.6666667f, 1.0f, 0.54509807f);
+		testRGBtoHSB(CSS3Colors.DARK_CYAN, 0.5f, 1.0f, 0.54509807f);
+		testRGBtoHSB(CSS3Colors.DARK_GOLDEN_ROD, 0.11849711f, 0.9402174f, 0.72156864f);
+		testRGBtoHSB(CSS3Colors.DARK_GRAY, 0.0f, 0.0f, 0.6627451f);
+		testRGBtoHSB(CSS3Colors.DARK_GREY, 0.0f, 0.0f, 0.6627451f);
+		testRGBtoHSB(CSS3Colors.DARK_GREEN, 0.33333334f, 1.0f, 0.39215687f);
+		testRGBtoHSB(CSS3Colors.DARK_KHAKI, 0.15447155f, 0.43386245f, 0.7411765f);
+		testRGBtoHSB(CSS3Colors.DARK_MAGENTA, 0.8333333f, 1.0f, 0.54509807f);
+		testRGBtoHSB(CSS3Colors.DARK_OLIVE_GREEN, 0.2277778f, 0.5607477f, 0.41960785f);
+		testRGBtoHSB(CSS3Colors.DARK_ORANGE, 0.09150326f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.DARK_ORCHID, 0.7781386f, 0.75490195f, 0.8f);
+		testRGBtoHSB(CSS3Colors.DARK_RED, 0.0f, 1.0f, 0.54509807f);
+		testRGBtoHSB(CSS3Colors.DARK_SALMON, 0.042042047f, 0.47639486f, 0.9137255f);
+		testRGBtoHSB(CSS3Colors.DARK_SEA_GREEN, 0.33333334f, 0.2393617f, 0.7372549f);
+		testRGBtoHSB(CSS3Colors.DARK_SLATE_BLUE, 0.69017094f, 0.5611511f, 0.54509807f);
+		testRGBtoHSB(CSS3Colors.DARK_SLATE_GRAY, 0.5f, 0.4050633f, 0.30980393f);
+		testRGBtoHSB(CSS3Colors.DARK_SLATE_GREY, 0.5f, 0.4050633f, 0.30980393f);
+		testRGBtoHSB(CSS3Colors.DARK_TURQUOISE, 0.50239235f, 1.0f, 0.81960785f);
+		testRGBtoHSB(CSS3Colors.DARK_VIOLET, 0.7835703f, 1.0f, 0.827451f);
+		testRGBtoHSB(CSS3Colors.DEEP_PINK, 0.9099291f, 0.92156863f, 1.0f);
+		testRGBtoHSB(CSS3Colors.DEEP_SKY_BLUE, 0.54183006f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.DIM_GRAY, 0.0f, 0.0f, 0.4117647f);
+		testRGBtoHSB(CSS3Colors.DIM_GREY, 0.0f, 0.0f, 0.4117647f);
+		testRGBtoHSB(CSS3Colors.DODGER_BLUE, 0.5822222f, 0.88235295f, 1.0f);
+		testRGBtoHSB(CSS3Colors.FIRE_BRICK, 0.0f, 0.80898875f, 0.69803923f);
+		testRGBtoHSB(CSS3Colors.FLORAL_WHITE, 0.111111104f, 0.05882353f, 1.0f);
+		testRGBtoHSB(CSS3Colors.FOREST_GREEN, 0.33333334f, 0.7553957f, 0.54509807f);
+		testRGBtoHSB(CSS3Colors.FUCHSIA, 0.8333333f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.GAINS_BORO, 0.0f, 0.0f, 0.8627451f);
+		testRGBtoHSB(CSS3Colors.GHOST_WHITE, 0.6666667f, 0.02745098f, 1.0f);
+		testRGBtoHSB(CSS3Colors.GOLD, 0.14052288f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.GOLDEN_ROD, 0.119175635f, 0.853211f, 0.85490197f);
+		testRGBtoHSB(CSS3Colors.GRAY, 0.0f, 0.0f, 0.5019608f);
+		testRGBtoHSB(CSS3Colors.GREY, 0.0f, 0.0f, 0.5019608f);
+		testRGBtoHSB(CSS3Colors.GREEN, 0.33333334f, 1.0f, 0.5019608f);
+		testRGBtoHSB(CSS3Colors.GREEN_YELLOW, 0.2323718f, 0.8156863f, 1.0f);
+		testRGBtoHSB(CSS3Colors.HONEY_DEW, 0.33333334f, 0.05882353f, 1.0f);
+		testRGBtoHSB(CSS3Colors.HOT_PINK, 0.9166667f, 0.5882353f, 1.0f);
+		testRGBtoHSB(CSS3Colors.INDIAN_RED, 0.0f, 0.5512195f, 0.8039216f);
+		testRGBtoHSB(CSS3Colors.INDIGO, 0.7628205f, 1.0f, 0.50980395f);
+		testRGBtoHSB(CSS3Colors.IVORY, 0.16666667f, 0.05882353f, 1.0f);
+		testRGBtoHSB(CSS3Colors.KHAKI, 0.14999999f, 0.41666666f, 0.9411765f);
+		testRGBtoHSB(CSS3Colors.LAVENDER, 0.6666667f, 0.08f, 0.98039216f);
+		testRGBtoHSB(CSS3Colors.LAVENDER_BLUSH, 0.9444444f, 0.05882353f, 1.0f);
+		testRGBtoHSB(CSS3Colors.LAWN_GREEN, 0.25132275f, 1.0f, 0.9882353f);
+		testRGBtoHSB(CSS3Colors.LEMON_CHIFFON, 0.14999999f, 0.19607843f, 1.0f);
+		testRGBtoHSB(CSS3Colors.LIGHT_BLUE, 0.5409357f, 0.24782608f, 0.9019608f);
+		testRGBtoHSB(CSS3Colors.LIGHT_CORAL, 0.0f, 0.46666667f, 0.9411765f);
+		testRGBtoHSB(CSS3Colors.LIGHT_CYAN, 0.5f, 0.12156863f, 1.0f);
+		testRGBtoHSB(CSS3Colors.LIGHT_GOLDEN_ROD_YELLOW, 0.16666667f, 0.16f, 0.98039216f);
+		testRGBtoHSB(CSS3Colors.LIGHT_GRAY, 0.0f, 0.0f, 0.827451f);
+		testRGBtoHSB(CSS3Colors.LIGHT_GREY, 0.0f, 0.0f, 0.827451f);
+		testRGBtoHSB(CSS3Colors.LIGHT_GREEN, 0.33333334f, 0.394958f, 0.93333334f);
+		testRGBtoHSB(CSS3Colors.LIGHT_PINK, 0.9748858f, 0.28627452f, 1.0f);
+		testRGBtoHSB(CSS3Colors.LIGHT_SALMON, 0.047619045f, 0.52156866f, 1.0f);
+		testRGBtoHSB(CSS3Colors.LIGHT_SEA_GREEN, 0.49086758f, 0.8202247f, 0.69803923f);
+		testRGBtoHSB(CSS3Colors.LIGHT_SKY_BLUE, 0.56376815f, 0.46f, 0.98039216f);
+		testRGBtoHSB(CSS3Colors.LIGHT_SLATE_GRAY, 0.5833333f, 0.22222222f, 0.6f);
+		testRGBtoHSB(CSS3Colors.LIGHT_SLATE_GREY, 0.5833333f, 0.22222222f, 0.6f);
+		testRGBtoHSB(CSS3Colors.LIGHT_STEEL_BLUE, 0.59420294f, 0.2072072f, 0.87058824f);
+		testRGBtoHSB(CSS3Colors.LIGHT_YELLOW, 0.16666667f, 0.12156863f, 1.0f);
+		testRGBtoHSB(CSS3Colors.LIME, 0.33333334f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.LIME_GREEN, 0.33333334f, 0.75609756f, 0.8039216f);
+		testRGBtoHSB(CSS3Colors.LINEN, 0.083333336f, 0.08f, 0.98039216f);
+		testRGBtoHSB(CSS3Colors.MAGENTA, 0.8333333f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.MAROON, 0.0f, 1.0f, 0.5019608f);
+		testRGBtoHSB(CSS3Colors.MEDIUM_AQUA_MARINE, 0.4433657f, 0.502439f, 0.8039216f);
+		testRGBtoHSB(CSS3Colors.MEDIUM_BLUE, 0.6666667f, 1.0f, 0.8039216f);
+		testRGBtoHSB(CSS3Colors.MEDIUM_ORCHID, 0.80026454f, 0.5971564f, 0.827451f);
+		testRGBtoHSB(CSS3Colors.MEDIUM_PURPLE, 0.7227564f, 0.4814815f, 0.84705883f);
+		testRGBtoHSB(CSS3Colors.MEDIUM_SEA_GREEN, 0.407563f, 0.66480446f, 0.7019608f);
+		testRGBtoHSB(CSS3Colors.MEDIUM_SLATE_BLUE, 0.6902985f, 0.56302524f, 0.93333334f);
+		testRGBtoHSB(CSS3Colors.MEDIUM_SPRING_GREEN, 0.436f, 1.0f, 0.98039216f);
+		testRGBtoHSB(CSS3Colors.MEDIUM_TURQUOISE, 0.49391726f, 0.6555024f, 0.81960785f);
+		testRGBtoHSB(CSS3Colors.MEDIUM_VIOLET_RED, 0.8951311f, 0.89447236f, 0.78039217f);
+		testRGBtoHSB(CSS3Colors.MIDNIGHT_BLUE, 0.6666667f, 0.77678573f, 0.4392157f);
+		testRGBtoHSB(CSS3Colors.MINT_CREAM, 0.41666666f, 0.039215688f, 1.0f);
+		testRGBtoHSB(CSS3Colors.MISTY_ROSE, 0.016666671f, 0.11764706f, 1.0f);
+		testRGBtoHSB(CSS3Colors.MOCCASIN, 0.10585586f, 0.2901961f, 1.0f);
+		testRGBtoHSB(CSS3Colors.NAVAJO_WHITE, 0.0995935f, 0.32156864f, 1.0f);
+		testRGBtoHSB(CSS3Colors.NAVY, 0.6666667f, 1.0f, 0.5019608f);
+		testRGBtoHSB(CSS3Colors.OLD_LACE, 0.10869565f, 0.09090909f, 0.99215686f);
+		testRGBtoHSB(CSS3Colors.OLIVE, 0.16666667f, 1.0f, 0.5019608f);
+		testRGBtoHSB(CSS3Colors.OLIVE_DRAB, 0.22118382f, 0.75352114f, 0.5568628f);
+		testRGBtoHSB(CSS3Colors.ORANGE, 0.10784314f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.ORANGE_RED, 0.045098037f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.ORCHID, 0.8396226f, 0.48623854f, 0.85490197f);
+		testRGBtoHSB(CSS3Colors.PALE_GOLDEN_ROD, 0.15196078f, 0.2857143f, 0.93333334f);
+		testRGBtoHSB(CSS3Colors.PALE_GREEN, 0.33333334f, 0.39442232f, 0.9843137f);
+		testRGBtoHSB(CSS3Colors.PALE_TURQUOISE, 0.5f, 0.2647059f, 0.93333334f);
+		testRGBtoHSB(CSS3Colors.PALE_VIOLET_RED, 0.94391024f, 0.4814815f, 0.84705883f);
+		testRGBtoHSB(CSS3Colors.PAPAYA_WHIP, 0.103174604f, 0.16470589f, 1.0f);
+		testRGBtoHSB(CSS3Colors.PEACH_PUFF, 0.07857143f, 0.27450982f, 1.0f);
+		testRGBtoHSB(CSS3Colors.PERU, 0.08215963f, 0.6926829f, 0.8039216f);
+		testRGBtoHSB(CSS3Colors.PINK, 0.97089946f, 0.24705882f, 1.0f);
+		testRGBtoHSB(CSS3Colors.PLUM, 0.8333333f, 0.2760181f, 0.8666667f);
+		testRGBtoHSB(CSS3Colors.POWDER_BLUE, 0.5185185f, 0.2347826f, 0.9019608f);
+		testRGBtoHSB(CSS3Colors.PURPLE, 0.8333333f, 1.0f, 0.5019608f);
+		testRGBtoHSB(CSS3Colors.RED, 0.0f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.ROSY_BROWN, 0.0f, 0.2393617f, 0.7372549f);
+		testRGBtoHSB(CSS3Colors.ROYAL_BLUE, 0.625f, 0.7111111f, 0.88235295f);
+		testRGBtoHSB(CSS3Colors.SADDLE_BROWN, 0.06944445f, 0.8633093f, 0.54509807f);
+		testRGBtoHSB(CSS3Colors.SALMON, 0.01715686f, 0.544f, 0.98039216f);
+		testRGBtoHSB(CSS3Colors.SANDY_BROWN, 0.07657658f, 0.60655737f, 0.95686275f);
+		testRGBtoHSB(CSS3Colors.SEA_GREEN, 0.40681005f, 0.66906476f, 0.54509807f);
+		testRGBtoHSB(CSS3Colors.SEA_SHELL, 0.06862745f, 0.06666667f, 1.0f);
+		testRGBtoHSB(CSS3Colors.SIENNA, 0.05362319f, 0.71875f, 0.627451f);
+		testRGBtoHSB(CSS3Colors.SILVER, 0.0f, 0.0f, 0.7529412f);
+		testRGBtoHSB(CSS3Colors.SKY_BLUE, 0.54833335f, 0.42553192f, 0.92156863f);
+		testRGBtoHSB(CSS3Colors.SLATE_BLUE, 0.6898551f, 0.5609756f, 0.8039216f);
+		testRGBtoHSB(CSS3Colors.SLATE_GRAY, 0.5833333f, 0.22222222f, 0.5647059f);
+		testRGBtoHSB(CSS3Colors.SLATE_GREY, 0.5833333f, 0.22222222f, 0.5647059f);
+		testRGBtoHSB(CSS3Colors.SNOW, 0.0f, 0.019607844f, 1.0f);
+		testRGBtoHSB(CSS3Colors.SPRING_GREEN, 0.41633987f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.STEEL_BLUE, 0.57575756f, 0.6111111f, 0.7058824f);
+		testRGBtoHSB(CSS3Colors.TAN, 0.09523809f, 0.33333334f, 0.8235294f);
+		testRGBtoHSB(CSS3Colors.TEAL, 0.5f, 1.0f, 0.5019608f);
+		testRGBtoHSB(CSS3Colors.THISTLE, 0.8333333f, 0.11574074f, 0.84705883f);
+		testRGBtoHSB(CSS3Colors.TOMATO, 0.025362322f, 0.72156864f, 1.0f);
+		testRGBtoHSB(CSS3Colors.TURQUOISE, 0.48333335f, 0.71428573f, 0.8784314f);
+		testRGBtoHSB(CSS3Colors.VIOLET, 0.8333333f, 0.45378152f, 0.93333334f);
+		testRGBtoHSB(CSS3Colors.WHEAT, 0.10858586f, 0.26938775f, 0.9607843f);
+		testRGBtoHSB(CSS3Colors.WHITE, 0.0f, 0.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.WHITE_SMOKE, 0.0f, 0.0f, 0.9607843f);
+		testRGBtoHSB(CSS3Colors.YELLOW, 0.16666667f, 1.0f, 1.0f);
+		testRGBtoHSB(CSS3Colors.YELLOW_GREEN, 0.22150536f, 0.75609756f, 0.8039216f);
+	}
+
+	@Test
+	public void testHSBtoRGB() throws IllegalArgumentException, IllegalAccessException {
+		List<Field> fields = ReflectionUtils.getAllFields(CSS3Colors.class);
+		for(Field field : fields) {
+			RGB rgb = (RGB) field.get(null);
+			HSB hsb = ColorConversionUtils.RGBtoHSB(rgb);
+			RGB rgb2 = ColorConversionUtils.HSBtoRGB(hsb);
 			Assert.assertEquals(rgb, rgb2);
 		}
 	}

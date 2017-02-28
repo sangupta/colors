@@ -107,6 +107,18 @@ public class HSB {
 		this.brightness = hsb[2];
 	}
 	
+	public int hueDegrees() {
+		return ColorConversionUtils.asInt(this.hue * 360d);
+	}
+	
+	public int saturationPercent() {
+		return ColorConversionUtils.asInt(this.saturation * 100d);
+	}
+	
+	public int brightnessPercent() {
+		return ColorConversionUtils.asInt(this.brightness * 100d);
+	}
+	
 	/**
 	 * Convert this to {@link RGB} color model
 	 * 
@@ -128,7 +140,7 @@ public class HSB {
 	
 	@Override
 	public String toString() {
-		return "HSV(" + this.hue + ", " + this.saturation + ", " + this.brightness + ")";
+		return "HSB(" + this.hue + ", " + this.saturation + ", " + this.brightness + ")";
 	}
 	
 	@Override
