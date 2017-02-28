@@ -7,6 +7,7 @@ import com.sangupta.colors.model.CMYK;
 import com.sangupta.colors.model.HSB;
 import com.sangupta.colors.model.HSL;
 import com.sangupta.colors.model.RGB;
+import com.sangupta.colors.model.YIQ;
 
 public class AbstractTestColorConversionUtils {
 
@@ -41,5 +42,13 @@ public class AbstractTestColorConversionUtils {
 		Assert.assertEquals(cyan, color.cyan, 0.001f);
 		Assert.assertEquals(magenta, color.magenta, 0.001f);
 		Assert.assertEquals(yellow, color.yellow, 0.001f);
+	}
+	
+	protected void testRGBtoYIQ(RGB rgbColor, float y, float i, float q) {
+		YIQ color = ColorConversionUtils.RGBtoYIQ(rgbColor);
+		
+		Assert.assertEquals(y, color.y, 0.001f);
+		Assert.assertEquals(i, color.i, 0.001f);
+		Assert.assertEquals(q, color.q, 0.001f);
 	}
 }

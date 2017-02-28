@@ -38,12 +38,16 @@ public class YIQ {
 		this.y = yiq[0];
 		this.i = yiq[1];
 		this.q = yiq[2];
+		
+		this.checkLimit();
 	}
 	
 	public YIQ(float y, float i, float q) {
 		this.y = y;
 		this.i = i;
 		this.q = q;
+		
+		this.checkLimit();
 	}
 	
 	/**
@@ -82,6 +86,20 @@ public class YIQ {
 		
 		YIQ color = (YIQ) obj;
 		return this.y == color.y && this.i == color.i && this.q == color.q;
+	}
+	
+	private void checkLimit() {
+		if(this.y < 0f || this.y > 1f) {
+			throw new IllegalArgumentException("Y component must be between (0, 1), got: " + this.y);
+		}
+		
+		if(this.i < -0.596f || this.i > 0.596f) {
+			throw new IllegalArgumentException("I component must be between (-0.596, 0.596), got: " + this.i);
+		}
+		
+		if(this.q < -0.523f || this.q > 0.523f) {
+			throw new IllegalArgumentException("I component must be between (-0.523, 0.523), got: " + this.q);
+		}
 	}
 	
 }

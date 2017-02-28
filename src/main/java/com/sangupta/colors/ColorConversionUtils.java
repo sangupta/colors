@@ -515,9 +515,15 @@ public class ColorConversionUtils {
 			throw new IllegalArgumentException("RGB Color cannot be null");
 		}
 		
-		Double y = 0.299d * rgb.red + 0.587d * rgb.green + 0.114d * rgb.blue;
-		Double i = 0.596d * rgb.red - 0.274d * rgb.green - 0.332d * rgb.blue;
-		Double q = 0.211d * rgb.red - 0.523d * rgb.green + 0.312d * rgb.blue;
+		// convert RGB to 0-1 scale
+		// refer https://en.wikipedia.org/wiki/YIQ for conversion
+		double red = rgb.red / 255d;
+		double green = rgb.green / 255d;
+		double blue = rgb.blue / 255d;
+		
+		Double y = 0.299d * red + 0.587d * green + 0.114d * blue;
+		Double i = 0.596d * red - 0.274d * green - 0.322d * blue;
+		Double q = 0.211d * red - 0.523d * green + 0.312d * blue;
 		
 		return new YIQ(y.floatValue(), i.floatValue(), q.floatValue());
 	}
@@ -535,11 +541,11 @@ public class ColorConversionUtils {
 			throw new IllegalArgumentException("YIQ Color cannot be null");
 		}
 		
-		Double red   = 1.0d * yiq.y + 0.956d * yiq.i + 0.621d * yiq.q;
-		Double green = 1.0d * yiq.y - 0.272d * yiq.i - 0.647d * yiq.q;
-		Double blue  = 1.0d * yiq.y - 1.106d * yiq.i + 1.703d * yiq.q;
+		Double red   = (1.0d * yiq.y + 0.956d * yiq.i + 0.621d * yiq.q) * 255d;
+		Double green = (1.0d * yiq.y - 0.272d * yiq.i - 0.647d * yiq.q) * 255d;
+		Double blue  = (1.0d * yiq.y - 1.106d * yiq.i + 1.703d * yiq.q) * 255d;
 	
-		return new RGB(red.intValue(), green.intValue(), blue.intValue());
+		return new RGB(asInt(red), asInt(green), asInt(blue));
 	}
 	
 	/**
