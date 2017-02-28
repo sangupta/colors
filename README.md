@@ -1,4 +1,4 @@
-# avu
+# colors
 
 Strongly-typed immutable color-models and utility conversion functions in Java.  
 
@@ -102,10 +102,10 @@ For more information on SemVer, please visit http://semver.org/.
 ## License
 
 ```
-avu - Strongly typed immutable color models
+colors - Strongly typed immutable color models
 Copyright (c) 2017, Sandeep Gupta
 
-https://sangupta.com/projects/avu
+https://sangupta.com/projects/colors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
