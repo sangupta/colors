@@ -184,7 +184,13 @@ public class ColorConversionUtils {
         	hue = 360f + hue;
         }
         
-        return new HSL(hue, saturation * 100f, lumin * 100f);
+        // bring them to relative float values
+        hue = hue / 360f;
+        if(saturation > 1.0f) {
+        	saturation = 1.0f;
+        }
+        
+        return new HSL(hue, saturation, lumin);
 	}
 
 	/**
@@ -210,11 +216,13 @@ public class ColorConversionUtils {
                 green = Math.round(255 * (x + m));
                 blue = Math.round(255 * m);
                 break;
+                
             case 1:
                 red = Math.round(255 * (x + m));
                 green = Math.round(255 * (c + m));
                 blue = Math.round(255 * m);
                 break;
+                
             case 2:
                 red = Math.round(255 * m);
                 green = Math.round(255 * (c + m));
@@ -225,11 +233,13 @@ public class ColorConversionUtils {
                 green = Math.round(255 * (x + m));
                 blue = Math.round(255 * (c + m));
                 break;
+                
             case 4:
                 red = Math.round(255 * (x + m));
                 green = Math.round(255 * m);
                 blue = Math.round(255 * (c + m));
                 break;
+                
             case 5:
             case 6:
                 red = Math.round(255 * (c + m));
@@ -405,11 +415,11 @@ public class ColorConversionUtils {
 			throw new IllegalArgumentException("CMY Color cannot be null");
 		}
 		
-		int red = new Float((1 - cmyColor.cyan) * 255).intValue();
-		int green = new Float((1 - cmyColor.magenta) * 255).intValue();
-		int blue = new Float((1 - cmyColor.yellow) * 255).intValue();
+		double red = (1d - cmyColor.cyan) * 255d;
+		double green = (1d - cmyColor.magenta) * 255d;
+		double blue = (1d - cmyColor.yellow) * 255d;
 		
-		return new RGB(red, green, blue);
+		return new RGB(asInt(red), asInt(green), asInt(blue));
 	}
 	
 	/**

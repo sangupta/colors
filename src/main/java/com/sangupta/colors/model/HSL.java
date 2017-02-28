@@ -75,6 +75,18 @@ public class HSL {
 		this.luminosity = luminosity;
 	}
 	
+	public int hueDegrees() {
+		return ColorConversionUtils.asInt(this.hue * 360d);
+	}
+	
+	public int saturationPercent() {
+		return ColorConversionUtils.asInt(this.saturation * 100d);
+	}
+	
+	public int luminosityPercent() {
+		return ColorConversionUtils.asInt(this.luminosity * 100d);
+	}
+	
 	/**
 	 * Construct a {@link HSL} color instance from another {@link HSL} instance
 	 * 
