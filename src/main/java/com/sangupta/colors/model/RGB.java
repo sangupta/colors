@@ -20,6 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
+import com.sangupta.colors.Maths;
 import com.sangupta.colors.model.YUV.YUVQuality;
 
 /**
@@ -81,13 +82,11 @@ public class RGB {
 			throw new IllegalArgumentException("RGB array must have exactly 3 elements");
 		}
 		
-		checkLimit("Red", rgb[0]);
-		checkLimit("Green", rgb[1]);
-		checkLimit("Blue", rgb[2]);
-		
 		this.red = rgb[0];
 		this.green = rgb[1];
 		this.blue = rgb[2];
+		
+		this.checkLimit();
 	}
 	
 	/**
@@ -103,13 +102,15 @@ public class RGB {
 	 *            between 0-255
 	 */
 	public RGB(int red, int green, int blue) {
-		checkLimit("Red", red);
-		checkLimit("Green", green);
-		checkLimit("Blue", blue);
-		
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
+		
+		this.checkLimit();
+	}
+	
+	public RGB(double red, double green, double blue) {
+		this(Maths.asInt(red), Maths.asInt(green), Maths.asInt(blue));
 	}
 	
 	/**
@@ -312,9 +313,15 @@ public class RGB {
 	 * @param component
 	 * @param value
 	 */
-	protected void checkLimit(String component, int value) {
-		if(value < 0 || value > 255) {
-			throw new IllegalArgumentException(component + " value must be between 0-255 inclusive: got " + value);
+	protected void checkLimit() {
+		if(this.red < 0 || this.red > 255) {
+			throw new IllegalArgumentException("Red component must be between 0-255 inclusive: got " + this.red);
+		}
+		if(this.green < 0 || this.green > 255) {
+			throw new IllegalArgumentException("Green component must be between 0-255 inclusive: got " + this.green);
+		}
+		if(this.blue < 0 || this.blue > 255) {
+			throw new IllegalArgumentException("Blue component must be between 0-255 inclusive: got " + this.blue);
 		}
 	}
 }

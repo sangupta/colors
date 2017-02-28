@@ -59,8 +59,6 @@ public class RGBA extends RGB {
 	 */
 	public RGBA(int color, int alpha) {
 		super(color);
-		
-		checkLimit("Alpha", alpha);
 		this.alpha = alpha;
 	}
 	
@@ -88,8 +86,6 @@ public class RGBA extends RGB {
 	 */
 	public RGBA(int red, int green, int blue, int alpha) {
 		super(red, green, blue);
-		
-		checkLimit("Alpha", alpha);
 		this.alpha = alpha;
 	}
 	
@@ -140,5 +136,13 @@ public class RGBA extends RGB {
 		RGBA color = (RGBA) obj;
 		return this.red == color.red && this.green == color.green && this.blue == color.blue && this.alpha == color.alpha;
 	}
-	
+
+	@Override
+	protected void checkLimit() {
+		super.checkLimit();
+		
+		if(this.alpha < 0 || this.alpha > 255) {
+			throw new IllegalArgumentException("Alpha component must be between 0-255 inclusive: got " + this.alpha);
+		}
+	}
 }
