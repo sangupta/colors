@@ -314,7 +314,7 @@ public class RGB {
 	 */
 	protected void checkLimit(String component, int value) {
 		if(value < 0 || value > 255) {
-			throw new IllegalArgumentException(component + " value must be between 0-255 inclusive.");
+			throw new IllegalArgumentException(component + " value must be between 0-255 inclusive: got " + value);
 		}
 	}
 }
