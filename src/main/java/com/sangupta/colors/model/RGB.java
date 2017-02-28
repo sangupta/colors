@@ -145,6 +145,8 @@ public class RGB {
 			this.red = Integer.parseInt(new String(color.substring(0, 2)), 16);
 			this.green = Integer.parseInt(new String(color.substring(2, 4)), 16);
 			this.blue = Integer.parseInt(new String(color.substring(4, 6)), 16);
+			
+			return;
 		}
 		
 		throw new IllegalArgumentException("Color value must be expressed as hex in either #rrggbb or #rgb format");
