@@ -5,9 +5,12 @@ import org.junit.Assert;
 import com.sangupta.colors.model.CMY;
 import com.sangupta.colors.model.CMYK;
 import com.sangupta.colors.model.HSB;
+import com.sangupta.colors.model.HSI;
 import com.sangupta.colors.model.HSL;
 import com.sangupta.colors.model.RGB;
 import com.sangupta.colors.model.YIQ;
+import com.sangupta.colors.model.YUV;
+import com.sangupta.colors.model.YUV.YUVQuality;
 
 public class AbstractTestColorConversionUtils {
 
@@ -51,4 +54,21 @@ public class AbstractTestColorConversionUtils {
 		Assert.assertEquals(i, color.i, 0.001f);
 		Assert.assertEquals(q, color.q, 0.001f);
 	}
+	
+	protected void testRGBtoYUV(RGB rgbColor, YUVQuality quality, float y, float i, float q) {
+		YUV color = ColorConversionUtils.RGBtoYUV(rgbColor, quality);
+		
+		Assert.assertEquals(y, color.y, 0.001f);
+		Assert.assertEquals(i, color.u, 0.001f);
+		Assert.assertEquals(q, color.v, 0.001f);
+	}
+
+	protected void testRGBtoHSI(RGB rgbColor, float hue, float saturation, float intensity) {
+		HSI color = ColorConversionUtils.RGBtoHSI(rgbColor);
+		
+		Assert.assertEquals(hue, color.hue, 0.001f);
+		Assert.assertEquals(saturation, color.saturation, 0.001f);
+		Assert.assertEquals(intensity, color.intensity, 0.001f);
+	}
+	
 }
