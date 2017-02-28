@@ -103,7 +103,7 @@ public class ColorConversionUtils {
 		Double green = delta * (1.0d - cmyk.magenta);
 		Double blue = delta * (1.0d - cmyk.yellow);
 		
-		return new RGB(red.intValue(), green.intValue(), blue.intValue());
+		return new RGB(asInt(red), asInt(green), asInt(blue));
 	}
 	
 	/**
@@ -797,4 +797,17 @@ public class ColorConversionUtils {
 
 		return new XYZ(X.floatValue(), Y.floatValue(), Z.floatValue(), illuminant);
 	}
+	
+	/**
+	 * Convert the given <code>double</code> value to an <code>int</code> value
+	 * using rounding principles.
+	 * 
+	 * @param value
+	 * @return
+	 */
+	private static int asInt(double value) {
+		Long longValue = Math.round(value);
+		return longValue.intValue();
+	}
+	
 }
