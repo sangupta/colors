@@ -20,6 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
+import com.sangupta.colors.ColorModel;
 import com.sangupta.colors.ColorUtils;
 
 /**
@@ -31,7 +32,7 @@ import com.sangupta.colors.ColorUtils;
  * @author sangupta
  * @since 1.0.0
  */
-public class HSI {
+public class HSI implements ColorModel {
 
 	public final float hue;
 	

@@ -20,6 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
+import com.sangupta.colors.ColorModel;
 
 /**
  * LCH color model definition.
@@ -32,7 +33,7 @@ import com.sangupta.colors.ColorConversionUtils;
  * @author sangupta
  *
  */
-public class LCH {
+public class LCH implements ColorModel {
 
 	public final float lightness;
 	

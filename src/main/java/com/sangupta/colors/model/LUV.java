@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.ColorModel;
+
 /**
  * CIE LUV color model definition. Refer https://en.wikipedia.org/wiki/CIELUV
  * for more details.
@@ -26,7 +28,7 @@ package com.sangupta.colors.model;
  * @author sangupta
  * @since 1.0.0
  */
-public class LUV {
+public class LUV implements ColorModel {
 
 	public final float l;
 	

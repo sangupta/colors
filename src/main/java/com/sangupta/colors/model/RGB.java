@@ -20,6 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
+import com.sangupta.colors.ColorModel;
 import com.sangupta.colors.ColorUtils;
 import com.sangupta.colors.model.YUV.YUVQuality;
 
@@ -30,7 +31,7 @@ import com.sangupta.colors.model.YUV.YUVQuality;
  * @author sangupta
  * @since 1.0.0
  */
-public class RGB {
+public class RGB implements ColorModel {
 	
 	/**
 	 * Red component between 0-255

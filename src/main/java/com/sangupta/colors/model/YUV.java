@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.ColorModel;
+
 /**
  * Refer
  * https://en.wikipedia.org/wiki/YUV#SDTV_with_BT.601
@@ -27,7 +29,7 @@ package com.sangupta.colors.model;
  * @author sangupta
  * @since 1.0.0
  */
-public class YUV {
+public class YUV implements ColorModel {
 	
 	/**
 	 * The y component

@@ -20,6 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
+import com.sangupta.colors.ColorModel;
 
 /**
  * Yxy Color Model
@@ -31,7 +32,7 @@ import com.sangupta.colors.ColorConversionUtils;
  * @author sangupta
  * @since 1.0.0
  */
-public class Yxy {
+public class Yxy implements ColorModel {
 
 	public final float Y;
 	

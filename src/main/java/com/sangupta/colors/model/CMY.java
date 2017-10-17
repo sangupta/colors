@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.ColorModel;
+
 /**
  * Cyan-Magenta-Yellow color model.
  * 
@@ -29,7 +31,7 @@ package com.sangupta.colors.model;
  * @author sangupta
  * @since 1.0.0
  */
-public class CMY {
+public class CMY implements ColorModel {
 	
 	/**
 	 * the cyan component

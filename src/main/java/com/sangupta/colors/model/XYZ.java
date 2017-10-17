@@ -20,6 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
+import com.sangupta.colors.ColorModel;
 
 /**
  * XYZ color model as per https://en.wikipedia.org/wiki/CIE_1931_color_space
@@ -27,7 +28,7 @@ import com.sangupta.colors.ColorConversionUtils;
  * @author sangupta
  * @since 1.0.0
  */
-public class XYZ {
+public class XYZ implements ColorModel {
 	
 	public final float x;
 	

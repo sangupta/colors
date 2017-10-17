@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.ColorModel;
+
 /**
  * CMYK color based on https://en.wikipedia.org/wiki/CMYK_color_model
  * 
@@ -26,7 +28,7 @@ package com.sangupta.colors.model;
  * @author sangupta
  * @since 1.0.0
  */
-public class CMYK {
+public class CMYK implements ColorModel {
 	
 	/**
 	 * Cyan component

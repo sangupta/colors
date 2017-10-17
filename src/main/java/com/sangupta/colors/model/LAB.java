@@ -20,6 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
+import com.sangupta.colors.ColorModel;
 
 /**
  * LAB color model definition.
@@ -31,7 +32,7 @@ import com.sangupta.colors.ColorConversionUtils;
  * @author sangupta
  * @since 1.0.0
  */
-public class LAB {
+public class LAB implements ColorModel {
 	
 	/**
 	 * The <code>l</code> component 

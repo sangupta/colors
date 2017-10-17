@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.ColorModel;
+
 /**
  * RGBA color model for red, green, blue and alpha channels.
  * All values should be between 0-255 including alpha. The default

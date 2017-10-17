@@ -19,6 +19,8 @@
 
 package com.sangupta.colors.model;
 
+import com.sangupta.colors.ColorModel;
+
 /**
  * YIQ Color model. Refer https://en.wikipedia.org/wiki/YIQ
  * for more details.
@@ -26,7 +28,7 @@ package com.sangupta.colors.model;
  * @author sangupta
  * @since 1.0.0
  */
-public class YIQ {
+public class YIQ implements ColorModel {
 
 	public final float y;
 	
