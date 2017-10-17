@@ -1,6 +1,9 @@
 # colors
 
-Strongly-typed immutable color-models and utility conversion functions in Java.  
+Strongly-typed immutable color-models and utility conversion functions in Java. The code is
+based on the formulae as described on the respective Wikipedia articles and other sites that
+host details on color models. References to the same are mentioned at various places all over
+the code.
 
 ## Usage examples
 
@@ -19,14 +22,14 @@ CMY cmy = CSS3Colors.ORANGE.cmy();
 HSL = new HSB(0.3f, 0.3f, 0.3f).rgb().hsi().rgb().hsl();
 
 // all models in a single chain
-RGB rgb = new RGB(new int[] { 29, 39, 49})		// obtain the RGB color
-		    .hsb()								// let's convert it to HSB
-		    .rgb().hsi()						// now over to HSI
-		    .rgb().hsl()						// over to HSL
-		    .rgb().xyz()						// to XYZ
-		    .hunterLAB()						// to HunterLAB
-		    .xyz().yxy()						// to Yxy
-		    .xyz().rgb()						// and back to RGB
+RGB rgb = new RGB(new int[] { 29, 39, 49})              // obtain the RGB color
+		    .hsb() .                            // let's convert it to HSB
+		    .rgb().hsi()                        // now over to HSI
+		    .rgb().hsl()                        // over to HSL
+		    .rgb().xyz()                        // to XYZ
+		    .hunterLAB()                        // to HunterLAB
+		    .xyz().yxy()                        // to Yxy
+		    .xyz().rgb()                        // and back to RGB
 ```
 
 ## Available Color Models
@@ -68,7 +71,7 @@ RGB rgb = new RGB(new int[] { 29, 39, 49})		// obtain the RGB color
 ## RoadMap
 
 * Add YCbCr family of color models - https://en.wikipedia.org/wiki/YCbCr
-* Test cases
+* Unit-test cases for conversions
 
 ## Versioning
 
