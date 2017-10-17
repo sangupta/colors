@@ -9,6 +9,9 @@ based on the formulae as described on the respective Wikipedia articles and othe
 host details on color models. References to the same are mentioned at various places all over
 the code.
 
+CSS3 colors are also available in `RGB` format using the `CSS3Colors` class. Usage is as simple
+as: `CMY cmy = CSS3Colors.ORANGE.cmy();`. Detailed examples are available below.
+
 ## Usage examples
 
 ```java
