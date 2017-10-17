@@ -20,7 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
-import com.sangupta.colors.Maths;
+import com.sangupta.colors.ColorUtils;
 
 /**
  * HSL stands for hue, saturation, and lightness (or luminosity), and is also often called HLS
@@ -81,15 +81,15 @@ public class HSL {
 	}
 	
 	public int hueDegrees() {
-		return Maths.asInt(this.hue * 360d);
+		return ColorUtils.asInt(this.hue * 360d);
 	}
 	
 	public int saturationPercent() {
-		return Maths.asInt(this.saturation * 100d);
+		return ColorUtils.asInt(this.saturation * 100d);
 	}
 	
 	public int luminosityPercent() {
-		return Maths.asInt(this.luminosity * 100d);
+		return ColorUtils.asInt(this.luminosity * 100d);
 	}
 	
 	/**

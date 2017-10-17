@@ -20,7 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
-import com.sangupta.colors.Maths;
+import com.sangupta.colors.ColorUtils;
 import com.sangupta.colors.model.YUV.YUVQuality;
 
 /**
@@ -110,7 +110,7 @@ public class RGB {
 	}
 	
 	public RGB(double red, double green, double blue) {
-		this(Maths.asInt(red), Maths.asInt(green), Maths.asInt(blue));
+		this(ColorUtils.asInt(red), ColorUtils.asInt(green), ColorUtils.asInt(blue));
 	}
 	
 	/**

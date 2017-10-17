@@ -20,7 +20,7 @@
 package com.sangupta.colors.model;
 
 import com.sangupta.colors.ColorConversionUtils;
-import com.sangupta.colors.Maths;
+import com.sangupta.colors.ColorUtils;
 
 /**
  * A third model, common in computer vision applications, is HSI, for hue,
@@ -64,15 +64,15 @@ public class HSI {
 	}
 	
 	public int hueDegrees() {
-		return Maths.asInt(this.hue * 360d);
+		return ColorUtils.asInt(this.hue * 360d);
 	}
 	
 	public int saturationPercent() {
-		return Maths.asInt(this.saturation * 100d);
+		return ColorUtils.asInt(this.saturation * 100d);
 	}
 	
 	public int intensityPercent() {
-		return Maths.asInt(this.intensity * 100d);
+		return ColorUtils.asInt(this.intensity * 100d);
 	}
 	
 	/**

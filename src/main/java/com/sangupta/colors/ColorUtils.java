@@ -1,6 +1,6 @@
 package com.sangupta.colors;
 
-public class Maths {
+public class ColorUtils {
 
 	/**
 	 * Convert the given <code>double</code> value to an <code>int</code> value
