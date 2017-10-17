@@ -1,5 +1,9 @@
 # colors
 
+[![Build Status](https://travis-ci.org/sangupta/colors.svg?branch=master)](https://travis-ci.org/sangupta/colors)
+[![Coverage Status](https://coveralls.io/repos/sangupta/colors/badge.png)](https://coveralls.io/r/sangupta/colors)
+[![Maven Version](https://maven-badges.herokuapp.com/maven-central/com.sangupta/colors/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.sangupta/colors)
+
 Strongly-typed immutable color-models and utility conversion functions in Java. The code is
 based on the formulae as described on the respective Wikipedia articles and other sites that
 host details on color models. References to the same are mentioned at various places all over
