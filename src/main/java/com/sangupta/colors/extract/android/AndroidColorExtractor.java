@@ -20,10 +20,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sangupta.colors.extract.android.Bitmap;
-import com.sangupta.colors.extract.android.ColorCutQuantizer;
-import com.sangupta.colors.extract.android.Palette;
-import com.sangupta.colors.extract.android.Target;
+import com.sangupta.colors.Swatch;
+import com.sangupta.colors.model.RGB;
 
 /**
  * This class is based on the Android source code to extract colors from a given
@@ -39,12 +37,12 @@ import com.sangupta.colors.extract.android.Target;
 public class AndroidColorExtractor {
 
 	static final int DEFAULT_RESIZE_BITMAP_AREA = 112 * 112;
-	
+
 	static final int DEFAULT_CALCULATE_NUMBER_COLORS = 16;
 
-	private final List<PaletteSwatch> mSwatches;
+	private final List<PaletteSwatch> swatches;
 
-	private final Bitmap mBitmap;
+	private final Bitmap bitmapImage;
 
 	private final List<Target> targets = new ArrayList<Target>();
 
@@ -57,23 +55,26 @@ public class AndroidColorExtractor {
 	private final List<PaletteFilter> filters = new ArrayList<PaletteFilter>();
 
 	/**
-	 * Construct a new {@link Builder} using a source {@link Bitmap}
+	 * 
+	 * @param bitmap
 	 */
 	public AndroidColorExtractor(Bitmap bitmap) {
 		if (bitmap == null) {
 			throw new IllegalArgumentException("Bitmap is not valid");
 		}
-		filters.add(PaletteFilter.DEFAULT_FILTER);
-		mBitmap = bitmap;
-		mSwatches = null;
+
+		this.filters.add(PaletteFilter.DEFAULT_FILTER);
+
+		this.bitmapImage = bitmap;
+		this.swatches = null;
 
 		// Add the default targets
-		targets.add(Target.LIGHT_VIBRANT);
-		targets.add(Target.VIBRANT);
-		targets.add(Target.DARK_VIBRANT);
-		targets.add(Target.LIGHT_MUTED);
-		targets.add(Target.MUTED);
-		targets.add(Target.DARK_MUTED);
+		this.targets.add(Target.LIGHT_VIBRANT);
+		this.targets.add(Target.VIBRANT);
+		this.targets.add(Target.DARK_VIBRANT);
+		this.targets.add(Target.LIGHT_MUTED);
+		this.targets.add(Target.MUTED);
+		this.targets.add(Target.DARK_MUTED);
 	}
 
 	/**
@@ -85,7 +86,7 @@ public class AndroidColorExtractor {
 	 * faces then this value should be increased to ~24.
 	 */
 	public AndroidColorExtractor maximumColorCount(int colors) {
-		maxColors = colors;
+		this.maxColors = colors;
 		return this;
 	}
 
@@ -104,8 +105,8 @@ public class AndroidColorExtractor {
 	 *             should cover, or any value &lt;= 0 to disable resizing.
 	 */
 	public AndroidColorExtractor resizeBitmapArea(final int area) {
-		resizeArea = area;
-		resizeMaxDimension = -1;
+		this.resizeArea = area;
+		this.resizeMaxDimension = -1;
 		return this;
 	}
 
@@ -114,7 +115,7 @@ public class AndroidColorExtractor {
 	 * automatically by {@link Palette}.
 	 */
 	public AndroidColorExtractor clearFilters() {
-		filters.clear();
+		this.filters.clear();
 		return this;
 	}
 
@@ -128,6 +129,7 @@ public class AndroidColorExtractor {
 		if (filter != null) {
 			filters.add(filter);
 		}
+
 		return this;
 	}
 
@@ -139,8 +141,8 @@ public class AndroidColorExtractor {
 	 * </p>
 	 */
 	public AndroidColorExtractor addTarget(final Target target) {
-		if (!targets.contains(target)) {
-			targets.add(target);
+		if (!this.targets.contains(target)) {
+			this.targets.add(target);
 		}
 		return this;
 	}
@@ -150,8 +152,8 @@ public class AndroidColorExtractor {
 	 * automatically by {@link Palette}.
 	 */
 	public AndroidColorExtractor clearTargets() {
-		if (targets != null) {
-			targets.clear();
+		if (this.targets != null) {
+			this.targets.clear();
 		}
 		return this;
 	}
@@ -162,26 +164,26 @@ public class AndroidColorExtractor {
 	public Palette generate() {
 		List<PaletteSwatch> swatches;
 
-		if (mBitmap != null) {
+		if (this.bitmapImage != null) {
 			// We have a Bitmap so we need to use quantization to reduce the number of
 			// colors
 
 			// First we'll scale down the bitmap if needed
-			final Bitmap bitmap = scaleBitmapDown(mBitmap);
+			final Bitmap bitmap = scaleBitmapDown(this.bitmapImage);
 
 			// Now generate a quantizer from the Bitmap
-			final ColorCutQuantizer quantizer = new ColorCutQuantizer(getPixelsFromBitmap(bitmap), maxColors,
-					filters.isEmpty() ? null : filters.toArray(new PaletteFilter[filters.size()]));
+			final ColorCutQuantizer quantizer = new ColorCutQuantizer(getPixelsFromBitmap(bitmap), this.maxColors,
+					this.filters.isEmpty() ? null : this.filters.toArray(new PaletteFilter[this.filters.size()]));
 
 			swatches = quantizer.getQuantizedColors();
 
 		} else {
 			// Else we're using the provided swatches
-			swatches = mSwatches;
+			swatches = this.swatches;
 		}
 
 		// Now create a Palette instance
-		final Palette palette = new Palette(swatches, targets);
+		final Palette palette = new Palette(swatches, this.targets);
 		// And make it generate itself
 		palette.generate();
 
@@ -198,15 +200,15 @@ public class AndroidColorExtractor {
 	private Bitmap scaleBitmapDown(final Bitmap bitmap) {
 		double scaleRatio = -1;
 
-		if (resizeArea > 0) {
+		if (this.resizeArea > 0) {
 			final int bitmapArea = bitmap.getWidth() * bitmap.getHeight();
-			if (bitmapArea > resizeArea) {
-				scaleRatio = Math.sqrt(resizeArea / (double) bitmapArea);
+			if (bitmapArea > this.resizeArea) {
+				scaleRatio = Math.sqrt(this.resizeArea / (double) bitmapArea);
 			}
-		} else if (resizeMaxDimension > 0) {
+		} else if (this.resizeMaxDimension > 0) {
 			final int maxDimension = Math.max(bitmap.getWidth(), bitmap.getHeight());
-			if (maxDimension > resizeMaxDimension) {
-				scaleRatio = resizeMaxDimension / (double) maxDimension;
+			if (maxDimension > this.resizeMaxDimension) {
+				scaleRatio = this.resizeMaxDimension / (double) maxDimension;
 			}
 		}
 
@@ -215,7 +217,8 @@ public class AndroidColorExtractor {
 			return bitmap;
 		}
 
-		return Bitmap.createScaledBitmap(bitmap, (int) Math.ceil(bitmap.getWidth() * scaleRatio), (int) Math.ceil(bitmap.getHeight() * scaleRatio));
+		return Bitmap.createScaledBitmap(bitmap, (int) Math.ceil(bitmap.getWidth() * scaleRatio),
+				(int) Math.ceil(bitmap.getHeight() * scaleRatio));
 	}
 
 	/**
@@ -229,10 +232,10 @@ public class AndroidColorExtractor {
 	 * @return A Color Hex String
 	 */
 	public static int getColor(BufferedImage image) {
-		if(image == null) {
+		if (image == null) {
 			throw new IllegalArgumentException("Image cannot be null");
 		}
-		
+
 		AndroidColorExtractor extractor = new AndroidColorExtractor(new Bitmap(image));
 		Palette palette = extractor.generate();
 		PaletteSwatch swatch = palette.getVibrantSwatch();
@@ -248,5 +251,40 @@ public class AndroidColorExtractor {
 		int color = swatch.getRgb();
 		return color;
 	}
-	
+
+	/**
+	 * Get a {@link Swatch} of all dominant colors.
+	 * 
+	 * @param image the {@link BufferedImage} to use
+	 * 
+	 * @return
+	 */
+	public static Swatch<RGB> getSwatch(BufferedImage image) {
+		if (image == null) {
+			throw new IllegalArgumentException("Image cannot be null");
+		}
+
+		AndroidColorExtractor extractor = new AndroidColorExtractor(new Bitmap(image));
+		Palette palette = extractor.generate();
+
+		Swatch<RGB> swatch = new Swatch<>();
+		addToSwatch(swatch, palette.getVibrantColor());
+
+		return swatch;
+	}
+
+	/**
+	 * Convert android swatch color to {@link RGB} color and add it to the
+	 * {@link Swatch}.
+	 * 
+	 * @param swatch
+	 * @param color
+	 */
+	private static void addToSwatch(Swatch<RGB> swatch, int color) {
+		if (color < 0) {
+			return;
+		}
+
+		swatch.add(new RGB(color));
+	}
 }

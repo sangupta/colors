@@ -62,38 +62,38 @@ public final class Palette {
 
 	static final boolean LOG_TIMINGS = false;
 
-	private final List<PaletteSwatch> mSwatches;
+	private final List<PaletteSwatch> swatches;
 	
-	private final List<Target> mTargets;
+	private final List<Target> targets;
 
-	private final Map<Target, PaletteSwatch> mSelectedSwatches;
+	private final Map<Target, PaletteSwatch> selectedSwatches;
 	
-	private final SparseBooleanArray mUsedColors;
+	private final SparseBooleanArray usedColors;
 
-	private final PaletteSwatch mDominantSwatch;
+	private final PaletteSwatch dominantSwatch;
 
 	Palette(List<PaletteSwatch> swatches, List<Target> targets) {
-		mSwatches = swatches;
-		mTargets = targets;
+		this.swatches = swatches;
+		this.targets = targets;
 
-		mUsedColors = new SparseBooleanArray();
-		mSelectedSwatches = new LinkedHashMap<Target, PaletteSwatch>();
+		this.usedColors = new SparseBooleanArray();
+		this.selectedSwatches = new LinkedHashMap<Target, PaletteSwatch>();
 
-		mDominantSwatch = findDominantSwatch();
+		this.dominantSwatch = findDominantSwatch();
 	}
 
 	/**
 	 * Returns all of the swatches which make up the palette.
 	 */
 	public List<PaletteSwatch> getSwatches() {
-		return Collections.unmodifiableList(mSwatches);
+		return Collections.unmodifiableList(this.swatches);
 	}
 
 	/**
 	 * Returns the targets used to generate this palette.
 	 */
 	public List<Target> getTargets() {
-		return Collections.unmodifiableList(mTargets);
+		return Collections.unmodifiableList(this.targets);
 	}
 
 	/**
@@ -156,8 +156,8 @@ public final class Palette {
 	 * @param defaultColor value to return if the swatch isn't available
 	 * @see #getVibrantSwatch()
 	 */
-	public int getVibrantColor(final int defaultColor) {
-		return getColorForTarget(Target.VIBRANT, defaultColor);
+	public int getVibrantColor() {
+		return getColorForTarget(Target.VIBRANT);
 	}
 
 	/**
@@ -166,8 +166,8 @@ public final class Palette {
 	 * @param defaultColor value to return if the swatch isn't available
 	 * @see #getLightVibrantSwatch()
 	 */
-	public int getLightVibrantColor(final int defaultColor) {
-		return getColorForTarget(Target.LIGHT_VIBRANT, defaultColor);
+	public int getLightVibrantColor() {
+		return getColorForTarget(Target.LIGHT_VIBRANT);
 	}
 
 	/**
@@ -176,8 +176,8 @@ public final class Palette {
 	 * @param defaultColor value to return if the swatch isn't available
 	 * @see #getDarkVibrantSwatch()
 	 */
-	public int getDarkVibrantColor(final int defaultColor) {
-		return getColorForTarget(Target.DARK_VIBRANT, defaultColor);
+	public int getDarkVibrantColor() {
+		return getColorForTarget(Target.DARK_VIBRANT);
 	}
 
 	/**
@@ -186,8 +186,8 @@ public final class Palette {
 	 * @param defaultColor value to return if the swatch isn't available
 	 * @see #getMutedSwatch()
 	 */
-	public int getMutedColor(final int defaultColor) {
-		return getColorForTarget(Target.MUTED, defaultColor);
+	public int getMutedColor() {
+		return getColorForTarget(Target.MUTED);
 	}
 
 	/**
@@ -196,8 +196,8 @@ public final class Palette {
 	 * @param defaultColor value to return if the swatch isn't available
 	 * @see #getLightMutedSwatch()
 	 */
-	public int getLightMutedColor(final int defaultColor) {
-		return getColorForTarget(Target.LIGHT_MUTED, defaultColor);
+	public int getLightMutedColor() {
+		return getColorForTarget(Target.LIGHT_MUTED);
 	}
 
 	/**
@@ -206,8 +206,8 @@ public final class Palette {
 	 * @param defaultColor value to return if the swatch isn't available
 	 * @see #getDarkMutedSwatch()
 	 */
-	public int getDarkMutedColor(final int defaultColor) {
-		return getColorForTarget(Target.DARK_MUTED, defaultColor);
+	public int getDarkMutedColor() {
+		return getColorForTarget(Target.DARK_MUTED);
 	}
 
 	/**
@@ -215,7 +215,7 @@ public final class Palette {
 	 * {@code null} if one could not be found.
 	 */
 	public PaletteSwatch getSwatchForTarget(final Target target) {
-		return mSelectedSwatches.get(target);
+		return this.selectedSwatches.get(target);
 	}
 
 	/**
@@ -224,9 +224,9 @@ public final class Palette {
 	 *
 	 * @param defaultColor value to return if the swatch isn't available
 	 */
-	public int getColorForTarget(final Target target, final int defaultColor) {
+	public int getColorForTarget(final Target target) {
 		PaletteSwatch swatch = getSwatchForTarget(target);
-		return swatch != null ? swatch.getRgb() : defaultColor;
+		return swatch != null ? swatch.getRgb() : -1;
 	}
 
 	/**
@@ -238,7 +238,7 @@ public final class Palette {
 	 * </p>
 	 */
 	public PaletteSwatch getDominantSwatch() {
-		return mDominantSwatch;
+		return this.dominantSwatch;
 	}
 
 	/**
@@ -249,20 +249,21 @@ public final class Palette {
 	 * @see #getDominantSwatch()
 	 */
 	public int getDominantColor(int defaultColor) {
-		return mDominantSwatch != null ? mDominantSwatch.getRgb() : defaultColor;
+		return this.dominantSwatch != null ? this.dominantSwatch.getRgb() : defaultColor;
 	}
 
 	void generate() {
 		// We need to make sure that the scored targets are generated first. This is so
 		// that
 		// inherited targets have something to inherit from
-		for (int i = 0, count = mTargets.size(); i < count; i++) {
-			final Target target = mTargets.get(i);
+		for (int i = 0, count = this.targets.size(); i < count; i++) {
+			final Target target = this.targets.get(i);
 			target.normalizeWeights();
-			mSelectedSwatches.put(target, generateScoredTarget(target));
+			this.selectedSwatches.put(target, generateScoredTarget(target));
 		}
+		
 		// We now clear out the used colors
-		mUsedColors.clear();
+		this.usedColors.clear();
 	}
 
 	private PaletteSwatch generateScoredTarget(final Target target) {
@@ -270,7 +271,7 @@ public final class Palette {
 		if (maxScoreSwatch != null && target.isExclusive()) {
 			// If we have a swatch, and the target is exclusive, add the color to the used
 			// list
-			mUsedColors.append(maxScoreSwatch.getRgb(), true);
+			this.usedColors.append(maxScoreSwatch.getRgb(), true);
 		}
 		return maxScoreSwatch;
 	}
@@ -278,8 +279,8 @@ public final class Palette {
 	private PaletteSwatch getMaxScoredSwatchForTarget(final Target target) {
 		float maxScore = 0;
 		PaletteSwatch maxScoreSwatch = null;
-		for (int i = 0, count = mSwatches.size(); i < count; i++) {
-			final PaletteSwatch swatch = mSwatches.get(i);
+		for (int i = 0, count = this.swatches.size(); i < count; i++) {
+			final PaletteSwatch swatch = this.swatches.get(i);
 			if (shouldBeScoredForTarget(swatch, target)) {
 				final float score = generateScore(swatch, target);
 				if (maxScoreSwatch == null || score > maxScore) {
@@ -298,7 +299,7 @@ public final class Palette {
 		final float hsl[] = swatch.getHsl();
 		return hsl[1] >= target.getMinimumSaturation() && hsl[1] <= target.getMaximumSaturation()
 				&& hsl[2] >= target.getMinimumLightness() && hsl[2] <= target.getMaximumLightness()
-				&& !mUsedColors.get(swatch.getRgb());
+				&& !this.usedColors.get(swatch.getRgb());
 	}
 
 	private float generateScore(PaletteSwatch swatch, Target target) {
@@ -308,7 +309,7 @@ public final class Palette {
 		float luminanceScore = 0;
 		float populationScore = 0;
 
-		final int maxPopulation = mDominantSwatch != null ? mDominantSwatch.getPopulation() : 1;
+		final int maxPopulation = this.dominantSwatch != null ? this.dominantSwatch.getPopulation() : 1;
 
 		if (target.getSaturationWeight() > 0) {
 			saturationScore = target.getSaturationWeight() * (1f - Math.abs(hsl[1] - target.getTargetSaturation()));
@@ -326,8 +327,8 @@ public final class Palette {
 	private PaletteSwatch findDominantSwatch() {
 		int maxPop = Integer.MIN_VALUE;
 		PaletteSwatch maxSwatch = null;
-		for (int i = 0, count = mSwatches.size(); i < count; i++) {
-			PaletteSwatch swatch = mSwatches.get(i);
+		for (int i = 0, count = this.swatches.size(); i < count; i++) {
+			PaletteSwatch swatch = this.swatches.get(i);
 			if (swatch.getPopulation() > maxPop) {
 				maxSwatch = swatch;
 				maxPop = swatch.getPopulation();
