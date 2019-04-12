@@ -16,7 +16,7 @@ public class Swatch<T extends ColorModel> {
 	/**
 	 * Colors that are part of this {@link Swatch}
 	 */
-	public final List<T> colors = new ArrayList<>();
+	public final List<T> palette = new ArrayList<>();
 	
 	/**
 	 * Create a new {@link Swatch} which is empty
@@ -37,7 +37,7 @@ public class Swatch<T extends ColorModel> {
 		}
 		
 		for(T color : colors) {
-			this.colors.add(color);
+			this.palette.add(color);
 		}
 	}
 
@@ -51,7 +51,7 @@ public class Swatch<T extends ColorModel> {
 			return;
 		}
 		
-		this.colors.add(color);
+		this.palette.add(color);
 	}
 	
 }
