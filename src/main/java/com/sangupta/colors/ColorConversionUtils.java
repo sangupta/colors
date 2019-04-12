@@ -103,7 +103,7 @@ public class ColorConversionUtils {
 		Double green = delta * (1.0d - cmyk.magenta);
 		Double blue = delta * (1.0d - cmyk.yellow);
 		
-		return new RGB(asInt(red), asInt(green), asInt(blue));
+		return new RGB(red, green, blue);
 	}
 	
 	/**
@@ -419,7 +419,7 @@ public class ColorConversionUtils {
 		double green = (1d - cmyColor.magenta) * 255d;
 		double blue = (1d - cmyColor.yellow) * 255d;
 		
-		return new RGB(asInt(red), asInt(green), asInt(blue));
+		return new RGB(red, green, blue);
 	}
 	
 	/**
@@ -545,7 +545,7 @@ public class ColorConversionUtils {
 		Double green = (1.0d * yiq.y - 0.272d * yiq.i - 0.647d * yiq.q) * 255d;
 		Double blue  = (1.0d * yiq.y - 1.106d * yiq.i + 1.703d * yiq.q) * 255d;
 	
-		return new RGB(asInt(red), asInt(green), asInt(blue));
+		return new RGB(red, green, blue);
 	}
 	
 	/**
@@ -812,18 +812,6 @@ public class ColorConversionUtils {
 		Double Z = (9 * Y - (15 * varV * Y) - (varV * X)) / (3 * varV);
 
 		return new XYZ(X.floatValue(), Y.floatValue(), Z.floatValue(), illuminant);
-	}
-	
-	/**
-	 * Convert the given <code>double</code> value to an <code>int</code> value
-	 * using rounding principles.
-	 * 
-	 * @param value
-	 * @return
-	 */
-	public static int asInt(double value) {
-		Long longValue = Math.round(value);
-		return longValue.intValue();
 	}
 	
 }
