@@ -16,7 +16,6 @@
 
 package com.sangupta.colors.extract.android;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,30 +58,26 @@ import java.util.Map;
  */
 public final class Palette {
 
-	static final float MIN_CONTRAST_TITLE_TEXT = 3.0f;
-	
-	static final float MIN_CONTRAST_BODY_TEXT = 4.5f;
-
 	static final String LOG_TAG = "Palette";
 
 	static final boolean LOG_TIMINGS = false;
 
-	private final List<Swatch> mSwatches;
+	private final List<PaletteSwatch> mSwatches;
 	
 	private final List<Target> mTargets;
 
-	private final Map<Target, Swatch> mSelectedSwatches;
+	private final Map<Target, PaletteSwatch> mSelectedSwatches;
 	
 	private final SparseBooleanArray mUsedColors;
 
-	private final Swatch mDominantSwatch;
+	private final PaletteSwatch mDominantSwatch;
 
-	Palette(List<Swatch> swatches, List<Target> targets) {
+	Palette(List<PaletteSwatch> swatches, List<Target> targets) {
 		mSwatches = swatches;
 		mTargets = targets;
 
 		mUsedColors = new SparseBooleanArray();
-		mSelectedSwatches = new LinkedHashMap<Target, Swatch>();
+		mSelectedSwatches = new LinkedHashMap<Target, PaletteSwatch>();
 
 		mDominantSwatch = findDominantSwatch();
 	}
@@ -90,7 +85,7 @@ public final class Palette {
 	/**
 	 * Returns all of the swatches which make up the palette.
 	 */
-	public List<Swatch> getSwatches() {
+	public List<PaletteSwatch> getSwatches() {
 		return Collections.unmodifiableList(mSwatches);
 	}
 
@@ -106,7 +101,7 @@ public final class Palette {
 	 *
 	 * @see Target#VIBRANT
 	 */
-	public Swatch getVibrantSwatch() {
+	public PaletteSwatch getVibrantSwatch() {
 		return getSwatchForTarget(Target.VIBRANT);
 	}
 
@@ -115,7 +110,7 @@ public final class Palette {
 	 *
 	 * @see Target#LIGHT_VIBRANT
 	 */
-	public Swatch getLightVibrantSwatch() {
+	public PaletteSwatch getLightVibrantSwatch() {
 		return getSwatchForTarget(Target.LIGHT_VIBRANT);
 	}
 
@@ -124,7 +119,7 @@ public final class Palette {
 	 *
 	 * @see Target#DARK_VIBRANT
 	 */
-	public Swatch getDarkVibrantSwatch() {
+	public PaletteSwatch getDarkVibrantSwatch() {
 		return getSwatchForTarget(Target.DARK_VIBRANT);
 	}
 
@@ -133,7 +128,7 @@ public final class Palette {
 	 *
 	 * @see Target#MUTED
 	 */
-	public Swatch getMutedSwatch() {
+	public PaletteSwatch getMutedSwatch() {
 		return getSwatchForTarget(Target.MUTED);
 	}
 
@@ -142,7 +137,7 @@ public final class Palette {
 	 *
 	 * @see Target#LIGHT_MUTED
 	 */
-	public Swatch getLightMutedSwatch() {
+	public PaletteSwatch getLightMutedSwatch() {
 		return getSwatchForTarget(Target.LIGHT_MUTED);
 	}
 
@@ -151,7 +146,7 @@ public final class Palette {
 	 *
 	 * @see Target#DARK_MUTED
 	 */
-	public Swatch getDarkMutedSwatch() {
+	public PaletteSwatch getDarkMutedSwatch() {
 		return getSwatchForTarget(Target.DARK_MUTED);
 	}
 
@@ -219,7 +214,7 @@ public final class Palette {
 	 * Returns the selected swatch for the given target from the palette, or
 	 * {@code null} if one could not be found.
 	 */
-	public Swatch getSwatchForTarget(final Target target) {
+	public PaletteSwatch getSwatchForTarget(final Target target) {
 		return mSelectedSwatches.get(target);
 	}
 
@@ -230,7 +225,7 @@ public final class Palette {
 	 * @param defaultColor value to return if the swatch isn't available
 	 */
 	public int getColorForTarget(final Target target, final int defaultColor) {
-		Swatch swatch = getSwatchForTarget(target);
+		PaletteSwatch swatch = getSwatchForTarget(target);
 		return swatch != null ? swatch.getRgb() : defaultColor;
 	}
 
@@ -242,7 +237,7 @@ public final class Palette {
 	 * (frequency) within the palette.
 	 * </p>
 	 */
-	public Swatch getDominantSwatch() {
+	public PaletteSwatch getDominantSwatch() {
 		return mDominantSwatch;
 	}
 
@@ -270,8 +265,8 @@ public final class Palette {
 		mUsedColors.clear();
 	}
 
-	private Swatch generateScoredTarget(final Target target) {
-		final Swatch maxScoreSwatch = getMaxScoredSwatchForTarget(target);
+	private PaletteSwatch generateScoredTarget(final Target target) {
+		final PaletteSwatch maxScoreSwatch = getMaxScoredSwatchForTarget(target);
 		if (maxScoreSwatch != null && target.isExclusive()) {
 			// If we have a swatch, and the target is exclusive, add the color to the used
 			// list
@@ -280,11 +275,11 @@ public final class Palette {
 		return maxScoreSwatch;
 	}
 
-	private Swatch getMaxScoredSwatchForTarget(final Target target) {
+	private PaletteSwatch getMaxScoredSwatchForTarget(final Target target) {
 		float maxScore = 0;
-		Swatch maxScoreSwatch = null;
+		PaletteSwatch maxScoreSwatch = null;
 		for (int i = 0, count = mSwatches.size(); i < count; i++) {
-			final Swatch swatch = mSwatches.get(i);
+			final PaletteSwatch swatch = mSwatches.get(i);
 			if (shouldBeScoredForTarget(swatch, target)) {
 				final float score = generateScore(swatch, target);
 				if (maxScoreSwatch == null || score > maxScore) {
@@ -296,7 +291,7 @@ public final class Palette {
 		return maxScoreSwatch;
 	}
 
-	private boolean shouldBeScoredForTarget(final Swatch swatch, final Target target) {
+	private boolean shouldBeScoredForTarget(final PaletteSwatch swatch, final Target target) {
 		// Check whether the HSL values are within the correct ranges, and this color
 		// hasn't
 		// been used yet.
@@ -306,7 +301,7 @@ public final class Palette {
 				&& !mUsedColors.get(swatch.getRgb());
 	}
 
-	private float generateScore(Swatch swatch, Target target) {
+	private float generateScore(PaletteSwatch swatch, Target target) {
 		final float[] hsl = swatch.getHsl();
 
 		float saturationScore = 0;
@@ -328,164 +323,17 @@ public final class Palette {
 		return saturationScore + luminanceScore + populationScore;
 	}
 
-	private Swatch findDominantSwatch() {
+	private PaletteSwatch findDominantSwatch() {
 		int maxPop = Integer.MIN_VALUE;
-		Swatch maxSwatch = null;
+		PaletteSwatch maxSwatch = null;
 		for (int i = 0, count = mSwatches.size(); i < count; i++) {
-			Swatch swatch = mSwatches.get(i);
+			PaletteSwatch swatch = mSwatches.get(i);
 			if (swatch.getPopulation() > maxPop) {
 				maxSwatch = swatch;
 				maxPop = swatch.getPopulation();
 			}
 		}
 		return maxSwatch;
-	}
-
-	/**
-	 * Represents a color swatch generated from an image's palette. The RGB color
-	 * can be retrieved by calling {@link #getRgb()}.
-	 */
-	public static final class Swatch {
-		private final int mRed, mGreen, mBlue;
-		private final int mRgb;
-		private final int mPopulation;
-
-		private boolean mGeneratedTextColors;
-		private int mTitleTextColor;
-		private int mBodyTextColor;
-
-		private float[] mHsl;
-
-		public Swatch(int color, int population) {
-			mRed = Color.red(color);
-			mGreen = Color.green(color);
-			mBlue = Color.blue(color);
-			mRgb = color;
-			mPopulation = population;
-		}
-
-		Swatch(int red, int green, int blue, int population) {
-			mRed = red;
-			mGreen = green;
-			mBlue = blue;
-			mRgb = Color.rgb(red, green, blue);
-			mPopulation = population;
-		}
-
-		Swatch(float[] hsl, int population) {
-			this(AndroidColorUtils.HSLToColor(hsl), population);
-			mHsl = hsl;
-		}
-
-		/**
-		 * @return this swatch's RGB color value
-		 */
-		public int getRgb() {
-			return mRgb;
-		}
-
-		/**
-		 * Return this swatch's HSL values. hsv[0] is Hue [0 .. 360) hsv[1] is
-		 * Saturation [0...1] hsv[2] is Lightness [0...1]
-		 */
-		public float[] getHsl() {
-			if (mHsl == null) {
-				mHsl = new float[3];
-			}
-			AndroidColorUtils.RGBToHSL(mRed, mGreen, mBlue, mHsl);
-			return mHsl;
-		}
-
-		/**
-		 * @return the number of pixels represented by this swatch
-		 */
-		public int getPopulation() {
-			return mPopulation;
-		}
-
-		/**
-		 * Returns an appropriate color to use for any 'title' text which is displayed
-		 * over this {@link Swatch}'s color. This color is guaranteed to have sufficient
-		 * contrast.
-		 */
-		public int getTitleTextColor() {
-			ensureTextColorsGenerated();
-			return mTitleTextColor;
-		}
-
-		/**
-		 * Returns an appropriate color to use for any 'body' text which is displayed
-		 * over this {@link Swatch}'s color. This color is guaranteed to have sufficient
-		 * contrast.
-		 */
-		public int getBodyTextColor() {
-			ensureTextColorsGenerated();
-			return mBodyTextColor;
-		}
-
-		private void ensureTextColorsGenerated() {
-			if (!mGeneratedTextColors) {
-				// First check white, as most colors will be dark
-				final int lightBodyAlpha = AndroidColorUtils.calculateMinimumAlpha(Color.WHITE, mRgb, MIN_CONTRAST_BODY_TEXT);
-				final int lightTitleAlpha = AndroidColorUtils.calculateMinimumAlpha(Color.WHITE, mRgb,
-						MIN_CONTRAST_TITLE_TEXT);
-
-				if (lightBodyAlpha != -1 && lightTitleAlpha != -1) {
-					// If we found valid light values, use them and return
-					mBodyTextColor = AndroidColorUtils.setAlphaComponent(Color.WHITE, lightBodyAlpha);
-					mTitleTextColor = AndroidColorUtils.setAlphaComponent(Color.WHITE, lightTitleAlpha);
-					mGeneratedTextColors = true;
-					return;
-				}
-
-				final int darkBodyAlpha = AndroidColorUtils.calculateMinimumAlpha(Color.BLACK, mRgb, MIN_CONTRAST_BODY_TEXT);
-				final int darkTitleAlpha = AndroidColorUtils.calculateMinimumAlpha(Color.BLACK, mRgb, MIN_CONTRAST_TITLE_TEXT);
-
-				if (darkBodyAlpha != -1 && darkBodyAlpha != -1) {
-					// If we found valid dark values, use them and return
-					mBodyTextColor = AndroidColorUtils.setAlphaComponent(Color.BLACK, darkBodyAlpha);
-					mTitleTextColor = AndroidColorUtils.setAlphaComponent(Color.BLACK, darkTitleAlpha);
-					mGeneratedTextColors = true;
-					return;
-				}
-
-				// If we reach here then we can not find title and body values which use the
-				// same
-				// lightness, we need to use mismatched values
-				mBodyTextColor = lightBodyAlpha != -1 ? AndroidColorUtils.setAlphaComponent(Color.WHITE, lightBodyAlpha)
-						: AndroidColorUtils.setAlphaComponent(Color.BLACK, darkBodyAlpha);
-				mTitleTextColor = lightTitleAlpha != -1 ? AndroidColorUtils.setAlphaComponent(Color.WHITE, lightTitleAlpha)
-						: AndroidColorUtils.setAlphaComponent(Color.BLACK, darkTitleAlpha);
-				mGeneratedTextColors = true;
-			}
-		}
-
-		@Override
-		public String toString() {
-			return new StringBuilder(getClass().getSimpleName()).append(" [RGB: #")
-					.append(Integer.toHexString(getRgb())).append(']').append(" [HSL: ")
-					.append(Arrays.toString(getHsl())).append(']').append(" [Population: ").append(mPopulation)
-					.append(']').append(" [Title Text: #").append(Integer.toHexString(getTitleTextColor())).append(']')
-					.append(" [Body Text: #").append(Integer.toHexString(getBodyTextColor())).append(']').toString();
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) {
-				return true;
-			}
-			if (o == null || getClass() != o.getClass()) {
-				return false;
-			}
-
-			Swatch swatch = (Swatch) o;
-			return mPopulation == swatch.mPopulation && mRgb == swatch.mRgb;
-		}
-
-		@Override
-		public int hashCode() {
-			return 31 * mRgb + mPopulation;
-		}
 	}
 
 }

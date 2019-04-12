@@ -1,3 +1,19 @@
+/**
+ * Copyright (C) 2015 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sangupta.colors.extract.android;
 
 import java.awt.image.BufferedImage;
@@ -7,7 +23,6 @@ import java.util.List;
 import com.sangupta.colors.extract.android.Bitmap;
 import com.sangupta.colors.extract.android.ColorCutQuantizer;
 import com.sangupta.colors.extract.android.Palette;
-import com.sangupta.colors.extract.android.Palette.Swatch;
 import com.sangupta.colors.extract.android.Target;
 
 /**
@@ -27,19 +42,19 @@ public class AndroidColorExtractor {
 	
 	static final int DEFAULT_CALCULATE_NUMBER_COLORS = 16;
 
-	private final List<Swatch> mSwatches;
+	private final List<PaletteSwatch> mSwatches;
 
 	private final Bitmap mBitmap;
 
-	private final List<Target> mTargets = new ArrayList<Target>();
+	private final List<Target> targets = new ArrayList<Target>();
 
-	private int mMaxColors = DEFAULT_CALCULATE_NUMBER_COLORS;
+	private int maxColors = DEFAULT_CALCULATE_NUMBER_COLORS;
 
-	private int mResizeArea = DEFAULT_RESIZE_BITMAP_AREA;
+	private int resizeArea = DEFAULT_RESIZE_BITMAP_AREA;
 
-	private int mResizeMaxDimension = -1;
+	private int resizeMaxDimension = -1;
 
-	private final List<PaletteFilter> mFilters = new ArrayList<PaletteFilter>();
+	private final List<PaletteFilter> filters = new ArrayList<PaletteFilter>();
 
 	/**
 	 * Construct a new {@link Builder} using a source {@link Bitmap}
@@ -48,17 +63,17 @@ public class AndroidColorExtractor {
 		if (bitmap == null) {
 			throw new IllegalArgumentException("Bitmap is not valid");
 		}
-		mFilters.add(PaletteFilter.DEFAULT_FILTER);
+		filters.add(PaletteFilter.DEFAULT_FILTER);
 		mBitmap = bitmap;
 		mSwatches = null;
 
 		// Add the default targets
-		mTargets.add(Target.LIGHT_VIBRANT);
-		mTargets.add(Target.VIBRANT);
-		mTargets.add(Target.DARK_VIBRANT);
-		mTargets.add(Target.LIGHT_MUTED);
-		mTargets.add(Target.MUTED);
-		mTargets.add(Target.DARK_MUTED);
+		targets.add(Target.LIGHT_VIBRANT);
+		targets.add(Target.VIBRANT);
+		targets.add(Target.DARK_VIBRANT);
+		targets.add(Target.LIGHT_MUTED);
+		targets.add(Target.MUTED);
+		targets.add(Target.DARK_MUTED);
 	}
 
 	/**
@@ -70,29 +85,9 @@ public class AndroidColorExtractor {
 	 * faces then this value should be increased to ~24.
 	 */
 	public AndroidColorExtractor maximumColorCount(int colors) {
-		mMaxColors = colors;
+		maxColors = colors;
 		return this;
 	}
-
-//		/**
-//		 * Set the resize value when using a {@link Bitmap} as the source. If the
-//		 * bitmap's largest dimension is greater than the value specified, then the
-//		 * bitmap will be resized so that it's largest dimension matches
-//		 * {@code maxDimension}. If the bitmap is smaller or equal, the original is used
-//		 * as-is.
-//		 *
-//		 * @deprecated Using {@link #resizeBitmapArea(int)} is preferred since it can
-//		 *             handle abnormal aspect ratios more gracefully.
-//		 *
-//		 * @param maxDimension the number of pixels that the max dimension should be
-//		 *                     scaled down to, or any value &lt;= 0 to disable resizing.
-//		 */
-//		@Deprecated
-//		public Builder resizeBitmapSize(final int maxDimension) {
-//			mResizeMaxDimension = maxDimension;
-//			mResizeArea = -1;
-//			return this;
-//		}
 
 	/**
 	 * Set the resize value when using a {@link Bitmap} as the source. If the
@@ -109,8 +104,8 @@ public class AndroidColorExtractor {
 	 *             should cover, or any value &lt;= 0 to disable resizing.
 	 */
 	public AndroidColorExtractor resizeBitmapArea(final int area) {
-		mResizeArea = area;
-		mResizeMaxDimension = -1;
+		resizeArea = area;
+		resizeMaxDimension = -1;
 		return this;
 	}
 
@@ -119,7 +114,7 @@ public class AndroidColorExtractor {
 	 * automatically by {@link Palette}.
 	 */
 	public AndroidColorExtractor clearFilters() {
-		mFilters.clear();
+		filters.clear();
 		return this;
 	}
 
@@ -131,7 +126,7 @@ public class AndroidColorExtractor {
 	 */
 	public AndroidColorExtractor addFilter(PaletteFilter filter) {
 		if (filter != null) {
-			mFilters.add(filter);
+			filters.add(filter);
 		}
 		return this;
 	}
@@ -144,8 +139,8 @@ public class AndroidColorExtractor {
 	 * </p>
 	 */
 	public AndroidColorExtractor addTarget(final Target target) {
-		if (!mTargets.contains(target)) {
-			mTargets.add(target);
+		if (!targets.contains(target)) {
+			targets.add(target);
 		}
 		return this;
 	}
@@ -155,8 +150,8 @@ public class AndroidColorExtractor {
 	 * automatically by {@link Palette}.
 	 */
 	public AndroidColorExtractor clearTargets() {
-		if (mTargets != null) {
-			mTargets.clear();
+		if (targets != null) {
+			targets.clear();
 		}
 		return this;
 	}
@@ -165,7 +160,7 @@ public class AndroidColorExtractor {
 	 * Generate and return the {@link Palette} synchronously.
 	 */
 	public Palette generate() {
-		List<Swatch> swatches;
+		List<PaletteSwatch> swatches;
 
 		if (mBitmap != null) {
 			// We have a Bitmap so we need to use quantization to reduce the number of
@@ -175,8 +170,8 @@ public class AndroidColorExtractor {
 			final Bitmap bitmap = scaleBitmapDown(mBitmap);
 
 			// Now generate a quantizer from the Bitmap
-			final ColorCutQuantizer quantizer = new ColorCutQuantizer(getPixelsFromBitmap(bitmap), mMaxColors,
-					mFilters.isEmpty() ? null : mFilters.toArray(new PaletteFilter[mFilters.size()]));
+			final ColorCutQuantizer quantizer = new ColorCutQuantizer(getPixelsFromBitmap(bitmap), maxColors,
+					filters.isEmpty() ? null : filters.toArray(new PaletteFilter[filters.size()]));
 
 			swatches = quantizer.getQuantizedColors();
 
@@ -186,7 +181,7 @@ public class AndroidColorExtractor {
 		}
 
 		// Now create a Palette instance
-		final Palette palette = new Palette(swatches, mTargets);
+		final Palette palette = new Palette(swatches, targets);
 		// And make it generate itself
 		palette.generate();
 
@@ -203,15 +198,15 @@ public class AndroidColorExtractor {
 	private Bitmap scaleBitmapDown(final Bitmap bitmap) {
 		double scaleRatio = -1;
 
-		if (mResizeArea > 0) {
+		if (resizeArea > 0) {
 			final int bitmapArea = bitmap.getWidth() * bitmap.getHeight();
-			if (bitmapArea > mResizeArea) {
-				scaleRatio = Math.sqrt(mResizeArea / (double) bitmapArea);
+			if (bitmapArea > resizeArea) {
+				scaleRatio = Math.sqrt(resizeArea / (double) bitmapArea);
 			}
-		} else if (mResizeMaxDimension > 0) {
+		} else if (resizeMaxDimension > 0) {
 			final int maxDimension = Math.max(bitmap.getWidth(), bitmap.getHeight());
-			if (maxDimension > mResizeMaxDimension) {
-				scaleRatio = mResizeMaxDimension / (double) maxDimension;
+			if (maxDimension > resizeMaxDimension) {
+				scaleRatio = resizeMaxDimension / (double) maxDimension;
 			}
 		}
 
@@ -220,8 +215,7 @@ public class AndroidColorExtractor {
 			return bitmap;
 		}
 
-		return Bitmap.createScaledBitmap(bitmap, (int) Math.ceil(bitmap.getWidth() * scaleRatio),
-				(int) Math.ceil(bitmap.getHeight() * scaleRatio));
+		return Bitmap.createScaledBitmap(bitmap, (int) Math.ceil(bitmap.getWidth() * scaleRatio), (int) Math.ceil(bitmap.getHeight() * scaleRatio));
 	}
 
 	/**
@@ -241,7 +235,7 @@ public class AndroidColorExtractor {
 		
 		AndroidColorExtractor extractor = new AndroidColorExtractor(new Bitmap(image));
 		Palette palette = extractor.generate();
-		Palette.Swatch swatch = palette.getVibrantSwatch();
+		PaletteSwatch swatch = palette.getVibrantSwatch();
 
 		if (swatch == null) {
 			swatch = palette.getMutedSwatch();
@@ -254,5 +248,5 @@ public class AndroidColorExtractor {
 		int color = swatch.getRgb();
 		return color;
 	}
-
+	
 }

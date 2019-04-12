@@ -23,8 +23,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import com.sangupta.colors.extract.android.Palette.Swatch;
-
 /**
  * An color quantizer based on the Median-cut algorithm, but optimized for
  * picking out distinct colors rather than representation colors.
@@ -50,7 +48,7 @@ final class ColorCutQuantizer {
 	private static final int QUANTIZE_WORD_MASK = (1 << QUANTIZE_WORD_WIDTH) - 1;
 	final int[] mColors;
 	final int[] mHistogram;
-	final List<Swatch> mQuantizedColors;
+	final List<PaletteSwatch> mQuantizedColors;
 	final PaletteFilter[] mFilters;
 	private final float[] mTempHsl = new float[3];
 
@@ -95,9 +93,9 @@ final class ColorCutQuantizer {
 		if (distinctColorCount <= maxColors) {
 			// The image has fewer colors than the maximum requested, so just return the
 			// colors
-			mQuantizedColors = new ArrayList<Swatch>();
+			mQuantizedColors = new ArrayList<PaletteSwatch>();
 			for (int color : colors) {
-				mQuantizedColors.add(new Swatch(approximateToRgb888(color), hist[color]));
+				mQuantizedColors.add(new PaletteSwatch(approximateToRgb888(color), hist[color]));
 			}
 		} else {
 			// We need use quantization to reduce the number of colors
@@ -108,11 +106,11 @@ final class ColorCutQuantizer {
 	/**
 	 * @return the list of quantized colors
 	 */
-	List<Swatch> getQuantizedColors() {
+	List<PaletteSwatch> getQuantizedColors() {
 		return mQuantizedColors;
 	}
 
-	private List<Swatch> quantizePixels(int maxColors) {
+	private List<PaletteSwatch> quantizePixels(int maxColors) {
 		// Create the priority queue which is sorted by volume descending. This means we
 		// always
 		// split the largest box in the queue
@@ -150,10 +148,10 @@ final class ColorCutQuantizer {
 		}
 	}
 
-	private List<Swatch> generateAverageColors(Collection<Vbox> vboxes) {
-		ArrayList<Swatch> colors = new ArrayList<Swatch>(vboxes.size());
+	private List<PaletteSwatch> generateAverageColors(Collection<Vbox> vboxes) {
+		ArrayList<PaletteSwatch> colors = new ArrayList<PaletteSwatch>(vboxes.size());
 		for (Vbox vbox : vboxes) {
-			Swatch swatch = vbox.getAverageColor();
+			PaletteSwatch swatch = vbox.getAverageColor();
 			if (!shouldIgnoreColor(swatch)) {
 				// As we're averaging a color box, we can still get colors which we do not want,
 				// so
@@ -313,7 +311,7 @@ final class ColorCutQuantizer {
 		/**
 		 * @return the average color of this box.
 		 */
-		final Swatch getAverageColor() {
+		final PaletteSwatch getAverageColor() {
 			final int[] colors = mColors;
 			final int[] hist = mHistogram;
 			int redSum = 0;
@@ -331,7 +329,7 @@ final class ColorCutQuantizer {
 			final int redMean = Math.round(redSum / (float) totalPopulation);
 			final int greenMean = Math.round(greenSum / (float) totalPopulation);
 			final int blueMean = Math.round(blueSum / (float) totalPopulation);
-			return new Swatch(approximateToRgb888(redMean, greenMean, blueMean), totalPopulation);
+			return new PaletteSwatch(approximateToRgb888(redMean, greenMean, blueMean), totalPopulation);
 		}
 	}
 
@@ -372,7 +370,7 @@ final class ColorCutQuantizer {
 		return shouldIgnoreColor(rgb, mTempHsl);
 	}
 
-	private boolean shouldIgnoreColor(Swatch color) {
+	private boolean shouldIgnoreColor(PaletteSwatch color) {
 		return shouldIgnoreColor(color.getRgb(), color.getHsl());
 	}
 
