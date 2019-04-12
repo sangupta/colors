@@ -22,13 +22,11 @@ package com.sangupta.colors;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sangupta.jerry.util.AssertUtils;
-
 /**
  * A swatch is an active palette of colors.
  * 
  * @author sangupta
- *
+ * @since 1.0.0
  */
 public class Swatch<T extends ColorModel> {
 
@@ -51,7 +49,7 @@ public class Swatch<T extends ColorModel> {
 	 * @param colors
 	 */
 	public Swatch(T[] colors) {
-		if(AssertUtils.isEmpty(colors)) {
+		if(colors == null || colors.length == 0) {
 			return;
 		}
 		
