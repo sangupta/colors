@@ -51,7 +51,7 @@ final class ColorCutQuantizer {
 	final int[] mColors;
 	final int[] mHistogram;
 	final List<Swatch> mQuantizedColors;
-	final Palette.Filter[] mFilters;
+	final PaletteFilter[] mFilters;
 	private final float[] mTempHsl = new float[3];
 
 	/**
@@ -62,7 +62,7 @@ final class ColorCutQuantizer {
 	 *                  palette.
 	 * @param filters   Set of filters to use in the quantization stage
 	 */
-	ColorCutQuantizer(final int[] pixels, final int maxColors, final Palette.Filter[] filters) {
+	ColorCutQuantizer(final int[] pixels, final int maxColors, final PaletteFilter[] filters) {
 		mFilters = filters;
 		final int[] hist = mHistogram = new int[1 << (QUANTIZE_WORD_WIDTH * 3)];
 		for (int i = 0; i < pixels.length; i++) {

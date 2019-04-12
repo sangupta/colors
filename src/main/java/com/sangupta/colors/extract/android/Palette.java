@@ -16,7 +16,6 @@
 
 package com.sangupta.colors.extract.android;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -60,37 +59,20 @@ import java.util.Map;
  */
 public final class Palette {
 
-	static final int DEFAULT_RESIZE_BITMAP_AREA = 112 * 112;
-	static final int DEFAULT_CALCULATE_NUMBER_COLORS = 16;
-
 	static final float MIN_CONTRAST_TITLE_TEXT = 3.0f;
+	
 	static final float MIN_CONTRAST_BODY_TEXT = 4.5f;
 
 	static final String LOG_TAG = "Palette";
+
 	static final boolean LOG_TIMINGS = false;
 
-	/**
-	 * Start generating a {@link Palette} with the returned {@link Builder}
-	 * instance.
-	 */
-	public static Builder from(Bitmap bitmap) {
-		return new Builder(bitmap);
-	}
-
-	/**
-	 * Generate a {@link Palette} from the pre-generated list of
-	 * {@link Palette.Swatch} swatches. This is useful for testing, or if you want
-	 * to resurrect a {@link Palette} instance from a list of swatches. Will return
-	 * null if the {@code swatches} is null.
-	 */
-	public static Palette from(List<Swatch> swatches) {
-		return new Builder(swatches).generate();
-	}
-
 	private final List<Swatch> mSwatches;
+	
 	private final List<Target> mTargets;
 
 	private final Map<Target, Swatch> mSelectedSwatches;
+	
 	private final SparseBooleanArray mUsedColors;
 
 	private final Swatch mDominantSwatch;
@@ -506,271 +488,4 @@ public final class Palette {
 		}
 	}
 
-	/**
-	 * Builder class for generating {@link Palette} instances.
-	 */
-	public static final class Builder {
-		
-		private final List<Swatch> mSwatches;
-		
-		private final Bitmap mBitmap;
-
-		private final List<Target> mTargets = new ArrayList<Target>();
-
-		private int mMaxColors = DEFAULT_CALCULATE_NUMBER_COLORS;
-		
-		private int mResizeArea = DEFAULT_RESIZE_BITMAP_AREA;
-		
-		private int mResizeMaxDimension = -1;
-
-		private final List<Filter> mFilters = new ArrayList<Filter>();
-
-		/**
-		 * Construct a new {@link Builder} using a source {@link Bitmap}
-		 */
-		public Builder(Bitmap bitmap) {
-			if (bitmap == null) {
-				throw new IllegalArgumentException("Bitmap is not valid");
-			}
-			mFilters.add(DEFAULT_FILTER);
-			mBitmap = bitmap;
-			mSwatches = null;
-
-			// Add the default targets
-			mTargets.add(Target.LIGHT_VIBRANT);
-			mTargets.add(Target.VIBRANT);
-			mTargets.add(Target.DARK_VIBRANT);
-			mTargets.add(Target.LIGHT_MUTED);
-			mTargets.add(Target.MUTED);
-			mTargets.add(Target.DARK_MUTED);
-		}
-
-		/**
-		 * Construct a new {@link Builder} using a list of {@link Swatch} instances.
-		 * Typically only used for testing.
-		 */
-		public Builder(List<Swatch> swatches) {
-			if (swatches == null || swatches.isEmpty()) {
-				throw new IllegalArgumentException("List of Swatches is not valid");
-			}
-			mFilters.add(DEFAULT_FILTER);
-			mSwatches = swatches;
-			mBitmap = null;
-		}
-
-		/**
-		 * Set the maximum number of colors to use in the quantization step when using a
-		 * {@link Bitmap} as the source.
-		 * <p>
-		 * Good values for depend on the source image type. For landscapes, good values
-		 * are in the range 10-16. For images which are largely made up of people's
-		 * faces then this value should be increased to ~24.
-		 */
-		public Builder maximumColorCount(int colors) {
-			mMaxColors = colors;
-			return this;
-		}
-
-		/**
-		 * Set the resize value when using a {@link Bitmap} as the source. If the
-		 * bitmap's largest dimension is greater than the value specified, then the
-		 * bitmap will be resized so that it's largest dimension matches
-		 * {@code maxDimension}. If the bitmap is smaller or equal, the original is used
-		 * as-is.
-		 *
-		 * @deprecated Using {@link #resizeBitmapArea(int)} is preferred since it can
-		 *             handle abnormal aspect ratios more gracefully.
-		 *
-		 * @param maxDimension the number of pixels that the max dimension should be
-		 *                     scaled down to, or any value &lt;= 0 to disable resizing.
-		 */
-		@Deprecated
-		public Builder resizeBitmapSize(final int maxDimension) {
-			mResizeMaxDimension = maxDimension;
-			mResizeArea = -1;
-			return this;
-		}
-
-		/**
-		 * Set the resize value when using a {@link Bitmap} as the source. If the
-		 * bitmap's area is greater than the value specified, then the bitmap will be
-		 * resized so that it's area matches {@code area}. If the bitmap is smaller or
-		 * equal, the original is used as-is.
-		 * <p>
-		 * This value has a large effect on the processing time. The larger the resized
-		 * image is, the greater time it will take to generate the palette. The smaller
-		 * the image is, the more detail is lost in the resulting image and thus less
-		 * precision for color selection.
-		 *
-		 * @param area the number of pixels that the intermediary scaled down Bitmap
-		 *             should cover, or any value &lt;= 0 to disable resizing.
-		 */
-		public Builder resizeBitmapArea(final int area) {
-			mResizeArea = area;
-			mResizeMaxDimension = -1;
-			return this;
-		}
-
-		/**
-		 * Clear all added filters. This includes any default filters added
-		 * automatically by {@link Palette}.
-		 */
-		public Builder clearFilters() {
-			mFilters.clear();
-			return this;
-		}
-
-		/**
-		 * Add a filter to be able to have fine grained control over which colors are
-		 * allowed in the resulting palette.
-		 *
-		 * @param filter filter to add.
-		 */
-		public Builder addFilter(Filter filter) {
-			if (filter != null) {
-				mFilters.add(filter);
-			}
-			return this;
-		}
-
-		/**
-		 * Add a target profile to be generated in the palette.
-		 *
-		 * <p>
-		 * You can retrieve the result via {@link Palette#getSwatchForTarget(Target)}.
-		 * </p>
-		 */
-		public Builder addTarget(final Target target) {
-			if (!mTargets.contains(target)) {
-				mTargets.add(target);
-			}
-			return this;
-		}
-
-		/**
-		 * Clear all added targets. This includes any default targets added
-		 * automatically by {@link Palette}.
-		 */
-		public Builder clearTargets() {
-			if (mTargets != null) {
-				mTargets.clear();
-			}
-			return this;
-		}
-
-		/**
-		 * Generate and return the {@link Palette} synchronously.
-		 */
-		public Palette generate() {
-			List<Swatch> swatches;
-
-			if (mBitmap != null) {
-				// We have a Bitmap so we need to use quantization to reduce the number of
-				// colors
-
-				// First we'll scale down the bitmap if needed
-				final Bitmap bitmap = scaleBitmapDown(mBitmap);
-
-				// Now generate a quantizer from the Bitmap
-				final ColorCutQuantizer quantizer = new ColorCutQuantizer(getPixelsFromBitmap(bitmap), mMaxColors,
-						mFilters.isEmpty() ? null : mFilters.toArray(new Filter[mFilters.size()]));
-
-				swatches = quantizer.getQuantizedColors();
-
-			} else {
-				// Else we're using the provided swatches
-				swatches = mSwatches;
-			}
-
-			// Now create a Palette instance
-			final Palette palette = new Palette(swatches, mTargets);
-			// And make it generate itself
-			palette.generate();
-
-			return palette;
-		}
-
-		private int[] getPixelsFromBitmap(Bitmap bitmap) {
-			return bitmap.getPixels();
-		}
-
-		/**
-		 * Scale the bitmap down as needed.
-		 */
-		private Bitmap scaleBitmapDown(final Bitmap bitmap) {
-			double scaleRatio = -1;
-
-			if (mResizeArea > 0) {
-				final int bitmapArea = bitmap.getWidth() * bitmap.getHeight();
-				if (bitmapArea > mResizeArea) {
-					scaleRatio = Math.sqrt(mResizeArea / (double) bitmapArea);
-				}
-			} else if (mResizeMaxDimension > 0) {
-				final int maxDimension = Math.max(bitmap.getWidth(), bitmap.getHeight());
-				if (maxDimension > mResizeMaxDimension) {
-					scaleRatio = mResizeMaxDimension / (double) maxDimension;
-				}
-			}
-
-			if (scaleRatio <= 0) {
-				// Scaling has been disabled or not needed so just return the Bitmap
-				return bitmap;
-			}
-
-			return Bitmap.createScaledBitmap(bitmap, (int) Math.ceil(bitmap.getWidth() * scaleRatio),
-					(int) Math.ceil(bitmap.getHeight() * scaleRatio));
-		}
-	}
-
-	/**
-	 * A Filter provides a mechanism for exercising fine-grained control over which
-	 * colors are valid within a resulting {@link Palette}.
-	 */
-	public interface Filter {
-		/**
-		 * Hook to allow clients to be able filter colors from resulting palette.
-		 *
-		 * @param rgb the color in RGB888.
-		 * @param hsl HSL representation of the color.
-		 *
-		 * @return true if the color is allowed, false if not.
-		 *
-		 * @see Builder#addFilter(Filter)
-		 */
-		boolean isAllowed(int rgb, float[] hsl);
-	}
-
-	/**
-	 * The default filter.
-	 */
-	static final Filter DEFAULT_FILTER = new Filter() {
-		private static final float BLACK_MAX_LIGHTNESS = 0.05f;
-		private static final float WHITE_MIN_LIGHTNESS = 0.95f;
-
-		@Override
-		public boolean isAllowed(int rgb, float[] hsl) {
-			return !isWhite(hsl) && !isBlack(hsl) && !isNearRedILine(hsl);
-		}
-
-		/**
-		 * @return true if the color represents a color which is close to black.
-		 */
-		private boolean isBlack(float[] hslColor) {
-			return hslColor[2] <= BLACK_MAX_LIGHTNESS;
-		}
-
-		/**
-		 * @return true if the color represents a color which is close to white.
-		 */
-		private boolean isWhite(float[] hslColor) {
-			return hslColor[2] >= WHITE_MIN_LIGHTNESS;
-		}
-
-		/**
-		 * @return true if the color lies close to the red side of the I line.
-		 */
-		private boolean isNearRedILine(float[] hslColor) {
-			return hslColor[0] >= 10f && hslColor[0] <= 37f && hslColor[1] <= 0.82f;
-		}
-	};
 }
