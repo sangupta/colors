@@ -22,6 +22,8 @@ package com.sangupta.colors;
 import com.sangupta.colors.model.RGB;
 
 /**
+ * CSS3 color names as defined by Mozilla at
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
  * 
  * @author sangupta
  * @since 1.0.0
