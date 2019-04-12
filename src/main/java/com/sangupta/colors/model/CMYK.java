@@ -1,6 +1,6 @@
 /**
  * colors - Strongly typed immutable color models
- * Copyright (c) 2017, Sandeep Gupta
+ * Copyright (c) 2017-present, Sandeep Gupta
  * 
  * https://sangupta.com/projects/colors
  * 
