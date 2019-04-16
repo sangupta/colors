@@ -16,6 +16,7 @@
 
 package com.sangupta.colors.extract.android;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -87,6 +88,13 @@ public final class Palette {
 	 */
 	public List<PaletteSwatch> getSwatches() {
 		return Collections.unmodifiableList(this.swatches);
+	}
+
+	/**
+	 * Returns all of the swatches which make up the palette.
+	 */
+	public Collection<PaletteSwatch> getSeleectedSwatches() {
+		return this.selectedSwatches.values();
 	}
 
 	/**

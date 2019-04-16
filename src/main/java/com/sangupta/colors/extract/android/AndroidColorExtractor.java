@@ -18,6 +18,7 @@ package com.sangupta.colors.extract.android;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.sangupta.colors.Swatch;
@@ -35,6 +36,8 @@ import com.sangupta.colors.model.RGB;
  * @since 1.0.0
  */
 public class AndroidColorExtractor {
+	
+	static final int MAX_WIDTH = 1200;
 
 	static final int DEFAULT_RESIZE_BITMAP_AREA = 112 * 112;
 
@@ -198,27 +201,33 @@ public class AndroidColorExtractor {
 	 * Scale the bitmap down as needed.
 	 */
 	private Bitmap scaleBitmapDown(final Bitmap bitmap) {
-		double scaleRatio = -1;
-
-		if (this.resizeArea > 0) {
-			final int bitmapArea = bitmap.getWidth() * bitmap.getHeight();
-			if (bitmapArea > this.resizeArea) {
-				scaleRatio = Math.sqrt(this.resizeArea / (double) bitmapArea);
-			}
-		} else if (this.resizeMaxDimension > 0) {
-			final int maxDimension = Math.max(bitmap.getWidth(), bitmap.getHeight());
-			if (maxDimension > this.resizeMaxDimension) {
-				scaleRatio = this.resizeMaxDimension / (double) maxDimension;
-			}
+//		double scaleRatio = -1;
+//
+//		if (this.resizeArea > 0) {
+//			final int bitmapArea = bitmap.getWidth() * bitmap.getHeight();
+//			if (bitmapArea > this.resizeArea) {
+//				scaleRatio = Math.sqrt(this.resizeArea / (double) bitmapArea);
+//			}
+//		} else if (this.resizeMaxDimension > 0) {
+//			final int maxDimension = Math.max(bitmap.getWidth(), bitmap.getHeight());
+//			if (maxDimension > this.resizeMaxDimension) {
+//				scaleRatio = this.resizeMaxDimension / (double) maxDimension;
+//			}
+//		}
+//
+//		if (scaleRatio <= 0) {
+//			// Scaling has been disabled or not needed so just return the Bitmap
+//			return bitmap;
+//		}
+		
+		if(bitmap.getWidth() > MAX_WIDTH) {
+			double scale = ((double) MAX_WIDTH) / bitmap.getWidth();
+			double scaledHeight = bitmap.getHeight() * scale;
+			
+			return Bitmap.createScaledBitmap(bitmap, MAX_WIDTH, Double.valueOf(scaledHeight).intValue());
 		}
 
-		if (scaleRatio <= 0) {
-			// Scaling has been disabled or not needed so just return the Bitmap
-			return bitmap;
-		}
-
-		return Bitmap.createScaledBitmap(bitmap, (int) Math.ceil(bitmap.getWidth() * scaleRatio),
-				(int) Math.ceil(bitmap.getHeight() * scaleRatio));
+		return bitmap;
 	}
 
 	/**
@@ -266,9 +275,16 @@ public class AndroidColorExtractor {
 
 		AndroidColorExtractor extractor = new AndroidColorExtractor(new Bitmap(image));
 		Palette palette = extractor.generate();
-
+		Collection<PaletteSwatch> swatches = palette.getSeleectedSwatches();
+		
 		Swatch<RGB> swatch = new Swatch<>();
-		addToSwatch(swatch, palette.getVibrantColor());
+		
+		for(PaletteSwatch ps : swatches) {
+			if(ps != null) {
+				addToSwatch(swatch, ps.getRgb());
+			}
+		}
+		
 
 		return swatch;
 	}
@@ -281,10 +297,6 @@ public class AndroidColorExtractor {
 	 * @param color
 	 */
 	private static void addToSwatch(Swatch<RGB> swatch, int color) {
-		if (color < 0) {
-			return;
-		}
-
 		swatch.add(new RGB(color));
 	}
 }
